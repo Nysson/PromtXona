@@ -2,6 +2,7 @@ import { ArrowRight, PenLine, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
 import { AmbientBackground } from "./AmbientBackground";
+import { Logo } from "./Logo";
 import { SubmitLink } from "./SubmitLink";
 
 export function Hero() {
@@ -9,6 +10,8 @@ export function Hero() {
     <section className="relative overflow-hidden pb-20 pt-20 sm:pb-28 sm:pt-28">
       <AmbientBackground />
       <div className="container-page relative flex flex-col items-center text-center">
+        <Logo className="mb-7 h-24 w-24 drop-shadow-[0_12px_28px_rgba(16,60,120,0.28)] sm:h-28 sm:w-28" />
+
         <span className="glass-panel inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium text-neutral-600 dark:text-neutral-300">
           <Sparkles className="h-3.5 w-3.5 text-accent-blue" />
           100% ochiq kodli · ChatGPT, Claude va Gemini uchun sinovdan o&apos;tgan

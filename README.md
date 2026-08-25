@@ -139,6 +139,22 @@ O'zgaruvchi belgilangach, header va hero tugmalari o'sha formani yangi oynada
 ochadi; `/submit` sahifasida esa qo'shimcha "Google Form orqali" tugmasi paydo
 bo'ladi.
 
+### Logo va brend belgisi
+
+Logo ikki joyda saqlanadi va ikkalasi bir xil bo'lishi kerak:
+
+| Fayl | Nima uchun |
+| --- | --- |
+| `app/icon.svg` | Favicon (brauzer tabi) + OG va Apple ikonkalari uchun manba |
+| `components/Logo.tsx` | Sayt ichida (header, footer, hero) ishlatiladigan komponent |
+
+`app/apple-icon.tsx` va `app/opengraph-image.tsx` logoni avtomatik ravishda
+`app/icon.svg` faylidan o'qib PNG'ga aylantiradi — ularni qo'lda yangilash
+shart emas.
+
+**Logoni almashtirish:** yangi SVG'ni `app/icon.svg` ga yozing, keyin
+`components/Logo.tsx` ichidagi shakllarni ham xuddi shunday yangilang.
+
 ### Boshqa sozlamalar
 
 `lib/constants.ts` faylida:

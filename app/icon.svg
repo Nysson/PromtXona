@@ -1,20 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0a84ff" />
-      <stop offset="100%" stop-color="#5e5ce6" />
+    <linearGradient id="px-bubble" x1="96" y1="120" x2="424" y2="408" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2C6CBB"/>
+      <stop offset="1" stop-color="#0F3970"/>
+    </linearGradient>
+    <linearGradient id="px-tail" x1="136" y1="400" x2="200" y2="491" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A67B6"/>
+      <stop offset="1" stop-color="#16468C"/>
+    </linearGradient>
+    <linearGradient id="px-page" x1="256" y1="196" x2="256" y2="322" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF2F7"/>
+      <stop offset="1" stop-color="#BCC7D6"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="15" fill="url(#g)" />
-  <path
-    d="M22 15h20a3 3 0 0 1 3 3v31a1.5 1.5 0 0 1-2.4 1.2L32 42.5l-10.6 7.7A1.5 1.5 0 0 1 19 49V18a3 3 0 0 1 3-3z"
-    fill="#fff"
-    fill-opacity="0.95"
-  />
-  <path
-    d="M27 24h10M27 30h7"
-    stroke="#0a63c9"
-    stroke-width="3"
-    stroke-linecap="round"
-  />
+
+  <!-- suhbat pufagi dumi -->
+  <path d="M136 400h83L136 491Z" fill="url(#px-tail)"/>
+  <!-- suhbat pufagi -->
+  <rect x="71" y="111" width="370" height="301" rx="90" fill="url(#px-bubble)"/>
+
+  <!-- ochiq kitob -->
+  <path d="M136 206C176 202 218 199 256 199V320C218 319 176 310 136 297Z" fill="url(#px-page)"/>
+  <path d="M376 206C336 202 294 199 256 199V320C294 319 336 310 376 297Z" fill="url(#px-page)"/>
+  <rect x="254" y="203" width="4" height="112" rx="2" fill="#16345F" opacity=".85"/>
+
+  <!-- bitiruv shapkasi -->
+  <path d="M256 21 389 78 256 112 123 78Z" fill="#10294E"/>
+  <rect x="237" y="127" width="38" height="30" rx="6" fill="#10294E"/>
+  <path d="M386 76C392 98 392 124 391 144" stroke="#10294E" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="391" cy="153" r="10" fill="#BFC9D6"/>
 </svg>

@@ -1,21 +1,13 @@
 "use client";
 
-import {
-  BookMarked,
-  Bookmark,
-  Menu,
-  Moon,
-  PenLine,
-  Search,
-  Sun,
-  X,
-} from "lucide-react";
+import { Bookmark, Menu, Moon, PenLine, Search, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useCommandPalette } from "./CommandPalette";
+import { Logo } from "./Logo";
 import { usePrompts } from "./PromptsProvider";
 import { SubmitLink } from "./SubmitLink";
 import { useTheme } from "./ThemeProvider";
@@ -37,10 +29,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full">
       <div className="border-b border-black/5 bg-white/75 backdrop-blur-xl dark:border-white/10 dark:bg-black/60">
         <div className="container-page flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-accent-indigo text-white shadow-glow">
-              <BookMarked className="h-5 w-5" strokeWidth={2.25} />
-            </span>
+          <Link href="/" className="flex items-center gap-2.5 font-semibold">
+            <Logo className="h-9 w-9" />
             <span className="text-lg tracking-tight text-neutral-900 dark:text-white">
               {SITE.name}
             </span>

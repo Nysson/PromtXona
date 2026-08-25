@@ -1,6 +1,7 @@
-import { BookMarked, Github, Heart } from "lucide-react";
+import { Github, Heart } from "lucide-react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
+import { Logo } from "./Logo";
 import { SubmitLink } from "./SubmitLink";
 
 export function Footer() {
@@ -9,10 +10,8 @@ export function Footer() {
       <div className="container-page py-12">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4">
           <div className="col-span-1 sm:col-span-2 md:col-span-2">
-            <Link href="/" className="flex items-center gap-2 font-semibold">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-blue to-accent-indigo text-white">
-                <BookMarked className="h-4 w-4" strokeWidth={2.25} />
-              </span>
+            <Link href="/" className="flex items-center gap-2.5 font-semibold">
+              <Logo className="h-8 w-8" />
               <span className="text-base text-neutral-900 dark:text-white">
                 {SITE.name}
               </span>
