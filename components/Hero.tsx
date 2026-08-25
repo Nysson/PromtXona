@@ -2,6 +2,7 @@ import { ArrowRight, PenLine, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
 import { AmbientBackground } from "./AmbientBackground";
+import { SubmitLink } from "./SubmitLink";
 
 export function Hero() {
   return (
@@ -34,15 +35,10 @@ export function Hero() {
             Promptlarni ko&apos;rish
             <ArrowRight className="h-4 w-4" />
           </Link>
-          <a
-            href={SITE.submitFormUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="pill-button justify-center border border-black/10 bg-white/70 px-6 py-3 text-[15px] text-neutral-700 shadow-soft transition hover:-translate-y-0.5 hover:shadow-glow dark:border-white/10 dark:bg-white/[0.06] dark:text-neutral-100"
-          >
+          <SubmitLink className="pill-button justify-center border border-black/10 bg-white/70 px-6 py-3 text-[15px] text-neutral-700 shadow-soft transition hover:-translate-y-0.5 hover:shadow-glow dark:border-white/10 dark:bg-white/[0.06] dark:text-neutral-100">
             <PenLine className="h-4 w-4" />
             O&apos;z promptingizni yuboring
-          </a>
+          </SubmitLink>
         </div>
 
         <div className="mt-14 grid w-full max-w-2xl grid-cols-3 gap-4 text-center">

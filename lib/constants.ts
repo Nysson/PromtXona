@@ -1,16 +1,38 @@
 import type { FilterGroup, PromptCategory } from "./types";
 
+/**
+ * Ixtiyoriy: agar siz haqiqiy Google Form yaratsangiz, uni `.env.local` faylida
+ * NEXT_PUBLIC_SUBMIT_FORM_URL sifatida qo'shing. Bo'sh bo'lsa, ilova o'zining
+ * ichki /submit sahifasidan foydalanadi (hech qanday buzilgan havola yo'q).
+ */
+const EXTERNAL_FORM_URL = process.env.NEXT_PUBLIC_SUBMIT_FORM_URL?.trim() || "";
+
 export const SITE = {
   name: "PromptXona",
   tagline: "Prompt kutubxonasi — IELTS, SAT va Ona tili uchun",
   description:
     "O'zbekistonlik o'quvchilar uchun ochiq kodli prompt kutubxonasi: IELTS, SAT tayyorgarligi va Ona tili/Adabiyot inshosi uchun sinovdan o'tgan AI promptlari.",
   url: "https://promptxona.vercel.app",
-  githubUrl: "https://github.com/promptxona/promptxona",
-  // Replace with your real Google Form link for community prompt submissions.
-  submitFormUrl: "https://forms.gle/PromptXonaSubmitYourPrompt",
-  twitterUrl: "https://twitter.com/promptxona",
+  repoOwner: "Nysson",
+  repoName: "PromtXona",
+  githubUrl: "https://github.com/Nysson/PromtXona",
+  /** Tashqi forma bo'lsa — o'sha, bo'lmasa ichki sahifa. */
+  submitFormUrl: EXTERNAL_FORM_URL || "/submit",
+  hasExternalForm: Boolean(EXTERNAL_FORM_URL),
 };
+
+/** Prompt taklifini GitHub issue sifatida oldindan to'ldirib ochadi. */
+export function githubIssueUrl(params: {
+  title: string;
+  body: string;
+}): string {
+  const search = new URLSearchParams({
+    title: params.title,
+    body: params.body,
+    labels: "prompt-submission",
+  });
+  return `${SITE.githubUrl}/issues/new?${search.toString()}`;
+}
 
 export const CATEGORY_META: Record<
   PromptCategory,

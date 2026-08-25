@@ -14,6 +14,7 @@ import type { Prompt, PromptComment, PromptOverride } from "@/lib/types";
 import { generateId } from "@/lib/utils";
 
 const STORAGE_KEY = "promptxona-overrides-v1";
+const SAVED_KEY = "promptxona-saved-v1";
 
 type OverrideMap = Record<string, PromptOverride>;
 
@@ -24,6 +25,9 @@ interface PromptsContextValue {
   incrementCopyCount: (id: string) => void;
   addComment: (id: string, author: string, content: string) => void;
   getPromptById: (id: string) => Prompt | undefined;
+  savedIds: string[];
+  isSaved: (id: string) => boolean;
+  toggleSaved: (id: string) => void;
 }
 
 const PromptsContext = createContext<PromptsContextValue | undefined>(
@@ -50,16 +54,32 @@ function saveOverrides(overrides: OverrideMap) {
 
 export function PromptsProvider({ children }: { children: ReactNode }) {
   const [overrides, setOverrides] = useState<OverrideMap>({});
+  const [savedIds, setSavedIds] = useState<string[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     setOverrides(loadOverrides());
+    try {
+      const raw = window.localStorage.getItem(SAVED_KEY);
+      if (raw) setSavedIds(JSON.parse(raw) as string[]);
+    } catch {
+      // ignore malformed storage
+    }
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (hydrated) saveOverrides(overrides);
   }, [overrides, hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      window.localStorage.setItem(SAVED_KEY, JSON.stringify(savedIds));
+    } catch {
+      // ignore write errors
+    }
+  }, [savedIds, hydrated]);
 
   const prompts = useMemo<Prompt[]>(() => {
     return PROMPTS.map((base) => {
@@ -137,6 +157,17 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
     [prompts]
   );
 
+  const isSaved = useCallback(
+    (id: string) => savedIds.includes(id),
+    [savedIds]
+  );
+
+  const toggleSaved = useCallback((id: string) => {
+    setSavedIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  }, []);
+
   const value: PromptsContextValue = {
     prompts,
     isUpvoted,
@@ -144,6 +175,9 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
     incrementCopyCount,
     addComment,
     getPromptById,
+    savedIds,
+    isSaved,
+    toggleSaved,
   };
 
   return (

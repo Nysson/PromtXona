@@ -21,15 +21,20 @@ bir zumda ishlating.
 - **Interaktiv prompt kartalari:**
   - 📋 Bir bosishda nusxalash (toast bildirishnoma bilan)
   - 👍 Real-time upvote hisoblagichi
+  - 🔖 Saqlash (bookmark) — `/saved` sahifasida to'planadi
   - 🤖 "Try in ChatGPT" / ✨ "Try in Claude" — tashqi havolalar orqali
     to'g'ridan-to'g'ri promptni AI chatga yuborish
   - 💬 To'liq izoh (comment) tizimi — yangi izoh qoldirish, real-time yangilanish
+- **⌘K / Ctrl+K buyruq palitrasi** — istalgan joydan tez qidirish, klaviatura
+  bilan boshqarish (↑↓ tanlash, ↵ ochish, Esc yopish).
 - **Qidiruv va filtrlash** — kategoriya bo'yicha pill-filtrlar, mashhurlik/vaqt
   bo'yicha saralash.
-- **"Submit Prompt" tugmasi** — navigatsiya headerida, tashqi Google Form
-  havolasini ochadi.
-- **LocalStorage orqali mock backend** — upvote, nusxalash soni va izohlar
-  brauzer xotirasida saqlanadi, sahifani yangilaganda ham yo'qolmaydi.
+- **Prompt yuborish sahifasi (`/submit`)** — to'liq forma, validatsiya va
+  to'ldirilganlik ko'rsatkichi bilan; yuborish uchun ikki yo'l: oldindan
+  to'ldirilgan GitHub issue yoki matnni nusxalash.
+- **O'xshash promptlar** — detal sahifada kategoriya va teglar bo'yicha tavsiya.
+- **LocalStorage orqali mock backend** — upvote, nusxalash soni, saqlanganlar va
+  izohlar brauzer xotirasida saqlanadi, sahifani yangilaganda ham yo'qolmaydi.
 
 ## 🧱 Tech Stack
 
@@ -113,11 +118,33 @@ npm run lint     # ESLint orqali kod sifatini tekshirish
 
 ## ⚙️ Konfiguratsiya
 
-`lib/constants.ts` faylida quyidagilarni o'zgartirishingiz mumkin:
+### "Prompt yuborish" tugmasi
 
-- `SITE.submitFormUrl` — "Prompt yuborish" tugmasi ochadigan Google Form
-  havolangizni shu yerga qo'ying.
-- `SITE.githubUrl`, `SITE.twitterUrl` — ijtimoiy tarmoq havolalari.
+Sukut bo'yicha tugma ilova ichidagi **`/submit`** sahifasini ochadi — hech qanday
+tashqi xizmat kerak emas va havola hech qachon buzilmaydi. U yerdan foydalanuvchi
+promptni ikki yo'l bilan yuborishi mumkin:
+
+1. **GitHub'da yuborish** — forma avtomatik to'ldirilgan issue ochadi
+   (`prompt-submission` yorlig'i bilan).
+2. **Matnni nusxalash** — tayyor Markdown matnni olib, Telegram/email orqali
+   yuborish.
+
+Agar Google Form ishlatmoqchi bo'lsangiz, `.env.local` fayl yarating:
+
+```bash
+NEXT_PUBLIC_SUBMIT_FORM_URL=https://forms.gle/SIZNING-HAQIQIY-HAVOLANGIZ
+```
+
+O'zgaruvchi belgilangach, header va hero tugmalari o'sha formani yangi oynada
+ochadi; `/submit` sahifasida esa qo'shimcha "Google Form orqali" tugmasi paydo
+bo'ladi.
+
+### Boshqa sozlamalar
+
+`lib/constants.ts` faylida:
+
+- `SITE.repoOwner` / `SITE.repoName` — GitHub issue havolalari shu asosda
+  quriladi.
 - `chatGptUrl()` / `claudeUrl()` — "Try in ChatGPT/Claude" tugmalari qanday URL
   formatida ochilishini boshqaradi.
 

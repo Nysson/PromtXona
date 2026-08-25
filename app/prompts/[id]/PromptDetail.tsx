@@ -2,9 +2,11 @@
 
 import {
   ArrowLeft,
+  Bookmark,
   Bot,
   Copy,
   Layers,
+  Link2,
   ListChecks,
   MessageSquareQuote,
   Sparkles,
@@ -17,18 +19,40 @@ import Link from "next/link";
 import { CommentSection } from "@/components/CommentSection";
 import { ModelBadge } from "@/components/ModelBadge";
 import { usePrompts } from "@/components/PromptsProvider";
+import { RelatedPrompts } from "@/components/RelatedPrompts";
 import { useToast } from "@/components/ToastProvider";
 import { chatGptUrl, claudeUrl } from "@/lib/constants";
 import type { Prompt } from "@/lib/types";
 import { cn, formatCompactNumber, formatDate } from "@/lib/utils";
 
 export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
-  const { getPromptById, toggleUpvote, isUpvoted, incrementCopyCount } =
-    usePrompts();
+  const {
+    getPromptById,
+    toggleUpvote,
+    isUpvoted,
+    incrementCopyCount,
+    isSaved,
+    toggleSaved,
+  } = usePrompts();
   const { showToast } = useToast();
 
   const prompt = getPromptById(initialPrompt.id) ?? initialPrompt;
   const upvoted = isUpvoted(prompt.id);
+  const saved = isSaved(prompt.id);
+
+  async function handleShare() {
+    const url = window.location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: prompt.title, url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      showToast("Havola nusxalandi!");
+    } catch {
+      // foydalanuvchi ulashishni bekor qildi — xabar kerak emas
+    }
+  }
 
   async function handleCopy(text: string, label = "Prompt") {
     try {
@@ -116,6 +140,34 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
               <Sparkles className="h-4 w-4" />
               Claude&apos;da sinash
             </a>
+            <button
+              onClick={() => {
+                toggleSaved(prompt.id);
+                showToast(
+                  saved
+                    ? "Saqlanganlardan olib tashlandi."
+                    : "Promptga saqlandi!"
+                );
+              }}
+              className={cn(
+                "pill-button border",
+                saved
+                  ? "border-accent-blue/30 bg-accent-blue/10 text-accent-blue"
+                  : "border-black/10 bg-white/70 text-neutral-700 hover:border-accent-blue/40 hover:text-accent-blue dark:border-white/10 dark:bg-white/[0.04] dark:text-neutral-200"
+              )}
+            >
+              <Bookmark
+                className={cn("h-4 w-4", saved && "fill-accent-blue")}
+              />
+              {saved ? "Saqlangan" : "Saqlash"}
+            </button>
+            <button
+              onClick={handleShare}
+              className="pill-button border border-black/10 bg-white/70 text-neutral-700 transition hover:text-neutral-900 dark:border-white/10 dark:bg-white/[0.04] dark:text-neutral-200"
+            >
+              <Link2 className="h-4 w-4" />
+              Ulashish
+            </button>
           </div>
 
           {/* Role / Task / Context */}
@@ -166,6 +218,8 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
               </div>
             </div>
           </div>
+
+          <RelatedPrompts current={prompt} />
 
           <div className="mt-10">
             <CommentSection promptId={prompt.id} comments={prompt.comments} />

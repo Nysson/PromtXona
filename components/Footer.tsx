@@ -1,6 +1,7 @@
 import { BookMarked, Github, Heart } from "lucide-react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
+import { SubmitLink } from "./SubmitLink";
 
 export function Footer() {
   return (
@@ -40,14 +41,14 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a
-                  href={SITE.submitFormUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-accent-blue"
-                >
+                <Link href="/saved" className="hover:text-accent-blue">
+                  Saqlanganlar
+                </Link>
+              </li>
+              <li>
+                <SubmitLink className="hover:text-accent-blue">
                   Prompt yuborish
-                </a>
+                </SubmitLink>
               </li>
             </ul>
           </div>
@@ -70,12 +71,12 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href={SITE.twitterUrl}
+                  href={`${SITE.githubUrl}/issues/new?labels=prompt-submission`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-accent-blue"
                 >
-                  Twitter / X
+                  Xato yoki taklif bildirish
                 </a>
               </li>
             </ul>
