@@ -38,6 +38,21 @@ export interface Prompt {
   author: string;
   createdAt: string; // ISO date string
   comments: PromptComment[];
+  /**
+   * Ixtiyoriy: prompt biror bosqichma-bosqich ketma-ketlikka (zanjirga)
+   * tegishli bo'lsa, uning identifikatori. `data/chains.ts` ga qarang.
+   */
+  chainId?: string;
+  /** Zanjirdagi tartib raqami, 1 dan boshlanadi. `chainId` bilan birga keladi. */
+  stepOrder?: number;
+}
+
+/** Bosqichma-bosqich prompt ketma-ketligi (masalan, insho yozish jarayoni). */
+export interface PromptChain {
+  id: string;
+  title: string;
+  description: string;
+  category: PromptCategory;
 }
 
 export interface PromptOverride {

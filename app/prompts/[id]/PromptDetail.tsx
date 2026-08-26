@@ -16,6 +16,7 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
+import { ChainNavigator } from "@/components/ChainNavigator";
 import { CommentSection } from "@/components/CommentSection";
 import { ModelBadge } from "@/components/ModelBadge";
 import { usePrompts } from "@/components/PromptsProvider";
@@ -169,6 +170,8 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
               Ulashish
             </button>
           </div>
+
+          <ChainNavigator prompt={prompt} />
 
           {/* Role / Task / Context */}
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">

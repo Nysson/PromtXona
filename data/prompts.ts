@@ -102,6 +102,8 @@ My essay:
     copyCount: 2410,
     author: "Aziz Rahimov",
     createdAt: "2025-09-22T11:00:00.000Z",
+    chainId: "ielts-writing-task2",
+    stepOrder: 4,
     comments: [
       {
         id: "c-wt2-1",
@@ -855,6 +857,217 @@ Mening xatolarim:
         content:
           "Xatolarimning ko'pi bilmaslikdan emas, shoshqaloqlikdan ekanini shu tahlildan bildim.",
         createdAt: "2026-04-18T09:50:00.000Z",
+      },
+    ],
+  },
+  // ─────────────────────────────────────────────────────────────────────
+  // IELTS Writing Task 2 zanjiri — yetishmayotgan qadamlar
+  // (4-qadam mavjud "ielts-writing-task2-examiner" prompti)
+  // ─────────────────────────────────────────────────────────────────────
+  {
+    id: "ielts-writing-task2-question-analysis",
+    title: "IELTS Task 2 — 1-qadam: Savolni Tahlil Qilish",
+    category: "IELTS",
+    filterGroup: "IELTS Writing",
+    subcategory: "Writing Task 2",
+    description:
+      "Insho savolining turini aniqlaydi, kalit so'zlarni ajratadi va mavzudan chetga chiqmaslik uchun aniq chegara belgilaydi.",
+    role: "You are an IELTS Writing Task 2 coach who specializes in question analysis — the step most students skip and the single biggest cause of low Task Response scores.",
+    task: "Break down an IELTS Task 2 question: identify its type, extract the topic and the exact instruction words, list what MUST be addressed to fully answer it, and flag the most likely ways a student could drift off-topic.",
+    context:
+      "Task Response bahosi past chiqishining eng keng tarqalgan sababi — talaba savolni noto'g'ri tushunib, umuman boshqa narsa haqida yozib yuborishi. Masalan, «to what extent do you agree» savoliga ikki tomonni sanab, o'z pozitsiyasini aytmasdan qo'yadi yoki «discuss both views and give your opinion» da fikrini yozishni unutadi. Bu prompt yozishdan OLDIN savolni bo'laklarga ajratadi: turi qanday, nechta qism bor, qaysi so'zlar javob doirasini belgilaydi. Shu 3 daqiqalik tahlil butun inshoning yo'nalishini to'g'ri belgilaydi.",
+    template: `You are my IELTS Writing Task 2 coach. Before I write anything, analyse the question for me.
+
+Return exactly this:
+1. **Question type** — name it precisely (Opinion / Agree-Disagree, Discussion + Opinion, Advantages-Disadvantages, Problem-Solution, Two-part question) and say how many separate things I must answer.
+2. **Topic vs. instruction words** — split the question into: the TOPIC (what it is about) and the INSTRUCTION (what I must do with it). Quote the exact words.
+3. **Scope limits** — any word that narrows the question (e.g. "young people", "in developing countries", "in the workplace"). Warn me that ignoring these costs Task Response marks.
+4. **Checklist to fully answer** — a numbered list of everything my essay MUST contain to score 7+ on Task Response.
+5. **Off-topic traps** — the 2 most likely ways a student drifts off-topic on THIS question, stated concretely.
+6. **My position options** — 3 possible stances I could take, with a one-line note on which is easiest to argue with strong examples.
+
+Do NOT write the essay or an outline yet — only the analysis.
+
+Question:
+"""
+{{Paste the Task 2 question here}}
+"""`,
+    exampleInput:
+      "Some people think that the best way to reduce traffic congestion in cities is to build more roads. Others believe that improving public transport is more effective. Discuss both views and give your own opinion.",
+    exampleOutput:
+      "**Question type:** Discussion + Opinion. This is a THREE-part task: (a) discuss view 1, (b) discuss view 2, (c) state and justify your own opinion. Missing any one of the three caps Task Response at band 5-6.\n\n**Topic vs. instruction words:**\n- TOPIC: \"the best way to reduce traffic congestion in cities\" — specifically comparing \"build more roads\" against \"improving public transport\".\n- INSTRUCTION: \"Discuss both views and give your own opinion.\" Note \"discuss\" (explain the reasoning behind each side, not just name it) and \"your own opinion\" (a clear personal stance is compulsory).\n\n**Scope limits:**\n- \"in cities\" — your examples must be urban. Writing about rural highways or intercity travel is off-scope.\n- \"traffic congestion\" — the goal is reducing congestion, NOT reducing pollution or accidents. You may mention those as side benefits, but if your whole argument is about emissions, you have answered a different question.\n\n**Checklist to fully answer (Task Response 7+):**\n1. Paraphrase the question in the introduction without copying it.\n2. State your opinion clearly in the introduction (do not save it only for the conclusion).\n3. One body paragraph explaining WHY people support building more roads — with reasoning, not just a claim.\n4. One body paragraph explaining WHY people support better public transport.\n5. Your own position, clearly justified — either in a third short paragraph or woven in and restated in the conclusion.\n6. A conclusion that matches the opinion you gave in the introduction (no contradiction).\n\n**Off-topic traps:**\n1. *Turning it into a pollution essay.* Many students slide from congestion into air quality and climate change. Keep every argument tied to the number of vehicles actually moving on urban roads.\n2. *Forgetting to discuss the first view fairly.* Students who personally favour public transport often give the road-building view one weak sentence and then attack it. \"Discuss\" requires you to present its genuine logic first — otherwise the paragraph is unbalanced and Task Response drops.\n\n**My position options:**\n1. *Public transport is more effective* — easiest to argue; strong evidence available (induced demand: new roads fill up quickly; cities like Seoul and Tokyo).\n2. *Building roads is more effective* — harder; you would need to limit it to specific cases such as bypass roads that divert through-traffic.\n3. *Both are needed together* — safe and defensible, but you must still say which you consider MORE effective, or the examiner reads it as sitting on the fence.",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
+    tags: ["Writing Task 2", "Savol tahlili", "Task Response", "Zanjir"],
+    upvotes: 344,
+    copyCount: 1490,
+    author: "Aziz Rahimov",
+    createdAt: "2026-04-20T09:00:00.000Z",
+    chainId: "ielts-writing-task2",
+    stepOrder: 1,
+    comments: [
+      {
+        id: "c-chain-1-1",
+        author: "Muhammadali",
+        content:
+          "Shu qadamni qo'shganimdan keyin mavzudan chetga chiqish muammosi butunlay yo'qoldi.",
+        createdAt: "2026-05-02T10:15:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "ielts-writing-task2-outline-builder",
+    title: "IELTS Task 2 — 2-qadam: Reja va Dalillar Tuzish",
+    category: "IELTS",
+    filterGroup: "IELTS Writing",
+    subcategory: "Writing Task 2",
+    description:
+      "Tahlil qilingan savol asosida paragraflarga bo'lingan reja tuzadi: har bir band uchun tezis, dalil va aniq misol.",
+    role: "You are an IELTS Writing Task 2 coach who builds essay outlines that can be written up in 30 minutes under exam conditions.",
+    task: "Turn a Task 2 question and the writer's chosen position into a paragraph-by-paragraph outline, giving each body paragraph a topic sentence, a line of reasoning, and one concrete example — without writing the essay itself.",
+    context:
+      "Rejasiz yozilgan insho odatda ikkinchi banddan keyin yo'nalishini yo'qotadi: talaba yozayotib yangi fikr o'ylab topadi, oldingisiga qaytadi va natijada Coherence bahosi tushadi. Imtihonda rejaga 5 daqiqa sarflash umumiy vaqtni TEJAYDI, chunki yozish paytida nima haqida yozishni o'ylab to'xtab qolmaysiz. Bu prompt har bir band uchun uchta narsani oldindan qat'iylashtiradi — bosh fikr, uni asoslash mantig'i va aniq misol — shundan keyin yozish faqat «rejani gaplarga aylantirish» ishiga aylanadi.",
+    template: `You are my IELTS Writing Task 2 coach. I have already analysed the question. Now build me a writing outline — NOT the essay.
+
+Give me:
+1. **Introduction plan** — (a) a paraphrase of the question in different words, (b) a one-sentence thesis stating my position clearly.
+2. **Body paragraph 1** — topic sentence · the reasoning chain (why is this true?) · ONE specific example (a real place, study, statistic or realistic scenario — not "many people say").
+3. **Body paragraph 2** — same three parts.
+4. **Body paragraph 3 (only if the question needs it)** — same three parts; tell me honestly if two body paragraphs are enough for this question.
+5. **Conclusion plan** — how to restate the position without repeating the introduction word for word.
+6. **Word budget** — roughly how many words each paragraph should get to land between 260 and 290 words total.
+7. **Weak spot warning** — which paragraph in this plan is hardest to support, and what I should do about it.
+
+Keep every line short — this is a plan I will glance at while writing, not prose.
+
+Question:
+"""
+{{Paste the Task 2 question here}}
+"""
+
+My position:
+"""
+{{State the position you chose in step 1}}
+"""`,
+    exampleInput:
+      "Question: Some people think that the best way to reduce traffic congestion in cities is to build more roads. Others believe that improving public transport is more effective. Discuss both views and give your own opinion.\n\nMy position: Improving public transport is more effective, though limited road building has a role.",
+    exampleOutput:
+      "**Introduction plan:**\n- Paraphrase: Urban congestion has prompted debate over whether expanding road networks or upgrading mass transit offers the better remedy.\n- Thesis: While additional roads can ease pressure in specific bottlenecks, investment in public transport is the more durable solution.\n\n**Body paragraph 1 — the case for building more roads** (~70 words)\n- Topic sentence: Advocates of road expansion argue that congestion is fundamentally a capacity problem.\n- Reasoning: More lanes → traffic distributes across more space → journey times fall in the short term; also allows freight to bypass city centres.\n- Example: Ring roads and bypasses around historic city centres, which divert through-traffic that has no business in the centre at all.\n\n**Body paragraph 2 — the case for public transport** (~85 words)\n- Topic sentence: However, the evidence suggests that road building offers only temporary relief.\n- Reasoning: Induced demand — new capacity attracts drivers who previously avoided the route, so roads refill within a few years; transit moves far more people per lane.\n- Example: Cities that expanded metro and bus rapid transit networks (e.g. Seoul's decision to remove an elevated motorway and invest in transit) saw congestion fall rather than rise.\n\n**Body paragraph 3 — my position** (~55 words)\n- Topic sentence: In my view, the two approaches are not equal in value.\n- Reasoning: Road building should be targeted and exceptional (bypasses only); transit is what scales with a growing population.\n- Example: A single metro line carrying the equivalent of several motorway lanes' worth of passengers.\n\n**Conclusion plan** (~35 words)\n- Restate: acknowledge roads have a narrow role, then reaffirm that transit investment addresses the cause rather than the symptom. Use different wording from the introduction — swap \"durable solution\" for something like \"addresses the root of the problem\".\n\n**Word budget:** Intro 45 · BP1 70 · BP2 85 · BP3 55 · Conclusion 35 = ~290 words. This is comfortably above the 250 minimum without risking time.\n\n**Weak spot warning:** Body paragraph 1 is hardest, because you personally disagree with it. There is a real temptation to write two sentences and move on — but an unbalanced discussion costs Task Response marks. Give it genuine reasoning and a fair example, and save your disagreement for paragraph 2, where the word \"However\" does that work for you.",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
+    tags: ["Writing Task 2", "Reja tuzish", "Outline", "Zanjir"],
+    upvotes: 389,
+    copyCount: 1680,
+    author: "Aziz Rahimov",
+    createdAt: "2026-04-21T09:00:00.000Z",
+    chainId: "ielts-writing-task2",
+    stepOrder: 2,
+    comments: [],
+  },
+  {
+    id: "ielts-writing-task2-draft-writer",
+    title: "IELTS Task 2 — 3-qadam: Qoralama Yozish Bo'yicha Yo'riqnoma",
+    category: "IELTS",
+    filterGroup: "IELTS Writing",
+    subcategory: "Writing Task 2",
+    description:
+      "Rejani inshoga aylantirish uchun bosqichma-bosqich yo'riqnoma beradi: har bir band uchun boshlanish iboralari va 40 daqiqalik vaqt taqsimoti.",
+    role: "You are an IELTS Writing Task 2 coach guiding a student through writing their own first draft under exam timing — you coach, you do not write the essay for them.",
+    task: "Give the student a paragraph-by-paragraph writing guide based on their outline: opening sentence frames, linking language, a 40-minute time plan, and rules for what to do when they get stuck — without producing the finished essay.",
+    context:
+      "Bu qadamning maqsadi — talabaning O'ZI yozishi. Agar AI tayyor insho yozib bersa, talaba imtihonda foydasiz qoladi, chunki band 9 darajasidagi matnni ko'chirish malaka bermaydi. Shu sababli bu prompt ataylab tayyor insho yozib berishdan bosh tortadi va uning o'rniga «yozish uchun asboblar» beradi: band boshlanish iboralari, bog'lovchi so'zlar to'plami, vaqt taqsimoti va tiqilib qolganda nima qilish qoidalari. Talaba qoralamani o'zi yozadi, keyingi qadamda esa uni baholatadi.",
+    template: `You are my IELTS Writing Task 2 coach. I have my outline ready. Guide me while I write the draft MYSELF.
+
+Important: do NOT write the essay or any full paragraph for me. Give me tools, not text.
+
+Provide:
+1. **40-minute time plan** — how many minutes for each paragraph, plus when to stop writing and start checking.
+2. **Sentence frames** — for each paragraph of my outline, give 2 alternative OPENING sentence frames with blanks I fill in myself (e.g. "Those who advocate ______ argue that ______."). Frames only, never complete sentences using my content.
+3. **Linking language bank** — grouped by function: adding, contrasting, giving reasons, giving examples, concluding. 3-4 options each, at band 7+ register.
+4. **Rules while writing** — 5 short rules to follow (e.g. what to do about spelling doubts, whether to count words, when to move on).
+5. **If I get stuck** — 3 concrete unsticking tactics for when I cannot think how to continue a paragraph.
+6. **Stop-and-check list** — the 5 things to verify in my last 3 minutes.
+
+My outline:
+"""
+{{Paste the outline from step 2 here}}
+"""`,
+    exampleInput:
+      "Outline: Intro (paraphrase + thesis: public transport more effective). BP1: case for roads — capacity, bypasses. BP2: case for transit — induced demand, Seoul. BP3: my position — roads targeted only, transit scales. Conclusion: restate.",
+    exampleOutput:
+      "**40-minute time plan:**\n- 0-3 min — re-read the question and your outline; do not start writing yet.\n- 3-8 min — introduction (keep it short, 2 sentences is enough).\n- 8-19 min — body paragraph 1.\n- 19-31 min — body paragraph 2 (your strongest, so give it the most time).\n- 31-36 min — body paragraph 3 and conclusion.\n- 36-40 min — stop writing. Check only (see the list below).\n\n**Sentence frames:**\n*Introduction:*\n- \"The question of how best to ______ has become increasingly pressing in ______.\"\n- \"Opinion is divided over whether ______ or ______ offers the more effective solution.\"\n\n*Body paragraph 1 (the view you do not hold):*\n- \"Those who favour ______ argue that ______.\"\n- \"There is a reasonable case for ______, principally because ______.\"\n\n*Body paragraph 2 (your side):*\n- \"This argument, however, overlooks ______.\"\n- \"A more compelling case can be made for ______, since ______.\"\n\n*Body paragraph 3 (your position):*\n- \"In my own view, ______ , although ______.\"\n- \"Weighing these arguments, I am persuaded that ______.\"\n\n*Conclusion:*\n- \"To conclude, while ______ has a limited role, ______.\"\n- \"On balance, the evidence points towards ______.\"\n\n**Linking language bank:**\n- *Adding:* Moreover · Furthermore · In addition · What is more\n- *Contrasting:* However · Nevertheless · That said · By contrast\n- *Giving reasons:* since · owing to · this is largely because · as a result of\n- *Giving examples:* for instance · a case in point is · as illustrated by\n- *Concluding:* To conclude · On balance · Ultimately\n\n**Rules while writing:**\n1. If you are unsure of a word's spelling, use a simpler word you can spell — an accurate simple word beats a misspelled sophisticated one.\n2. Do not count words as you go; you lose ~2 minutes. Learn roughly how many lines 280 words is in your handwriting instead.\n3. Never cross out and rewrite a whole paragraph. If a sentence goes wrong, finish it and move on.\n4. Write one idea per sentence. Long tangled sentences cost you Grammatical Accuracy marks.\n5. Leave a blank line between paragraphs so the structure is visible at a glance.\n\n**If I get stuck:**\n1. Ask yourself \"why is that true?\" about your last sentence and write the answer — that is almost always the next sentence.\n2. Move to a concrete example. Naming a specific place, group or situation restarts the paragraph.\n3. If a paragraph will not come, write its final sentence first, then work backwards to connect to it.\n\n**Stop-and-check list (last 3 minutes):**\n1. Does the introduction state a clear position?\n2. Does the conclusion agree with that same position?\n3. Are there at least 4 visible paragraphs?\n4. Scan for third-person -s errors (\"it help\" → \"it helps\") — the most common slip under time pressure.\n5. Are you over 250 words? If clearly under, add one more sentence of explanation to your strongest paragraph — never pad the conclusion.",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
+    tags: ["Writing Task 2", "Qoralama", "Vaqt boshqaruvi", "Zanjir"],
+    upvotes: 301,
+    copyCount: 1270,
+    author: "Shahnoza Islomova",
+    createdAt: "2026-04-22T09:00:00.000Z",
+    chainId: "ielts-writing-task2",
+    stepOrder: 3,
+    comments: [
+      {
+        id: "c-chain-3-1",
+        author: "Aziza",
+        content:
+          "Tayyor insho yozib bermagani juda to'g'ri — o'zim yozganim uchun imtihonda ham qo'lim keldi.",
+        createdAt: "2026-05-08T13:00:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "ielts-writing-task2-rewrite-polish",
+    title: "IELTS Task 2 — 5-qadam: Xatolar Ustida Ishlash va Qayta Yozish",
+    category: "IELTS",
+    filterGroup: "IELTS Writing",
+    subcategory: "Writing Task 2",
+    description:
+      "Baholash natijasidagi izohlarni amaliy tuzatishlarga aylantiradi va inshoni bir band yuqori darajada qayta yozishga yo'naltiradi.",
+    role: "You are an IELTS Writing Task 2 coach running the final revision stage: converting examiner feedback into a concrete, prioritised rewrite plan.",
+    task: "Take an essay together with its examiner feedback and produce a prioritised revision plan — which fixes raise the band most, a guided rewrite of the two weakest paragraphs, and a personal error list the student can reuse on future essays.",
+    context:
+      "Baho olish o'z-o'zidan ball ko'tarmaydi — ball qayta yozish jarayonida ko'tariladi. Ammo talabalar odatda hamma izohni bir vaqtda tuzatishga urinadi va ko'pincha eng kam ta'sir qiladigan narsalardan (masalan, bitta vergul) boshlaydi. Bu prompt izohlarni ta'sir kuchi bo'yicha tartiblaydi: qaysi bitta o'zgarish bandni eng ko'p ko'taradi. Eng muhimi, u shaxsiy xatolar ro'yxatini shakllantiradi — bu ro'yxat keyingi insholarda takrorlanuvchi xatolarning oldini oladi va zanjirni yopiq halqaga aylantiradi.",
+    template: `You are my IELTS Writing Task 2 coach. Below is my essay and the examiner feedback I received. Help me turn that feedback into a better essay.
+
+Give me:
+1. **Priority ranking** — order the feedback points by how much each would raise my band, highest impact first, with the estimated gain (e.g. "+0.5 Task Response"). Be honest if a point is cosmetic.
+2. **The one change that matters most** — name the single fix that would improve this essay more than anything else, and explain exactly how to make it.
+3. **Guided rewrite of my two weakest paragraphs** — for each: quote my original, then give a rewritten version at one band higher, then a short bullet list of WHAT changed and why. I need to see the difference, not just the result.
+4. **What I already did well** — 2-3 things to keep doing, so I do not accidentally remove my own strengths while revising.
+5. **My personal error list** — the recurring mistakes visible in this essay, written as a short checklist I can re-read before my NEXT essay (e.g. "check third-person -s", "state opinion in the introduction").
+6. **Next practice question** — one Task 2 question of a similar type so I can immediately apply what I just learned.
+
+My essay:
+"""
+{{Paste your essay here}}
+"""
+
+The examiner feedback I received:
+"""
+{{Paste the feedback from step 4 here}}
+"""`,
+    exampleInput:
+      "Essay: (the community service essay from step 4)\n\nFeedback: Task Response 6.0 — position clear but ideas under-developed. Coherence 6.0 — mechanical linkers. Lexical 5.5 — repetitive vocabulary, word-form errors. Grammar 5.5 — agreement errors, mostly simple sentences. Overall 5.5.",
+    exampleOutput:
+      "**Priority ranking:**\n1. *Develop your examples fully* (+0.5 Task Response) — the largest single gain available. Your hospital example stops at \"he will understand how doctors work hard\"; it never says what that changes.\n2. *Fix subject-verb agreement* (+0.5 Grammatical Range & Accuracy) — you have 4 instances of the same error type. Fixing one pattern lifts a whole criterion.\n3. *Replace repeated basic words* (+0.5 Lexical Resource) — \"good\" and \"help\" appear repeatedly.\n4. *Vary your linkers* (+0.0-0.5 Coherence) — worth doing, but your paragraphing is already logical, so the gain here is smaller than it looks.\n5. *Punctuation touch-ups* — cosmetic. Do this last, or skip it under time pressure.\n\n**The one change that matters most:**\nExtend every example by one sentence answering \"and what does that lead to?\" Right now your ideas are announced but not developed, which is precisely what separates band 6 from band 7 on Task Response. Concretely: after \"he will understand how doctors and nurses work hard\", add what results from that understanding — a greater sense of responsibility, a possible career interest, respect for public service. One sentence per example, three examples, and you have moved a whole band on the criterion that carries the most weight.\n\n**Guided rewrite — paragraph 2:**\n*Original:* \"Firstly, when students do community service they learn how to work with other people. For example if a student help in a hospital, he will understand how doctors and nurses work hard every day. This experience can make student more responsible and hardworking in future life.\"\n\n*Rewritten (band 7):* \"Firstly, community service develops interpersonal skills that classroom learning rarely provides. A student volunteering in a hospital, for example, works alongside staff under real pressure and sees at first hand the dedication the profession demands. That exposure often translates into a stronger sense of responsibility, and for some students it shapes the career they eventually choose.\"\n\n*What changed:*\n- \"if a student help\" → \"A student volunteering\" (removes the agreement error entirely by restructuring).\n- Added a consequence — \"translates into a stronger sense of responsibility... shapes the career they choose\" — which is the development the examiner said was missing.\n- \"learn how to work with other people\" → \"develops interpersonal skills\" (precise, academic register).\n\n**Guided rewrite — paragraph 4:**\n*Original:* \"However, some people say students already have very busy schedule with exams and homework, so adding community service is not good idea. But I think school can organize it during holidays or weekends so it will not effect study.\"\n\n*Rewritten (band 7):* \"Critics reasonably point out that students already face demanding schedules of examinations and coursework, and that additional obligations could harm their academic performance. This concern can be addressed through scheduling, however: if service is arranged during holidays or at weekends, it need not compete with study time at all.\"\n\n*What changed:*\n- \"it will not effect study\" → \"it need not compete with study time\" (fixes affect/effect and upgrades the phrasing).\n- \"some people say\" → \"Critics reasonably point out\" (concedes the counter-argument fairly, which strengthens Task Response).\n- Two simple sentences merged into complex sentences with subordination, addressing the \"mostly simple sentences\" comment.\n\n**What you already did well:**\n- Your essay structure is sound — introduction, two supporting paragraphs, a counter-argument, and a conclusion. Do not change this.\n- You took a clear position and never contradicted it. Many candidates lose marks here; you did not.\n- You included a counter-argument at all, which most band 5.5 essays omit.\n\n**Your personal error list (re-read before the next essay):**\n1. Third-person -s: \"it have\" → \"it has\", \"student help\" → \"student helps\".\n2. affect (verb) vs. effect (noun).\n3. Articles before singular countable nouns: \"make student more responsible\" → \"make a student\".\n4. Every example needs a consequence sentence — \"and what does that lead to?\"\n5. Never use \"good\" or \"bad\" in an academic essay; choose a precise word.\n\n**Next practice question:**\n\"Some people believe that schools should teach practical life skills such as budgeting and cooking alongside academic subjects. To what extent do you agree or disagree?\"\n(Same essay type — take a position and develop each reason with a consequence, exactly as practised above.)",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
+    tags: ["Writing Task 2", "Qayta yozish", "Xatolar tahlili", "Zanjir"],
+    upvotes: 427,
+    copyCount: 1830,
+    author: "Aziz Rahimov",
+    createdAt: "2026-04-23T09:00:00.000Z",
+    chainId: "ielts-writing-task2",
+    stepOrder: 5,
+    comments: [
+      {
+        id: "c-chain-5-1",
+        author: "Bekzod",
+        content:
+          "Shaxsiy xatolar ro'yxati eng foydali qismi — har safar yozishdan oldin ko'rib chiqaman.",
+        createdAt: "2026-05-11T17:30:00.000Z",
+      },
+      {
+        id: "c-chain-5-2",
+        author: "Sevara",
+        content: "Zanjirni boshidan oxirigacha bajarib, 6.0 dan 7.0 ga chiqdim.",
+        createdAt: "2026-05-25T11:45:00.000Z",
       },
     ],
   },

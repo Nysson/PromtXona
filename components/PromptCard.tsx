@@ -5,11 +5,13 @@ import {
   Bookmark,
   Bot,
   Copy,
+  ListOrdered,
   MessageCircle,
   Sparkles,
   ThumbsUp,
 } from "lucide-react";
 import Link from "next/link";
+import { getChainContext } from "@/data/chains";
 import { chatGptUrl, claudeUrl } from "@/lib/constants";
 import type { Prompt } from "@/lib/types";
 import { cn, formatCompactNumber } from "@/lib/utils";
@@ -35,6 +37,7 @@ export function PromptCard({ prompt }: { prompt: Prompt }) {
   const { showToast } = useToast();
   const upvoted = isUpvoted(prompt.id);
   const saved = isSaved(prompt.id);
+  const chain = getChainContext(prompt);
 
   async function handleCopy() {
     try {
@@ -103,7 +106,13 @@ export function PromptCard({ prompt }: { prompt: Prompt }) {
       </p>
 
       <div className="pointer-events-none relative mt-4 flex flex-wrap gap-1.5">
-        {prompt.tags.slice(0, 3).map((tag) => (
+        {chain && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-accent-indigo/10 px-2.5 py-1 text-[11px] font-semibold text-accent-indigo">
+            <ListOrdered className="h-3 w-3" />
+            {chain.stepNumber}/{chain.totalSteps}-qadam
+          </span>
+        )}
+        {prompt.tags.slice(0, chain ? 2 : 3).map((tag) => (
           <span
             key={tag}
             className="rounded-full bg-neutral-900/[0.04] px-2.5 py-1 text-[11px] font-medium text-neutral-500 dark:bg-white/[0.06] dark:text-neutral-400"

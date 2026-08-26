@@ -13,7 +13,7 @@ bir zumda ishlating.
 ## ✨ Features
 
 - **4 kategoriya:** DTM (Matematika, Ona tili, Tarix), IELTS (Writing,
-  Speaking), SAT (Math, Reading), Ona tili va Adabiyot — 18 ta to'liq
+  Speaking), SAT (Math, Reading), Ona tili va Adabiyot — 22 ta to'liq
   yozilgan, production-sifatli prompt.
 - **Multi-page Next.js App Router** — Bosh sahifa, Promptlar katalogi va har bir
   prompt uchun alohida detal sahifa (`/prompts/[id]`).
@@ -34,6 +34,11 @@ bir zumda ishlating.
   to'ldirilganlik ko'rsatkichi bilan; yuborish uchun ikki yo'l: oldindan
   to'ldirilgan GitHub issue yoki matnni nusxalash.
 - **O'xshash promptlar** — detal sahifada kategoriya va teglar bo'yicha tavsiya.
+- **Prompt zanjirlari** — promptlarni ketma-ket bosqichlarga bog'lash
+  (`chainId` + `stepOrder`). Detal sahifada "N-qadam / M" ko'rsatkichi,
+  bosqichlar ro'yxati va "Keyingi qadam" tugmasi chiqadi. Tayyor zanjir:
+  IELTS Writing Task 2 — savol tahlili → reja → qoralama → baholash →
+  qayta yozish.
 - **LocalStorage orqali mock backend** — upvote, nusxalash soni, saqlanganlar va
   izohlar brauzer xotirasida saqlanadi, sahifani yangilaganda ham yo'qolmaydi.
 
@@ -72,7 +77,8 @@ promptxona/
 │   ├── ToastProvider.tsx          # Toast bildirishnomalar
 │   └── PromptsProvider.tsx        # Prompt holati (upvote/copy/comment) + localStorage
 ├── data/
-│   └── prompts.ts                 # 18 ta to'liq seed prompt (DTM/IELTS/SAT/Ona tili)
+│   ├── prompts.ts                 # 22 ta to'liq seed prompt (DTM/IELTS/SAT/Ona tili)
+│   └── chains.ts                  # Prompt zanjirlari + navigatsiya yordamchilari
 ├── lib/
 │   ├── types.ts                   # TypeScript interfeyslar
 │   ├── constants.ts               # Sayt konfiguratsiyasi, filtr guruhlari
