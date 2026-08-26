@@ -1,11 +1,15 @@
 import { ArrowRight, PenLine, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { SITE } from "@/lib/constants";
+import { PROMPTS } from "@/data/prompts";
+import { CATEGORY_META, SITE } from "@/lib/constants";
 import { AmbientBackground } from "./AmbientBackground";
 import { Logo } from "./Logo";
 import { SubmitLink } from "./SubmitLink";
 
 export function Hero() {
+  const promptCount = PROMPTS.length;
+  const categoryCount = Object.keys(CATEGORY_META).length;
+
   return (
     <section className="relative overflow-hidden pb-20 pt-20 sm:pb-28 sm:pt-28">
       <AmbientBackground />
@@ -22,12 +26,12 @@ export function Hero() {
         </h1>
 
         <p className="mt-5 max-w-2xl text-balance text-lg leading-relaxed text-neutral-500 sm:text-xl dark:text-neutral-400">
-          IELTS, SAT tayyorgarligi va Ona tili/Adabiyot inshosi uchun
+          DTM, IELTS, SAT tayyorgarligi va Ona tili/Adabiyot inshosi uchun
           o&apos;quvchilar jamiyati yaratgan AI promptlari kutubxonasi.
         </p>
         <p className="mt-2 max-w-2xl text-balance text-sm leading-relaxed text-neutral-400 dark:text-neutral-500">
           A free, open-source prompt library built for Uzbek students —
-          test-ready prompts for IELTS, SAT, and native-language essays.
+          test-ready prompts for DTM, IELTS, SAT, and native-language essays.
         </p>
 
         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -47,7 +51,7 @@ export function Hero() {
         <div className="mt-14 grid w-full max-w-2xl grid-cols-3 gap-4 text-center">
           <div>
             <p className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
-              13+
+              {promptCount}
             </p>
             <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
               Sinovdan o&apos;tgan prompt
@@ -55,10 +59,10 @@ export function Hero() {
           </div>
           <div>
             <p className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
-              3
+              {categoryCount}
             </p>
             <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-              Yo&apos;nalish: IELTS, SAT, Ona tili
+              Yo&apos;nalish: DTM, IELTS, SAT, Ona tili
             </p>
           </div>
           <div>

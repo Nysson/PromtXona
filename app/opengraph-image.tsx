@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { PROMPTS } from "@/data/prompts";
 import { SITE } from "@/lib/constants";
 
 export const alt = `${SITE.name} — Ochiq kodli Prompt Kutubxonasi`;
@@ -14,6 +15,7 @@ export const contentType = "image/png";
 export default async function OpengraphImage() {
   const svg = readFileSync(join(process.cwd(), "app", "icon.svg"), "utf8");
   const logo = `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+  const count = PROMPTS.length;
 
   return new ImageResponse(
     (
@@ -55,7 +57,7 @@ export default async function OpengraphImage() {
             maxWidth: 900,
           }}
         >
-          IELTS, SAT va Ona tili uchun ochiq kodli prompt kutubxonasi
+          DTM, IELTS, SAT va Ona tili uchun ochiq kodli prompt kutubxonasi
         </div>
 
         <div
@@ -66,7 +68,7 @@ export default async function OpengraphImage() {
             marginTop: 30,
           }}
         >
-          13 ta sinovdan o&apos;tgan prompt · ChatGPT · Claude · Gemini
+          {count} ta sinovdan o&apos;tgan prompt · ChatGPT · Claude · Gemini
         </div>
       </div>
     ),

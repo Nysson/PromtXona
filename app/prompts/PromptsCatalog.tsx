@@ -56,7 +56,7 @@ export function PromptsCatalog() {
             Promptlar katalogi
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-balance text-neutral-500 dark:text-neutral-400">
-            IELTS, SAT va Ona tili/Adabiyot uchun barcha promptlarni qidiring,
+            DTM, IELTS, SAT va Ona tili/Adabiyot uchun barcha promptlarni qidiring,
             filtrlang va bir zumda nusxa oling.
           </p>
         </div>

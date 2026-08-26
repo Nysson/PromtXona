@@ -1,19 +1,20 @@
 # PromptXona 📚
 
 **PromptXona** — O'zbekistonlik o'quvchilar uchun yaratilgan, ochiq kodli AI prompt
-kutubxonasi. IELTS, SAT tayyorgarligi va Ona tili/Adabiyot inshosi uchun
+kutubxonasi. DTM, IELTS, SAT tayyorgarligi va Ona tili/Adabiyot inshosi uchun
 sinovdan o'tgan, tayyor promptlarni toping, nusxalang va ChatGPT/Claude/Gemini'da
 bir zumda ishlating.
 
 > An open-source, Apple-inspired prompt library built for Uzbek students preparing
-> for IELTS, SAT, and native-language (Ona tili va Adabiyot) essays.
+> for DTM (national exam), IELTS, SAT, and native-language essays.
 
 ---
 
 ## ✨ Features
 
-- **3 kategoriya:** IELTS (Writing, Speaking), SAT (Math, Reading), Ona tili va
-  Adabiyot — 13 ta to'liq yozilgan, production-sifatli prompt.
+- **4 kategoriya:** DTM (Matematika, Ona tili, Tarix), IELTS (Writing,
+  Speaking), SAT (Math, Reading), Ona tili va Adabiyot — 18 ta to'liq
+  yozilgan, production-sifatli prompt.
 - **Multi-page Next.js App Router** — Bosh sahifa, Promptlar katalogi va har bir
   prompt uchun alohida detal sahifa (`/prompts/[id]`).
 - **Apple-uslubidagi UI** — glassmorphism kartalar, ambient gradient orqa fon,
@@ -71,7 +72,7 @@ promptxona/
 │   ├── ToastProvider.tsx          # Toast bildirishnomalar
 │   └── PromptsProvider.tsx        # Prompt holati (upvote/copy/comment) + localStorage
 ├── data/
-│   └── prompts.ts                 # 13 ta to'liq seed prompt (IELTS/SAT/Ona tili)
+│   └── prompts.ts                 # 18 ta to'liq seed prompt (DTM/IELTS/SAT/Ona tili)
 ├── lib/
 │   ├── types.ts                   # TypeScript interfeyslar
 │   ├── constants.ts               # Sayt konfiguratsiyasi, filtr guruhlari

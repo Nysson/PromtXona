@@ -21,6 +21,7 @@ const CATEGORY_BADGE_STYLES: Record<string, string> = {
   SAT: "bg-accent-teal/10 text-accent-teal dark:bg-accent-teal/15",
   "Ona tili va Adabiyot":
     "bg-accent-pink/10 text-accent-pink dark:bg-accent-pink/15",
+  DTM: "bg-accent-green/10 text-accent-green dark:bg-accent-green/15",
 };
 
 /**

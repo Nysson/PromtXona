@@ -5,7 +5,7 @@ import { PromptsCatalog } from "./PromptsCatalog";
 export const metadata: Metadata = {
   title: "Promptlar katalogi",
   description:
-    "IELTS, SAT va Ona tili/Adabiyot uchun barcha AI promptlarini qidiring va filtrlang.",
+    "DTM, IELTS, SAT va Ona tili/Adabiyot uchun barcha AI promptlarini qidiring va filtrlang.",
 };
 
 export default function PromptsPage() {

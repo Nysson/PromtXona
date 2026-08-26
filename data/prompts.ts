@@ -608,6 +608,256 @@ Erkin mavzu:
       },
     ],
   },
+  // ─────────────────────────────────────────────────────────────────────
+  // DTM — Davlat Test Markazi (5)
+  // ─────────────────────────────────────────────────────────────────────
+  {
+    id: "dtm-matematika-masala-yechimi",
+    title: "DTM Matematika — Masala Yechimi va Tezkor Usullar",
+    category: "DTM",
+    filterGroup: "DTM — Matematika",
+    subcategory: "Matematika",
+    description:
+      "DTM test savolini bosqichma-bosqich yechadi, qaysi mavzu tekshirilayotganini aytadi va imtihonda vaqt tejaydigan tezkor usulni ko'rsatadi.",
+    role: "Siz DTM (Davlat Test Markazi) matematika blokiga o'nlab yillar davomida abituriyentlarni tayyorlab kelgan tajribali repetitorsiz.",
+    task: "Berilgan DTM matematika test savolini to'liq bosqichma-bosqich yeching, tekshirilayotgan mavzuni nomlang, testda vaqt tejaydigan tezkor usulni ko'rsating va eng ko'p tanlanadigan noto'g'ri variantning sababini tushuntiring.",
+    context:
+      "DTM matematika blokida vaqt juda cheklangan — har bir savolga o'rtacha bir necha daqiqa to'g'ri keladi. Abituriyentlar ko'pincha masalani to'liq, uzun usulda yechishga urinadi va vaqtdan yutqazadi. Bu prompt har bir masalani ikki xil — «to'liq tushunish uchun» va «testda tez yechish uchun» — usulda ko'rsatadi, hamda distraktorlarni (chalg'ituvchi variantlarni) tahlil qiladi, shunda o'quvchi keyingi safar tuzoqni tanib oladi.",
+    template: `Siz DTM matematika blokiga tayyorlaydigan tajribali repetitorsiz. Men sizga bitta test savolini beraman.
+
+Javobingizni aynan shu tuzilmada bering:
+1. **Tekshirilayotgan mavzu** — qaysi bo'lim va qoida sinalmoqda (masalan: «kvadrat tenglama», «progressiya», «foizlar»).
+2. **To'liq yechim** — barcha bosqichlarni tushuntirib, hech bir qadamni tashlab ketmasdan yozing.
+3. **Testda tezkor usul** — imtihon vaqtida shu savolni tezroq yechish yo'li (variantlarni o'rniga qo'yish, baholash, xossalardan foydalanish va h.k.), agar mavjud bo'lsa.
+4. **Tuzoq variant** — abituriyentlar eng ko'p tanlaydigan noto'g'ri javob qaysi va nega u chalg'ituvchi.
+5. **Shu turdagi yana bitta masala** — men mustaqil yechib ko'rishim uchun (faqat yakuniy javobini yozing, yechimini emas).
+
+Test savoli:
+"""
+{{Savol va variantlarni shu yerga joylashtiring}}
+"""`,
+    exampleInput:
+      "Agar 3x - 7 = 2x + 5 bo'lsa, x ning qiymatini toping.\nA) 2   B) 5   C) 12   D) 17",
+    exampleOutput:
+      "**Tekshirilayotgan mavzu:** Bir noma'lumli chiziqli tenglama — noma'lumni bir tomonga, ozod hadlarni ikkinchi tomonga o'tkazish.\n\n**To'liq yechim:**\n3x - 7 = 2x + 5\n→ 3x - 2x = 5 + 7 (2x ni chapga, -7 ni o'ngga o'tkazamiz, ishoralari almashadi)\n→ x = 12\n\n**Testda tezkor usul:** Variantlarni to'g'ridan-to'g'ri o'rniga qo'yish. C) 12 ni sinaymiz: chap tomon 3·12 - 7 = 29, o'ng tomon 2·12 + 5 = 29. Tenglik bajarildi — javob topildi. Bunday sodda tenglamalarda o'rniga qo'yish ba'zan algebraik yechimdan tezroq, ayniqsa variantlar butun sonlar bo'lsa.\n\n**Tuzoq variant:** Ko'pchilik B) 5 ni tanlaydi — chunki hadlarni o'tkazishda ishorani almashtirishni unutib, «3x - 2x = 5 - 7» deb hisoblaydi va x = -2 chiqadi, keyin ishorani e'tiborsiz qoldirib 5 ga yaqin variantni belgilaydi. Ikkinchi keng tarqalgan xato — 7 ni o'ngga o'tkazganda qo'shish o'rniga ayirish.\n\n**Mustaqil yechish uchun masala:**\n«Agar 5y + 3 = 3y + 19 bo'lsa, y ni toping.» (Javob: y = 8)",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
+    tags: ["DTM", "Matematika", "Test yechish", "Tezkor usullar"],
+    upvotes: 634,
+    copyCount: 2870,
+    author: "Bekzod Tursunov",
+    createdAt: "2026-03-12T09:00:00.000Z",
+    comments: [
+      {
+        id: "c-dtm-mat-1",
+        author: "Sanjar",
+        content:
+          "Tuzoq variant qismi zo'r — men aynan shu xatoni takrorlab yurgan ekanman.",
+        createdAt: "2026-03-20T11:30:00.000Z",
+      },
+      {
+        id: "c-dtm-mat-2",
+        author: "Ma'rufjon",
+        content: "O'rniga qo'yish usuli bilan blokni 15 daqiqa tez tugatdim.",
+        createdAt: "2026-04-02T08:15:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "dtm-ona-tili-test-tahlili",
+    title: "DTM Ona tili va Adabiyot — Test Savoli Tahlili",
+    category: "DTM",
+    filterGroup: "DTM — Ona tili",
+    subcategory: "Ona tili",
+    description:
+      "Ona tili test savolining ortidagi grammatik qoidani ochib beradi, har bir variantni alohida tahlil qiladi va shu qoidaga oid qo'shimcha mashq beradi.",
+    role: "Siz DTM ona tili va adabiyot blokiga abituriyentlar tayyorlaydigan, o'zbek tili grammatikasini chuqur biladigan filolog o'qituvchisiz.",
+    task: "Berilgan ona tili test savolidagi qoidani aniq nomlang, to'rtala variantni birma-bir tahlil qiling, to'g'ri javobni qoida asosida asoslang va shu qoidani mustahkamlash uchun 2 ta yangi mashq bering.",
+    context:
+      "Ona tili bloki ko'p hollarda yodlash emas, balki qoidani tanish va uni misolga to'g'ri qo'llash malakasini sinaydi. Abituriyentlar «quloqqa yoqimli» variantni tanlab xato qiladi, chunki qoidani aniq bilmaydi. Bu prompt har bir savolni qoidaga bog'laydi va nafaqat to'g'ri, balki noto'g'ri variantlar nima uchun noto'g'ri ekanini ham tushuntiradi — shu orqali o'quvchi bir savoldan butun bir mavzuni o'rganadi.",
+    template: `Siz DTM ona tili va adabiyot blokiga tayyorlaydigan filolog o'qituvchisiz. Men sizga bitta test savolini beraman.
+
+Javobingizni shu tuzilmada bering:
+1. **Qoida** — bu savolda qaysi grammatik yoki adabiy qoida tekshirilmoqda (aniq nomlang: «qo'shma gap turlari», «shaxs-son qo'shimchasi», «ko'chma ma'no» va h.k.).
+2. **Qoidaning qisqa izohi** — 2-3 gapda, misol bilan.
+3. **Variantlar tahlili** — A, B, C, D variantlarining har biri uchun alohida: to'g'ri yoki noto'g'ri va nima uchun.
+4. **To'g'ri javob** va uni qoidaga bog'lab asoslang.
+5. **2 ta mustaqil mashq** — shu qoidaga oid yangi savollar (javoblarini yozmang, o'zim sinab ko'raman).
+
+Test savoli:
+"""
+{{Savol va variantlarni shu yerga joylashtiring}}
+"""`,
+    exampleInput:
+      "Qaysi qatordagi so'z tarkibida yasovchi qo'shimcha bor?\nA) kitoblar   B) ishchi   C) uyga   D) keldim",
+    exampleOutput:
+      "**Qoida:** So'z yasovchi va shakl yasovchi (lug'aviy shakl hosil qiluvchi) qo'shimchalarni farqlash.\n\n**Qoidaning qisqa izohi:** Yasovchi qo'shimcha so'zdan butunlay yangi ma'noli so'z hosil qiladi va uni lug'atga yangi so'z sifatida kiritish mumkin (ish → ishchi). Shakl yasovchi qo'shimcha esa so'zning ma'nosini o'zgartirmaydi, faqat uning grammatik shaklini (son, kelishik, shaxs) ko'rsatadi (kitob → kitoblar).\n\n**Variantlar tahlili:**\n- A) «kitoblar» — noto'g'ri. «-lar» ko'plik qo'shimchasi, u shakl yasovchi: «kitob» va «kitoblar» bir xil narsani, faqat sonini o'zgartirib bildiradi.\n- B) «ishchi» — **to'g'ri.** «-chi» yasovchi qo'shimcha: «ish» (harakat) so'zidan «ishchi» (shaxs, kasb egasi) degan butunlay yangi ma'noli so'z hosil bo'lgan.\n- C) «uyga» — noto'g'ri. «-ga» jo'nalish kelishigi qo'shimchasi, ya'ni shakl yasovchi; so'zning lug'aviy ma'nosi o'zgarmagan.\n- D) «keldim» — noto'g'ri. «-dim» o'tgan zamon va I shaxs birlik qo'shimchasi, bu ham shakl yasovchi.\n\n**To'g'ri javob: B) ishchi** — chunki faqat shu variantda qo'shimcha so'zning lug'aviy ma'nosini o'zgartirib, yangi so'z yasagan.\n\n**Mustaqil mashqlar:**\n1. Qaysi qatordagi barcha so'zlarda yasovchi qo'shimcha bor? A) suvchi, temirchi, bog'bon  B) uylar, bordim, kitobni  C) maktabda, o'quvchi, yozdi  D) gulzor, kelgan, daftarlar\n2. «Paxtakor» so'zidagi «-kor» qo'shimchasi qanday vazifa bajaradi? A) shakl yasovchi  B) so'z yasovchi  C) kelishik qo'shimchasi  D) egalik qo'shimchasi",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
+    tags: ["DTM", "Ona tili", "Grammatika", "Test tahlili"],
+    upvotes: 498,
+    copyCount: 2140,
+    author: "Gulnora Abdullayeva",
+    createdAt: "2026-03-15T07:20:00.000Z",
+    comments: [
+      {
+        id: "c-dtm-ot-1",
+        author: "Nilufar",
+        content:
+          "Har bir variantni alohida tushuntirgani uchun qoida esimda qoladigan bo'ldi.",
+        createdAt: "2026-03-28T14:05:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "dtm-tarix-sana-mustahkamlash",
+    title: "DTM O'zbekiston Tarixi — Sana va Voqealarni Mustahkamlash",
+    category: "DTM",
+    filterGroup: "DTM — Tarix",
+    subcategory: "Tarix",
+    description:
+      "Tarixiy davr yoki mavzu bo'yicha sanalarni xronologik jadvalga soladi, sabab-oqibat bog'lanishini ko'rsatadi va yodlash uchun assotsiatsiyalar beradi.",
+    role: "Siz O'zbekiston tarixi fanidan DTM blokiga abituriyentlar tayyorlaydigan, mavzuni sanalar quruq ro'yxati sifatida emas, bog'liq voqealar zanjiri sifatida o'rgatadigan tarix o'qituvchisisiz.",
+    task: "Berilgan tarixiy davr yoki mavzu bo'yicha asosiy sanalarni xronologik jadval shaklida bering, har bir voqeaning sababi va oqibatini ko'rsating, oson chalkashtiriladigan sanalarni ajratib tushuntiring va yodlash uchun assotsiatsiyalar taklif qiling.",
+    context:
+      "Tarix blokida eng ko'p xato sanalarni chalkashtirishdan kelib chiqadi — ayniqsa bir-biriga yaqin yillardagi voqealar. Quruq yodlash tez unutiladi. Bu prompt sanalarni sabab-oqibat zanjiriga bog'laydi (nima uchun aynan shu voqea shu yili sodir bo'ldi), chalkashtiriladigan juftliklarni yonma-yon qo'yib farqini ko'rsatadi va har biri uchun eslab qolish usulini beradi — bu esa mexanik yodlashdan ancha mustahkamroq natija beradi.",
+    template: `Siz DTM O'zbekiston tarixi blokiga tayyorlaydigan tarix o'qituvchisisiz. Men sizga davr yoki mavzu nomini beraman.
+
+Javobingizni shu tuzilmada bering:
+1. **Xronologik jadval** — davrning eng muhim sanalari va voqealari, vaqt tartibida (jadval yoki ro'yxat shaklida).
+2. **Sabab-oqibat zanjiri** — asosiy 3-4 voqea uchun: nima sabab bo'ldi va nimaga olib keldi. Sanalarni bir-biriga bog'lang.
+3. **Chalkashtiriladigan sanalar** — bir-biriga yaqin yoki o'xshash voqealarni juft-juft qilib solishtiring va farqini aniq ko'rsating.
+4. **Yodlash usullari** — eng qiyin 3 ta sana uchun assotsiatsiya yoki mantiqiy bog'lanish taklif qiling.
+5. **5 ta test savoli** — shu mavzu bo'yicha, DTM uslubida, 4 tadan variant bilan. Javoblarni oxirida alohida ro'yxat qilib bering.
+
+Mavzu yoki davr:
+"""
+{{Mavzu yoki davrni shu yerga yozing}}
+"""`,
+    exampleInput: "Amir Temur davlatining tashkil topishi va yuksalishi",
+    exampleOutput:
+      "**Xronologik jadval:**\n- 1336 — Amir Temurning Kesh (Shahrisabz) yaqinidagi Xoja Ilg'or qishlog'ida tug'ilishi\n- 1360-yillar boshi — Movarounnahrdagi siyosiy tarqoqlik, Temurning siyosat maydoniga chiqishi\n- 1370 — Balxda qurultoy, Amir Temurning oliy hokimiyatni qo'lga olishi va davlatga asos solinishi\n- 1370-1380-yillar — Movarounnahrni birlashtirish va chegaralarni mustahkamlash\n- 1380-1390-yillar — Oltin O'rdaga qarshi yurishlar, To'xtamishxon bilan kurash\n- 1402 — Anqara jangi, Boyazid I ustidan g'alaba\n- 1405 — Amir Temurning Xitoy yurishi arafasida O'trorda vafot etishi\n\n**Sabab-oqibat zanjiri:**\n- *Movarounnahrdagi tarqoqlik → 1370-yil hokimiyat.* XIV asr o'rtalarida o'lka mayda beklarga bo'linib, o'zaro urushlar davom etardi. Aynan shu tartibsizlik markazlashgan kuchli hokimiyatga ehtiyoj tug'dirdi va 1370-yilda Balx qurultoyi bilan yakunlandi.\n- *Markazlashgan davlat → tashqi yurishlar.* Ichkarida barqarorlik o'rnatilgach, davlat resurslari tashqi siyosatga yo'naltirildi — savdo yo'llari ustidan nazorat o'rnatish asosiy maqsadga aylandi.\n- *To'xtamish bilan ziddiyat → Oltin O'rdaga zarba.* Bir vaqtlar Temur qo'llab-quvvatlagan To'xtamishxon keyinchalik unga qarshi chiqdi; bu yurishlar Oltin O'rdaning zaiflashuviga va Buyuk Ipak yo'li savdosining janubga siljishiga olib keldi.\n\n**Chalkashtiriladigan sanalar:**\n- **1370 va 1405** — birinchisi davlatning *boshlanishi* (hokimiyatga kelish), ikkinchisi Temur hayotining *tugashi*. Ikkalasi ham «davlat tarixi burilishi» bo'lgani uchun chalkashtiriladi.\n- **1391 va 1395** — ikkalasi ham To'xtamishga qarshi yurishlar. Farqi: 1395-yilgi yurish hal qiluvchi bo'lib, Oltin O'rda poytaxtiga qattiq zarba berdi.\n- **1336 va 1370** — tug'ilgan yil va hokimiyatga kelgan yil. Orasi 34 yil.\n\n**Yodlash usullari:**\n- *1370* — «uch-yetti-nol»: uchta raqamni ketma-ket ayting, davlat «noldan» boshlangani bilan bog'lang.\n- *1402 Anqara* — «14-02» ni sana formatida (14-fevral) tasavvur qiling, shu kuni Boyazid mag'lub bo'lgan deb eslang.\n- *1405* — Temur 1336-da tug'ilgan, 1405-da vafot etgan: 1405 - 1336 = 69 yosh. Yoshni eslasangiz, sanani chiqarib olasiz.\n\n**Test savollari:**\n1. Amir Temur qaysi yilda oliy hokimiyatni qo'lga olgan? A) 1360  B) 1370  C) 1380  D) 1391\n2. Anqara jangi qaysi yilda bo'lib o'tgan? A) 1395  B) 1398  C) 1402  D) 1405\n3. Amir Temur qaysi shaharda vafot etgan? A) Samarqand  B) O'tror  C) Kesh  D) Balx\n4. 1370-yilgi qurultoy qaysi shaharda o'tkazilgan? A) Samarqand  B) Kesh  C) Balx  D) Buxoro\n5. Amir Temur necha yoshida vafot etgan? A) 62  B) 65  C) 69  D) 72\n\n**Javoblar:** 1-B, 2-C, 3-B, 4-C, 5-C",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
+    tags: ["DTM", "Tarix", "Sanalar", "Yodlash"],
+    upvotes: 421,
+    copyCount: 1760,
+    author: "Aziz Rahimov",
+    createdAt: "2026-03-18T13:10:00.000Z",
+    comments: [
+      {
+        id: "c-dtm-tar-1",
+        author: "Shohruh",
+        content:
+          "Chalkashtiriladigan sanalar bo'limi juda kerak edi, 1391 va 1395 ni doim adashtirardim.",
+        createdAt: "2026-04-05T16:40:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "dtm-tezkor-takrorlash-rejasi",
+    title: "DTM — Shaxsiy Tezkor Takrorlash Rejasi",
+    category: "DTM",
+    filterGroup: "DTM — Umumiy",
+    subcategory: "Takrorlash rejasi",
+    description:
+      "Imtihongacha qolgan kunlar va zaif mavzularingizga qarab kunlik takrorlash jadvalini tuzadi, takrorlash oralig'ini hisobga oladi.",
+    role: "Siz DTM imtihoniga tayyorgarlik ko'rayotgan abituriyentlar uchun o'quv reja tuzuvchi tajribali mentorsiz va oraliqli takrorlash (spaced repetition) tamoyilini bilasiz.",
+    task: "Imtihongacha qolgan kunlar soni, bloklar va o'quvchining zaif mavzulariga qarab kunlik takrorlash jadvalini tuzing; har bir mavzuni kamida ikki marta — birinchi o'rganish va keyin oraliqli takrorlash sifatida — rejaga kiriting.",
+    context:
+      "Abituriyentlar odatda rejasiz tayyorlanadi: bir kunda ko'p mavzuni «bosib» o'tadi, keyin uni butunlay unutadi va imtihon oldidan hammasini boshidan boshlashga urinadi. Bu prompt qolgan vaqtni real taqsimlaydi, zaif mavzularga ko'proq soat ajratadi va eng muhimi — har bir mavzuni oraliqli takrorlash tamoyili bo'yicha bir necha kundan keyin qayta rejaga qo'yadi, chunki bilim aynan takroriy uchrashuvlarda mustahkamlanadi.",
+    template: `Siz DTM imtihoniga tayyorlaydigan o'quv mentorsiz. Men sizga vaziyatimni aytaman, siz menga real bajarish mumkin bo'lgan takrorlash jadvalini tuzing.
+
+Mening ma'lumotlarim:
+- Imtihongacha qolgan kunlar: {{masalan, 30}}
+- Bloklarim: {{masalan, Matematika (asosiy), Fizika, Ona tili, Tarix}}
+- Kuniga ajrata oladigan vaqtim: {{masalan, 4 soat}}
+- O'zimni zaif his qiladigan mavzular: {{masalan, progressiyalar, kinematika, qo'shma gaplar}}
+- Kuchli mavzularim: {{masalan, foizlar, sintaksis}}
+
+Menga quyidagilarni bering:
+1. **Umumiy strategiya** — qolgan vaqtni bloklar va mavzular orasida qanday taqsimlash kerak, zaif mavzularga necha foiz vaqt ajratish lozim.
+2. **Haftalik tuzilma** — bir hafta qanday ko'rinishda bo'ladi (yangi mavzu / takrorlash / test yechish / dam olish kunlari).
+3. **Kunlik jadval** — kamida birinchi 7 kun uchun aniq: qaysi kuni qaysi mavzu, necha daqiqa, nima qilinadi.
+4. **Oraliqli takrorlash rejasi** — har bir zaif mavzu qaysi kunlarda qayta takrorlanishi kerakligini ko'rsating (masalan: 1-kun o'rganish → 3-kun takror → 8-kun takror).
+5. **Oxirgi 3 kun rejasi** — imtihon oldidan nima qilish va nima QILMASLIK kerak.
+
+Jadval real bo'lsin — kuniga 10 soat deb yozmang, men aytgan vaqtga sig'diring.`,
+    exampleInput:
+      "Imtihongacha 30 kun. Bloklarim: Matematika (asosiy fan), Fizika, Ona tili, Tarix. Kuniga 4 soat vaqtim bor. Zaif mavzularim: progressiyalar, kinematika, qo'shma gaplar. Kuchli mavzularim: foizlar, sintaksis asoslari.",
+    exampleOutput:
+      "**Umumiy strategiya:**\n30 kun × 4 soat = 120 soat. Taqsimot: asosiy fan Matematikaga ~40% (48 soat), Fizikaga ~25% (30 soat), Ona tiliga ~20% (24 soat), Tarixga ~15% (18 soat). Zaif mavzularga umumiy vaqtning taxminan 60 foizini ajrating — kuchli mavzularni noldan o'rganish emas, faqat test bilan tekshirib turish kifoya. Oxirgi 5 kun butunlay takrorlash va to'liq test yechishga ketadi, yangi mavzu olinmaydi.\n\n**Haftalik tuzilma:**\n- Dushanba-Payshanba: yangi/zaif mavzu (2 soat) + oldingi mavzu takrori (1 soat) + test (1 soat)\n- Juma: faqat takrorlash kuni — hafta davomida o'tilgan hamma mavzu bo'yicha test\n- Shanba: to'liq blok testi, imtihon vaqti bilan (real sharoitda, telefonsiz)\n- Yakshanba: xatolar tahlili (2 soat) + yengil takrorlash (1 soat) + dam\n\n**Kunlik jadval (1-7 kun):**\n- **1-kun:** Progressiyalar — nazariya va formulalar (2 soat) · Foizlar bo'yicha 20 ta test (1 soat) · Ona tili: qo'shma gap turlari nazariyasi (1 soat)\n- **2-kun:** Kinematika — asosiy formulalar va grafiklar (2 soat) · Progressiyalar bo'yicha 15 ta masala (1 soat) · Tarix: XIV asr, xronologik jadval tuzish (1 soat)\n- **3-kun:** **Progressiyalar takrori** (1 soat) · Qo'shma gaplar — mashqlar (1.5 soat) · Matematika aralash test (1.5 soat)\n- **4-kun:** Kinematika masalalari (2 soat) · Ona tili: qo'shma gap testlari (1 soat) · Tarix takrori (1 soat)\n- **5-kun (juma):** Hafta mavzulari bo'yicha umumiy test: matematika 30 savol, fizika 20, ona tili 20, tarix 15 (3 soat) · Natija tahlili (1 soat)\n- **6-kun (shanba):** To'liq blok testi, imtihon formatida va vaqtida (3 soat) · Tanaffusdan keyin faqat javoblarni belgilash (1 soat)\n- **7-kun (yakshanba):** Xato javoblar tahlili (2 soat) · **Kinematika takrori** (1 soat) · Dam\n\n**Oraliqli takrorlash rejasi:**\n- *Progressiyalar:* 1-kun o'rganish → 3-kun takror → 8-kun takror → 17-kun takror → 27-kun yakuniy\n- *Kinematika:* 2-kun o'rganish → 7-kun takror → 12-kun takror → 21-kun takror → 28-kun yakuniy\n- *Qo'shma gaplar:* 1-kun nazariya → 4-kun mashq → 10-kun takror → 19-kun takror → 27-kun yakuniy\nQoida: har takrorlashda avval o'zingizni tekshiring (yopiq daftar bilan eslashga urinib ko'ring), keyingina konspektga qarang.\n\n**Oxirgi 3 kun:**\n*Qilish kerak:* faqat o'z konspektingiz va xatolar daftarini ko'rib chiqish; kuniga 1 ta yengil test; kuniga kamida 8 soat uxlash; imtihon kuni kerakli hujjatlarni oldindan tayyorlab qo'yish.\n*Qilmaslik kerak:* yangi mavzu boshlash (bu faqat sarosimaga soladi); yangi qiyin masalalar to'plamini yechishga urinish; tunda uxlamay takrorlash; imtihondan bir kun oldin to'liq test yechib charchash.",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
+    tags: ["DTM", "Takrorlash rejasi", "Vaqt boshqaruvi", "Oraliqli takrorlash"],
+    upvotes: 712,
+    copyCount: 3240,
+    author: "Shahnoza Islomova",
+    createdAt: "2026-03-22T10:45:00.000Z",
+    comments: [
+      {
+        id: "c-dtm-rej-1",
+        author: "Islom",
+        content:
+          "Oraliqli takrorlash qismi ishladi — mavzular haqiqatan esimda qoladigan bo'ldi.",
+        createdAt: "2026-04-01T19:20:00.000Z",
+      },
+      {
+        id: "c-dtm-rej-2",
+        author: "Dilshoda",
+        content: "Nihoyat real reja, kuniga 10 soat deb yozmadi :)",
+        createdAt: "2026-04-14T12:00:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "dtm-xato-javoblar-tahlili",
+    title: "DTM — Xato Javoblar Tahlili va Zaif Nuqtalar Xaritasi",
+    category: "DTM",
+    filterGroup: "DTM — Umumiy",
+    subcategory: "Xatolar tahlili",
+    description:
+      "Sinov testidagi xatolaringizni turkumlarga ajratadi: bilim yetishmasligi, e'tiborsizlik yoki vaqt tanqisligi — va har biriga alohida yechim beradi.",
+    role: "Siz DTM sinov testlari natijalarini tahlil qilib, abituriyentning aynan qaysi sababdan ball yo'qotayotganini aniqlaydigan o'quv tahlilchisisiz.",
+    task: "Sinov testida noto'g'ri belgilangan savollar ro'yxatini tahlil qiling, har bir xatoni sababi bo'yicha turkumlang, takrorlanuvchi naqshni aniqlang va keyingi qadamlar uchun aniq tavsiyalar bering.",
+    context:
+      "Ko'p abituriyent sinov testidan keyin faqat ballga qaraydi va «kam ball oldim, ko'proq o'qishim kerak» degan xulosaga keladi. Aslida xatolarning sabablari butunlay boshqa-boshqa: mavzuni bilmaslik, shoshib e'tiborsizlik qilish, savolni noto'g'ri tushunish yoki vaqt yetmay tavakkal belgilash. Har bir sabab uchun yechim ham har xil. Bu prompt xatolarni sabablari bo'yicha ajratib, qaysi biriga ko'proq vaqt sarflash kerakligini ko'rsatadi — ya'ni «ko'proq o'qish» o'rniga «to'g'ri joyga o'qish» imkonini beradi.",
+    template: `Siz DTM sinov testi natijalarini tahlil qiluvchi o'quv tahlilchisisiz. Men sizga noto'g'ri javob bergan savollarim haqida ma'lumot beraman.
+
+Har bir xato uchun quyidagilarni yozaman: savol mavzusi, mening javobim, to'g'ri javob va nima uchun xato qilganim haqidagi taxminim.
+
+Menga quyidagilarni bering:
+1. **Xatolar turkumi** — har bir xatoni shu toifalardan biriga ajrating va sababini tushuntiring:
+   - «Bilim yetishmasligi» (mavzuni umuman bilmayman)
+   - «Yarim bilim» (qoidani bilaman, lekin qo'llashda adashaman)
+   - «E'tiborsizlik» (bilardim, lekin shoshib xato belgiladim)
+   - «Savolni noto'g'ri tushunish» (nima so'ralayotganini noto'g'ri o'qidim)
+   - «Vaqt tanqisligi» (ulgurmay tavakkal qildim)
+2. **Statistika** — qaysi toifada nechta xato bor, foiz bilan.
+3. **Asosiy naqsh** — xatolarimda takrorlanadigan bitta eng katta muammo nima?
+4. **Har bir toifa uchun yechim** — aniq va amaliy (masalan, e'tiborsizlik uchun boshqa mashq, bilim yetishmasligi uchun boshqa).
+5. **Keyingi 7 kun uchun ustuvorliklar** — eng ko'p ball qaytaradigan 3 ta ish.
+
+Mening xatolarim:
+"""
+{{Xatolaringizni shu yerga ro'yxat qilib yozing}}
+"""`,
+    exampleInput:
+      "1. Progressiya masalasi — men C, to'g'risi A. Formulani eslay olmadim.\n2. Foiz masalasi — men B, to'g'risi D. Formulani bilardim, lekin oxirida 100 ga ko'paytirishni unutdim.\n3. Qo'shma gap turi — men A, to'g'risi C. Ergash gapli va bog'langan qo'shma gapni chalkashtirdim.\n4. Tarix sanasi — men B, to'g'risi C. 1391 va 1395 ni adashtirdim.\n5. Kinematika — men D, to'g'risi B. Vaqt tugab qolgani uchun tavakkal belgiladim.\n6. Sinonim topish — men A, to'g'risi A edi, lekin varaqqa B deb ko'chirib yozibman.",
+    exampleOutput:
+      "**Xatolar turkumi:**\n1. *Progressiya* → **Bilim yetishmasligi.** Formula umuman esda yo'q, ya'ni mavzu o'zlashtirilmagan.\n2. *Foiz* → **E'tiborsizlik.** Yo'l to'g'ri, faqat oxirgi qadam tashlab ketilgan — bu bilim muammosi emas.\n3. *Qo'shma gap* → **Yarim bilim.** Ikkala tur haqida tasavvur bor, lekin farqlash mezoni aniq emas.\n4. *Tarix sanasi* → **Yarim bilim.** Voqealarni bilasiz, sanalar bir-biriga yopishib qolgan.\n5. *Kinematika* → **Vaqt tanqisligi.** Bilim darajasi noma'lum — savolga umuman urinilmagan.\n6. *Sinonim* → **E'tiborsizlik.** Eng achinarli xato: javob to'g'ri topilgan, ball ko'chirishda yo'qolgan.\n\n**Statistika:**\n- E'tiborsizlik: 2 ta (33%)\n- Yarim bilim: 2 ta (33%)\n- Bilim yetishmasligi: 1 ta (17%)\n- Vaqt tanqisligi: 1 ta (17%)\n\n**Asosiy naqsh:** Xatolaringizning uchdan ikki qismi (67%) bilim yetishmasligidan EMAS, balki e'tiborsizlik va yarim bilimdan kelib chiqqan. Ya'ni siz o'ylagandan ko'ra ko'proq bilasiz — muammo bilimda emas, uni ishlatishda. Bu yaxshi xabar, chunki bunday xatolarni tuzatish yangi mavzu o'rganishdan ancha tez.\n\n**Har bir toifa uchun yechim:**\n- *E'tiborsizlik (eng ustuvor):* Har bir masalani yechgach, «savol nimani so'radi?» deb qaytadan o'qing va javobingiz aynan shunga mos ekanini tekshiring. Javoblarni varaqqa ko'chirishni oxiriga qoldirmang — har 10 savoldan keyin ko'chiring va ko'chirgandan so'ng raqamlarni bir marta solishtirib chiqing.\n- *Yarim bilim:* Chalkashtiriladigan tushunchalarni yonma-yon jadvalga yozing (bog'langan vs ergash gapli; 1391 vs 1395) va faqat farqini yodlang, ta'rifini emas.\n- *Bilim yetishmasligi:* Progressiya formulalarini alohida kartochkaga yozib, kuniga 5 daqiqadan takrorlang; keyin 15 ta masala yeching.\n- *Vaqt tanqisligi:* Testni yechishda «bir marta o'tish» qoidasini qo'llang — qiyin savolni belgilab qo'yib o'tib keting, oxirida qayting. Bitta savolga 2 daqiqadan ortiq vaqt sarflamang.\n\n**Keyingi 7 kun uchun 3 ta ustuvorlik:**\n1. **Javob ko'chirish tartibini o'zgartirish** — bu bitta odat 6-savoldagidek xatolarni butunlay yo'q qiladi va sizga darhol ball qaytaradi.\n2. **Chalkashtiriladigan juftliklar jadvali** — qo'shma gap turlari va yaqin tarixiy sanalar bo'yicha; kuniga 10 daqiqa.\n3. **Progressiyalar bloki** — nazariya + 15 masala; bu yagona haqiqiy «bilmayman» mavzuingiz.",
+    testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
+    tags: ["DTM", "Xatolar tahlili", "Sinov testi", "Strategiya"],
+    upvotes: 556,
+    copyCount: 2390,
+    author: "Bekzod Tursunov",
+    createdAt: "2026-04-02T08:30:00.000Z",
+    comments: [
+      {
+        id: "c-dtm-xat-1",
+        author: "Zuhra",
+        content:
+          "Xatolarimning ko'pi bilmaslikdan emas, shoshqaloqlikdan ekanini shu tahlildan bildim.",
+        createdAt: "2026-04-18T09:50:00.000Z",
+      },
+    ],
+  },
 ];
 
 export function getPromptById(id: string): Prompt | undefined {

@@ -1,4 +1,10 @@
-import { BookOpenText, Calculator, GraduationCap, type LucideIcon } from "lucide-react";
+import {
+  BookOpenText,
+  Calculator,
+  ClipboardCheck,
+  GraduationCap,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { PromptCategory } from "@/lib/types";
@@ -7,6 +13,7 @@ const ICONS: Record<string, LucideIcon> = {
   GraduationCap,
   Calculator,
   BookOpenText,
+  ClipboardCheck,
 };
 
 interface CategoryCardProps {

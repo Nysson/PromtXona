@@ -9,6 +9,7 @@ const CATEGORY_HREF: Record<PromptCategory, string> = {
   IELTS: "/prompts?category=IELTS Writing",
   SAT: "/prompts?category=SAT Math",
   "Ona tili va Adabiyot": "/prompts?category=Ona tili / Adabiyot",
+  DTM: "/prompts?category=DTM — Matematika",
 };
 
 export default function HomePage() {
@@ -31,7 +32,7 @@ export default function HomePage() {
             to&apos;plamlari
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {(Object.keys(CATEGORY_META) as PromptCategory[]).map((key) => {
             const meta = CATEGORY_META[key];
             return (

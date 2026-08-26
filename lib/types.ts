@@ -1,11 +1,15 @@
-export type PromptCategory = "IELTS" | "SAT" | "Ona tili va Adabiyot";
+export type PromptCategory = "IELTS" | "SAT" | "Ona tili va Adabiyot" | "DTM";
 
 export type FilterGroup =
   | "IELTS Writing"
   | "IELTS Speaking"
   | "SAT Math"
   | "SAT Reading"
-  | "Ona tili / Adabiyot";
+  | "Ona tili / Adabiyot"
+  | "DTM — Matematika"
+  | "DTM — Ona tili"
+  | "DTM — Tarix"
+  | "DTM — Umumiy";
 
 export interface PromptComment {
   id: string;

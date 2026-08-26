@@ -11,7 +11,7 @@ export const SITE = {
   name: "PromptXona",
   tagline: "Prompt kutubxonasi — IELTS, SAT va Ona tili uchun",
   description:
-    "O'zbekistonlik o'quvchilar uchun ochiq kodli prompt kutubxonasi: IELTS, SAT tayyorgarligi va Ona tili/Adabiyot inshosi uchun sinovdan o'tgan AI promptlari.",
+    "O'zbekistonlik o'quvchilar uchun ochiq kodli prompt kutubxonasi: DTM, IELTS, SAT tayyorgarligi va Ona tili/Adabiyot inshosi uchun sinovdan o'tgan AI promptlari.",
   url: "https://promptxona.vercel.app",
   repoOwner: "Nysson",
   repoName: "PromtXona",
@@ -56,6 +56,12 @@ export const CATEGORY_META: Record<
     color: "from-accent-pink to-accent-orange",
     icon: "BookOpenText",
   },
+  DTM: {
+    label: "DTM",
+    sublabel: "Matematika, Ona tili, Tarix",
+    color: "from-accent-green to-accent-teal",
+    icon: "ClipboardCheck",
+  },
 };
 
 export const FILTER_GROUPS: FilterGroup[] = [
@@ -64,6 +70,10 @@ export const FILTER_GROUPS: FilterGroup[] = [
   "SAT Math",
   "SAT Reading",
   "Ona tili / Adabiyot",
+  "DTM — Matematika",
+  "DTM — Ona tili",
+  "DTM — Tarix",
+  "DTM — Umumiy",
 ];
 
 export function chatGptUrl(promptText: string): string {
