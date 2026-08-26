@@ -15,6 +15,7 @@ import { getChainContext } from "@/data/chains";
 import { chatGptUrl, claudeUrl } from "@/lib/constants";
 import type { Prompt } from "@/lib/types";
 import { cn, formatCompactNumber } from "@/lib/utils";
+import { CompleteButton } from "./CompleteButton";
 import { usePrompts } from "./PromptsProvider";
 import { useToast } from "./ToastProvider";
 
@@ -168,6 +169,7 @@ export function PromptCard({ prompt }: { prompt: Prompt }) {
               className={cn("h-4 w-4", saved && "animate-pop fill-accent-blue")}
             />
           </button>
+          <CompleteButton promptId={prompt.id} />
           <span
             title={`${prompt.comments.length} izoh`}
             className="pointer-events-none flex items-center gap-1 px-1.5 text-xs text-neutral-400"

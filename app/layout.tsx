@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AuthProvider } from "@/components/AuthProvider";
 import { CommandPaletteProvider } from "@/components/CommandPalette";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { ProgressProvider } from "@/components/ProgressProvider";
 import { PromptsProvider } from "@/components/PromptsProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ToastProvider } from "@/components/ToastProvider";
@@ -42,13 +44,17 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col font-sans">
         <ThemeProvider>
           <ToastProvider>
-            <PromptsProvider>
-              <CommandPaletteProvider>
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </CommandPaletteProvider>
-            </PromptsProvider>
+            <AuthProvider>
+              <ProgressProvider>
+                <PromptsProvider>
+                  <CommandPaletteProvider>
+                    <Header />
+                    <main className="flex-1">{children}</main>
+                    <Footer />
+                  </CommandPaletteProvider>
+                </PromptsProvider>
+              </ProgressProvider>
+            </AuthProvider>
           </ToastProvider>
         </ThemeProvider>
       </body>

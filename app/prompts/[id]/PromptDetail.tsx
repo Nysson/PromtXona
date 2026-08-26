@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ChainNavigator } from "@/components/ChainNavigator";
+import { CompleteButton } from "@/components/CompleteButton";
 import { CommentSection } from "@/components/CommentSection";
 import { ModelBadge } from "@/components/ModelBadge";
 import { usePrompts } from "@/components/PromptsProvider";
@@ -162,6 +163,7 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
               />
               {saved ? "Saqlangan" : "Saqlash"}
             </button>
+            <CompleteButton promptId={prompt.id} variant="full" />
             <button
               onClick={handleShare}
               className="pill-button border border-black/10 bg-white/70 text-neutral-700 transition hover:text-neutral-900 dark:border-white/10 dark:bg-white/[0.04] dark:text-neutral-200"

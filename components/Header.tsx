@@ -1,6 +1,15 @@
 "use client";
 
-import { Bookmark, Menu, Moon, PenLine, Search, Sun, X } from "lucide-react";
+import {
+  Bookmark,
+  Menu,
+  Moon,
+  PenLine,
+  Search,
+  Sun,
+  Trophy,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -14,8 +23,9 @@ import { useTheme } from "./ThemeProvider";
 
 const NAV_LINKS = [
   { href: "/", label: "Bosh sahifa" },
-  { href: "/prompts", label: "Promptlar katalogi" },
+  { href: "/prompts", label: "Katalog" },
   { href: "/saved", label: "Saqlanganlar" },
+  { href: "/profile", label: "Progressim" },
 ];
 
 export function Header() {
@@ -43,6 +53,7 @@ export function Header() {
                   ? pathname === "/"
                   : pathname.startsWith(link.href);
               const isSaved = link.href === "/saved";
+              const isProfile = link.href === "/profile";
               return (
                 <Link
                   key={link.href}
@@ -55,6 +66,7 @@ export function Header() {
                   )}
                 >
                   {isSaved && <Bookmark className="h-3.5 w-3.5" />}
+                  {isProfile && <Trophy className="h-3.5 w-3.5" />}
                   {link.label}
                   {isSaved && savedIds.length > 0 && (
                     <span className="rounded-full bg-accent-blue px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white">

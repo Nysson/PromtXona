@@ -39,6 +39,13 @@ bir zumda ishlating.
   bosqichlar ro'yxati va "Keyingi qadam" tugmasi chiqadi. Tayyor zanjir:
   IELTS Writing Task 2 — savol tahlili → reja → qoralama → baholash →
   qayta yozish.
+- **Progress tracker** — promptni «Bajarildi» deb belgilash va `/profile`
+  sahifasida umumiy, kategoriya hamda zanjir bo'yicha progressni ko'rish.
+  Diqqat: «Bajarildi» ≠ «Saqlangan» — birinchisi amalda mashq qilinganini,
+  ikkinchisi keyinroq o'qish ro'yxatini bildiradi.
+- **Kirish (ixtiyoriy)** — Supabase Auth orqali Google yoki email magic link.
+  Kirilgan bo'lsa progress bulutga saqlanadi va qurilmalar aro sinxronlanadi;
+  kirilmagan bo'lsa brauzerda saqlanadi va birinchi kirishda bulutga ko'chadi.
 - **LocalStorage orqali mock backend** — upvote, nusxalash soni, saqlanganlar va
   izohlar brauzer xotirasida saqlanadi, sahifani yangilaganda ham yo'qolmaydi.
 
@@ -50,6 +57,7 @@ bir zumda ishlating.
 | [Tailwind CSS](https://tailwindcss.com) | Apple-uslubidagi styling |
 | [Lucide React](https://lucide.dev) | Ikonalar |
 | React `useState`/`useContext` | Mahalliy holat boshqaruvi (upvote, comment, copy) |
+| [Supabase](https://supabase.com) | Auth (Google / magic link) + progress uchun Postgres |
 | `localStorage` | Mock backend — foydalanuvchi harakatlarini saqlash |
 
 ## 📁 Loyiha tuzilmasi
@@ -79,6 +87,10 @@ promptxona/
 ├── data/
 │   ├── prompts.ts                 # 22 ta to'liq seed prompt (DTM/IELTS/SAT/Ona tili)
 │   └── chains.ts                  # Prompt zanjirlari + navigatsiya yordamchilari
+├── supabase/
+│   └── migrations/
+│       └── 0001_prompt_completions.sql   # Progress jadvali + RLS siyosatlari
+├── middleware.ts                  # Supabase sessiyasini yangilab turadi
 ├── lib/
 │   ├── types.ts                   # TypeScript interfeyslar
 │   ├── constants.ts               # Sayt konfiguratsiyasi, filtr guruhlari
@@ -145,6 +157,40 @@ NEXT_PUBLIC_SUBMIT_FORM_URL=https://forms.gle/SIZNING-HAQIQIY-HAVOLANGIZ
 O'zgaruvchi belgilangach, header va hero tugmalari o'sha formani yangi oynada
 ochadi; `/submit` sahifasida esa qo'shimcha "Google Form orqali" tugmasi paydo
 bo'ladi.
+
+### Kirish va progressni sozlash (Supabase)
+
+Supabase **ixtiyoriy**: kalitlarsiz ham sayt to'liq ishlaydi — kirish
+o'chgan bo'ladi va progress faqat brauzerda saqlanadi. Bulutga sinxronlash
+uchun:
+
+**1. Supabase loyihasi yarating** — [supabase.com](https://supabase.com) da
+bepul loyiha oching.
+
+**2. Jadvalni yarating** — Supabase panelidagi *SQL Editor* ni oching va
+`supabase/migrations/0001_prompt_completions.sql` faylining mazmunini
+ishga tushiring. U `prompt_completions` jadvalini va RLS siyosatlarini
+yaratadi (har bir foydalanuvchi faqat o'z yozuvlarini ko'radi).
+
+**3. Kalitlarni qo'shing** — *Project Settings → API* dan olib, `.env.local`
+fayliga yozing (namuna uchun `.env.example` ga qarang):
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
+```
+
+**4. Kirish usullarini yoqing** — *Authentication → Providers*:
+- **Email** — sukut bo'yicha yoqilgan (magic link uchun shu kifoya).
+- **Google** — yoqing va Google Cloud Console'dan Client ID/Secret kiriting.
+
+**5. Redirect URL larni qo'shing** — *Authentication → URL Configuration*:
+- Site URL: `https://sizning-saytingiz.vercel.app`
+- Redirect URLs: `https://sizning-saytingiz.vercel.app/auth/callback`
+  va lokal ish uchun `http://localhost:3000/auth/callback`
+
+Vercel'ga deploy qilganda o'sha ikki `NEXT_PUBLIC_*` o'zgaruvchini loyiha
+sozlamalariga ham qo'shishni unutmang.
 
 ### Logo va brend belgisi
 

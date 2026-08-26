@@ -18,9 +18,9 @@ export function Footer() {
             </Link>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
               O&apos;zbekistonlik o&apos;quvchilar uchun ochiq kodli prompt
-              kutubxonasi — IELTS, SAT tayyorgarligi va Ona tili/Adabiyot
-              inshosi uchun sinovdan o&apos;tgan AI promptlari, hammaga bepul
-              va ochiq.
+              kutubxonasi — DTM, IELTS, SAT tayyorgarligi va Ona
+              tili/Adabiyot inshosi uchun sinovdan o&apos;tgan AI promptlari,
+              hammaga bepul va ochiq.
             </p>
           </div>
 
@@ -42,6 +42,11 @@ export function Footer() {
               <li>
                 <Link href="/saved" className="hover:text-accent-blue">
                   Saqlanganlar
+                </Link>
+              </li>
+              <li>
+                <Link href="/profile" className="hover:text-accent-blue">
+                  Mening progressim
                 </Link>
               </li>
               <li>
