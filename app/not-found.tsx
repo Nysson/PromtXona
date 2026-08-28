@@ -22,7 +22,7 @@ export default function NotFound() {
           className="pill-button mt-6 bg-neutral-900 text-white shadow-soft dark:bg-white dark:text-neutral-900"
         >
           <ArrowLeft className="h-4 w-4" />
-          Promptlar katalogiga qaytish
+          Promptlarga qaytish
         </Link>
       </div>
     </div>

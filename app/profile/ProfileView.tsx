@@ -88,15 +88,17 @@ export function ProfileView() {
         <div className="container-page relative text-center">
           <span className="glass-panel inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium text-neutral-600 dark:text-neutral-300">
             <Trophy className="h-3.5 w-3.5 text-accent-green" />
-            {loading ? "Yuklanmoqda..." : `${stats.done} / ${stats.total} bajarildi`}
+            {loading
+              ? "Yuklanmoqda..."
+              : `${stats.done} / ${stats.total} mashq qilindi`}
           </span>
           <h1 className="mt-6 text-4xl font-semibold tracking-tighter text-neutral-900 sm:text-5xl dark:text-white">
-            Mening progressim
+            Natijalarim
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-balance text-neutral-500 dark:text-neutral-400">
-            Amalda mashq qilib ko&apos;rgan promptlaringiz shu yerda
-            hisoblanadi. Bu &laquo;Saqlanganlar&raquo;dan farq qiladi — u
-            keyinroq o&apos;qish uchun ro&apos;yxat.
+            Amalda sinab ko&apos;rgan promptlaringiz shu yerda hisoblanadi.
+            &laquo;Saqlanganlar&raquo; esa keyinroq o&apos;qish uchun
+            ro&apos;yxat.
           </p>
         </div>
       </section>
@@ -116,12 +118,12 @@ export function ProfileView() {
                 {isSynced ? (
                   <>
                     <Cloud className="h-3.5 w-3.5 text-accent-green" />
-                    Progress hisobingizga saqlanmoqda
+                    Natijalaringiz hisobingizda saqlanmoqda
                   </>
                 ) : (
                   <>
                     <CloudOff className="h-3.5 w-3.5" />
-                    Faqat shu brauzerda saqlanmoqda
+                    Faqat shu qurilmada saqlanmoqda
                   </>
                 )}
               </p>
@@ -144,7 +146,7 @@ export function ProfileView() {
                 className="pill-button bg-neutral-900 text-white shadow-soft dark:bg-white dark:text-neutral-900"
               >
                 <LogIn className="h-4 w-4" />
-                Kirish va sinxronlash
+                Kirish — natijalar saqlanadi
               </Link>
             )
           )}
@@ -155,7 +157,7 @@ export function ProfileView() {
           <div className="flex items-end justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-                Umumiy progress
+                Umumiy natija
               </h2>
               <p className="mt-2 text-4xl font-semibold tracking-tight text-neutral-900 dark:text-white">
                 {stats.done}
@@ -187,7 +189,7 @@ export function ProfileView() {
                     {c.label}
                   </span>
                   <span className="text-neutral-500 dark:text-neutral-400">
-                    {c.done}/{c.total} bajarildi
+                    {c.done}/{c.total} mashq qilindi
                   </span>
                 </div>
                 <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-900/10 dark:bg-white/10">
@@ -237,7 +239,7 @@ export function ProfileView() {
         {/* Oxirgi bajarilganlar */}
         <div className="glass-panel mt-5 rounded-4xl p-6 sm:p-8">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-            Bajarilgan promptlar
+            Mashq qilgan promptlaringiz
           </h2>
           {recent.length > 0 ? (
             <ul className="mt-4 space-y-1">
@@ -261,8 +263,8 @@ export function ProfileView() {
           ) : (
             <div className="mt-4 flex flex-col items-start gap-4">
               <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                Hozircha bajarilgan prompt yo&apos;q. Istalgan promptda
-                &laquo;Bajarildi&raquo; tugmasini bosing.
+                Hozircha bironta prompt belgilanmagan. Istalgan promptda
+                &laquo;Mashq qildim&raquo; tugmasini bosing.
               </p>
               <Link
                 href="/prompts"

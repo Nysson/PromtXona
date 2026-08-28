@@ -45,15 +45,15 @@ export function SavedPrompts() {
               Hozircha bo&apos;sh
             </h2>
             <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-              Katalogdagi istalgan promptda zakladka belgisini bosing — u shu
-              yerda paydo bo&apos;ladi.
+              Istalgan promptda saqlash belgisini bosing — u shu yerda paydo
+              bo&apos;ladi.
             </p>
             <Link
               href="/prompts"
               className="pill-button mt-6 bg-neutral-900 text-white shadow-soft dark:bg-white dark:text-neutral-900"
             >
               <Compass className="h-4 w-4" />
-              Katalogni ko&apos;rish
+              Promptlarni ko&apos;rish
             </Link>
           </div>
         )}

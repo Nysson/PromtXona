@@ -4,7 +4,7 @@ import { LoginForm } from "./LoginForm";
 
 export const metadata: Metadata = {
   title: "Kirish",
-  description: "PromptXona hisobingizga kirib, progressingizni saqlang.",
+  description: "PromptXona hisobingizga kirib, natijalaringizni saqlang.",
 };
 
 export default function LoginPage() {

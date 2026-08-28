@@ -62,7 +62,7 @@ export function LoginForm() {
             Hisobingizga kiring
           </h1>
           <p className="mt-3 max-w-md text-balance text-center text-neutral-500 dark:text-neutral-400">
-            Kirsangiz, bajargan promptlaringiz saqlanadi va barcha
+            Kirsangiz, natijalaringiz saqlanadi va barcha
             qurilmalaringizda ko&apos;rinadi.
           </p>
 
@@ -76,15 +76,15 @@ export function LoginForm() {
                   Kirish hozircha sozlanmagan
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
-                  Sayt egasi Supabase kalitlarini qo&apos;shmagan. Shunga
-                  qaramay progressingiz shu brauzerda saqlanadi — promptlarni
-                  bemalol &laquo;bajarildi&raquo; deb belgilashingiz mumkin.
+                  Hisobga kirish hozircha ishlamaydi. Xavotir olmang —
+                  natijalaringiz shu qurilmada saqlanadi, promptlarni bemalol
+                  &laquo;mashq qildim&raquo; deb belgilashingiz mumkin.
                 </p>
                 <Link
                   href="/profile"
                   className="pill-button mt-6 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
                 >
-                  Progressimni ko&apos;rish
+                  Natijalarimni ko&apos;rish
                 </Link>
               </div>
             ) : user ? (

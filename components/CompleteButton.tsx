@@ -6,7 +6,7 @@ import { useToast } from "./ToastProvider";
 import { cn } from "@/lib/utils";
 
 /**
- * "Bajarildi" tugmasi — promptni amalda mashq qilib ko'rganini belgilaydi.
+ * "Mashq qildim" tugmasi — promptni amalda sinab ko'rganini belgilaydi.
  * Bu "Saqlash" (keyinroq o'qish uchun) dan farq qiladi: rangi yashil,
  * belgisi doira-galochka.
  */
@@ -24,7 +24,9 @@ export function CompleteButton({
   async function handleClick() {
     await toggleCompleted(promptId);
     showToast(
-      done ? "Bajarilganlardan olib tashlandi." : "Bajarildi deb belgilandi!"
+      done
+        ? "Ro'yxatdan olib tashlandi."
+        : "Mashq qilingan deb belgilandi!"
     );
   }
 
@@ -45,7 +47,7 @@ export function CompleteButton({
         ) : (
           <CircleDashed className="h-4 w-4" />
         )}
-        {done ? "Bajarildi" : "Bajarildi deb belgilash"}
+        {done ? "Mashq qilindi" : "Mashq qildim"}
       </button>
     );
   }
@@ -54,8 +56,8 @@ export function CompleteButton({
     <button
       onClick={handleClick}
       aria-pressed={done}
-      title={done ? "Bajarilganlardan olib tashlash" : "Bajarildi deb belgilash"}
-      aria-label="Mark this prompt as completed"
+      title={done ? "Belgini olib tashlash" : "Mashq qildim deb belgilash"}
+      aria-label={done ? "Belgini olib tashlash" : "Mashq qildim deb belgilash"}
       className={cn(
         "flex h-9 w-9 items-center justify-center rounded-full transition",
         done

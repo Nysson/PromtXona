@@ -104,7 +104,7 @@ export function PromptsCatalog() {
 
         {filtered.length === 0 && (
           <div className="glass-panel mt-8 rounded-4xl p-10 text-center text-neutral-500 dark:text-neutral-400">
-            Hech qanday mos prompt topilmadi. Filtrni o&apos;zgartirib
+            Hech qanday mos prompt topilmadi. Boshqa bo&apos;limni tanlab
             ko&apos;ring.
           </div>
         )}

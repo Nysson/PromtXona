@@ -56,7 +56,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             <span>{toast.message}</span>
             <button
               onClick={() => dismiss(toast.id)}
-              aria-label="Dismiss notification"
+              aria-label="Xabarnomani yopish"
               className="ml-1 rounded-full p-0.5 text-neutral-400 transition hover:bg-black/5 hover:text-neutral-600 dark:hover:bg-white/10 dark:hover:text-neutral-200"
             >
               <X className="h-3.5 w-3.5" />

@@ -23,9 +23,9 @@ import { useTheme } from "./ThemeProvider";
 
 const NAV_LINKS = [
   { href: "/", label: "Bosh sahifa" },
-  { href: "/prompts", label: "Katalog" },
+  { href: "/prompts", label: "Promptlar" },
   { href: "/saved", label: "Saqlanganlar" },
-  { href: "/profile", label: "Progressim" },
+  { href: "/profile", label: "Natijalarim" },
 ];
 
 export function Header() {
@@ -86,14 +86,11 @@ export function Header() {
             >
               <Search className="h-3.5 w-3.5" />
               <span className="text-xs">Qidirish</span>
-              <kbd className="rounded border border-black/10 bg-white/80 px-1.5 py-0.5 font-sans text-[10px] font-medium text-neutral-400 dark:border-white/10 dark:bg-white/10">
-                ⌘K
-              </kbd>
             </button>
 
             <button
               onClick={toggleTheme}
-              aria-label="Toggle color theme"
+              aria-label="Tungi va kunduzgi ko'rinishni almashtirish"
               className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 transition hover:bg-neutral-900/[0.05] hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
             >
               {theme === "dark" ? (
@@ -110,7 +107,7 @@ export function Header() {
 
             <button
               onClick={() => setOpen((v) => !v)}
-              aria-label="Toggle menu"
+              aria-label="Menyuni ochish yoki yopish"
               className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 transition hover:bg-neutral-900/[0.05] hover:text-neutral-900 md:hidden dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

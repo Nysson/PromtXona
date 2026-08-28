@@ -110,13 +110,13 @@ export function SubmitForm() {
       "### Qisqacha tavsif",
       form.description || "-",
       "",
-      "### Role",
+      "### AI qanday rolda (Role)",
       form.role || "-",
       "",
-      "### Task",
+      "### Prompt nima qiladi (Task)",
       form.task || "-",
       "",
-      "### Context",
+      "### Nega kerak (Context)",
       form.context || "-",
       "",
       "### Prompt shabloni",
@@ -124,10 +124,10 @@ export function SubmitForm() {
       form.template || "-",
       "```",
       "",
-      "### Namuna kirish (Input)",
+      "### Siz shunday yozasiz (Input)",
       form.exampleInput || "-",
       "",
-      "### Namuna natija (Output)",
+      "### AI shunday javob beradi (Output)",
       form.exampleOutput || "-",
       "",
       "---",
@@ -138,7 +138,7 @@ export function SubmitForm() {
   function guard(): boolean {
     setTouched(true);
     if (!isValid) {
-      showToast("Iltimos, majburiy maydonlarni to'ldiring.");
+      showToast("Iltimos, shart bo'lgan joylarni to'ldiring.");
       return false;
     }
     return true;
@@ -254,10 +254,10 @@ export function SubmitForm() {
             {/* Prompt tuzilmasi */}
             <FormSection
               step={2}
-              title="Prompt tuzilmasi"
+              title="Prompt qismlari"
               hint="Bu qismlar prompt sahifasida alohida kartalar sifatida ko'rinadi."
             >
-              <Field label="Role — AI qanday rolni bajaradi?">
+              <Field label="AI qanday rolda javob beradi?">
                 <textarea
                   value={form.role}
                   onChange={(e) => update("role", e.target.value)}
@@ -266,7 +266,7 @@ export function SubmitForm() {
                   className={inputClass(false, "resize-none")}
                 />
               </Field>
-              <Field label="Task — aniq vazifa nima?">
+              <Field label="Prompt aniq nima qiladi?">
                 <textarea
                   value={form.task}
                   onChange={(e) => update("task", e.target.value)}
@@ -275,7 +275,7 @@ export function SubmitForm() {
                   className={inputClass(false, "resize-none")}
                 />
               </Field>
-              <Field label="Context — nega bu prompt kerak?">
+              <Field label="Nega bu prompt kerak?">
                 <textarea
                   value={form.context}
                   onChange={(e) => update("context", e.target.value)}
@@ -290,7 +290,7 @@ export function SubmitForm() {
             <FormSection
               step={3}
               title="Prompt shabloni"
-              hint="To'ldiriladigan joylarni {{shu tarzda}} belgilang."
+              hint="O'zgaradigan joylarni {{ikki qavs}} ichida yozing."
             >
               <Field label="To'liq prompt matni" required>
                 <textarea
@@ -314,7 +314,7 @@ export function SubmitForm() {
               title="Namuna va modellar"
               hint="Ixtiyoriy, lekin promptning sifatini ko'rsatadi."
             >
-              <Field label="Namuna kirish (Input)">
+              <Field label="Siz shunday yozasiz">
                 <textarea
                   value={form.exampleInput}
                   onChange={(e) => update("exampleInput", e.target.value)}
@@ -323,7 +323,7 @@ export function SubmitForm() {
                   className={inputClass(false, "resize-none")}
                 />
               </Field>
-              <Field label="Namuna natija (Output)">
+              <Field label="AI shunday javob beradi">
                 <textarea
                   value={form.exampleOutput}
                   onChange={(e) => update("exampleOutput", e.target.value)}
@@ -393,8 +393,8 @@ export function SubmitForm() {
                 <p className="mt-4 flex items-start gap-1.5 rounded-xl bg-accent-pink/10 p-3 text-xs text-accent-pink">
                   <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                   <span>
-                    Majburiy maydonlar to&apos;ldirilmagan: sarlavha,
-                    kategoriya, tavsif va prompt matni.
+                    To&apos;ldirilishi shart: sarlavha, kategoriya, tavsif
+                    va prompt matni.
                   </span>
                 </p>
               )}

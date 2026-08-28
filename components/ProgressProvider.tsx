@@ -47,7 +47,7 @@ function writeLocal(ids: string[]) {
 }
 
 /**
- * "Bajarildi" belgilarini boshqaradi. Tizimga kirilmagan bo'lsa localStorage'da,
+ * "Mashq qildim" belgilarini boshqaradi. Tizimga kirilmagan bo'lsa localStorage'da,
  * kirilgan bo'lsa Supabase'da saqlanadi. Birinchi marta kirganda mahalliy
  * belgilar bulutga ko'chiriladi, shunda foydalanuvchi progressini yo'qotmaydi.
  */

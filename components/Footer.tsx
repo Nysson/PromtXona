@@ -36,7 +36,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/prompts" className="hover:text-accent-blue">
-                  Promptlar katalogi
+                  Promptlar
                 </Link>
               </li>
               <li>
@@ -46,7 +46,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/profile" className="hover:text-accent-blue">
-                  Mening progressim
+                  Natijalarim
                 </Link>
               </li>
               <li>

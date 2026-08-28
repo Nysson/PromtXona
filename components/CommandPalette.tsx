@@ -162,7 +162,7 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
                       {prompt.title}
                     </span>
                     <span className="block truncate text-xs text-neutral-400">
-                      {prompt.subcategory} · {prompt.upvotes} upvote
+                      {prompt.subcategory} · {prompt.upvotes} kishiga foydali
                     </span>
                   </span>
                   {index === activeIndex && (
