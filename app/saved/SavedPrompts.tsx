@@ -37,7 +37,7 @@ export function SavedPrompts() {
             ))}
           </div>
         ) : (
-          <div className="glass-panel mx-auto flex max-w-md flex-col items-center rounded-4xl p-10 text-center">
+          <div className="quiet-panel mx-auto flex max-w-md flex-col items-center rounded-4xl p-10 text-center">
             <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-blue/10 text-accent-blue">
               <Bookmark className="h-7 w-7" />
             </span>

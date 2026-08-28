@@ -38,8 +38,31 @@
 }
 
 @layer components {
+  /*
+   * Uchta yuza sathi. Ilgari hamma narsa — kartalar ham, yon panel ham,
+   * filtrlar ham — bitta `.glass-panel` edi, shuning uchun hech biri
+   * ajralib turmasdi. Endi har bir sath o'z vazifasiga ega.
+   */
+
+  /* 1. Ko'tarilgan sath — o'zi mazmun bo'lgan yuzalar: prompt kartalari,
+     yo'nalish kartalari, promptning tayyor matni. Soyasi va ochroq foni
+     ularni sahifadan ko'taradi. */
   .glass-panel {
     @apply border border-black/5 bg-white/70 shadow-soft backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-soft-dark;
+  }
+
+  /* 2. Tinch sath — mazmunni qo'llab-quvvatlovchi yuzalar: yon panel,
+     izohlar, bo'sh holatlar, forma bo'limlari. Soyasi yo'q va foni
+     sahifadan bir oz to'qroq, shuning uchun u kartalar ortiga chekinadi. */
+  .quiet-panel {
+    @apply border border-black/[0.04] bg-neutral-900/[0.025] dark:border-white/[0.06] dark:bg-white/[0.02];
+  }
+
+  /* 3. Boshqaruv paneli — yopishib turadigan filtr qatori. Sahifaning o'z
+     rangida, shuning uchun mazmun bilan raqobatlashmaydi, lekin ostidan
+     o'tayotgan kartalarni to'sib turadi. */
+  .control-bar {
+    @apply border border-black/[0.04] bg-canvas-light/85 backdrop-blur-xl dark:border-white/[0.06] dark:bg-canvas-dark/85;
   }
 
   .pill-button {

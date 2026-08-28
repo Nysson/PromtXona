@@ -121,7 +121,10 @@ export function PromptsCatalog() {
       </section>
 
       <section className="container-page pb-24">
-        <div className="glass-panel sticky top-[73px] z-30 flex flex-col gap-3 rounded-4xl p-4">
+        {/* 65px = sarlavha balandligi (h-16) + 1px chegara. Panel unga tegib
+            tursin, aks holda oradagi tirqishdan pastdagi kartalar ko'rinib
+            qoladi. */}
+        <div className="control-bar sticky top-[65px] z-30 flex flex-col gap-3 rounded-4xl p-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <SearchBar value={query} onChange={setQuery} className="sm:max-w-sm" />
             <FilterTabs
@@ -182,7 +185,7 @@ export function PromptsCatalog() {
         </div>
 
         {filtered.length === 0 && (
-          <div className="glass-panel mt-8 rounded-4xl p-10 text-center text-neutral-500 dark:text-neutral-400">
+          <div className="quiet-panel mt-8 rounded-4xl p-10 text-center text-neutral-500 dark:text-neutral-400">
             Hech qanday mos prompt topilmadi. Boshqa bo&apos;limni tanlab
             ko&apos;ring.
           </div>

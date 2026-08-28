@@ -224,7 +224,7 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
                 <MessageSquareQuote className="h-4 w-4" />
                 Siz shunday yozasiz
               </h3>
-              <div className="glass-panel whitespace-pre-wrap rounded-3xl p-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
+              <div className="quiet-panel whitespace-pre-wrap rounded-3xl p-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
                 {prompt.exampleInput}
               </div>
             </div>
@@ -233,7 +233,7 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
                 <Sparkles className="h-4 w-4" />
                 AI shunday javob beradi
               </h3>
-              <div className="glass-panel max-h-[420px] overflow-y-auto whitespace-pre-wrap rounded-3xl p-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
+              <div className="quiet-panel max-h-[420px] overflow-y-auto whitespace-pre-wrap rounded-3xl p-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
                 {prompt.exampleOutput}
               </div>
             </div>
@@ -248,7 +248,7 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
 
         {/* Sidebar */}
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="glass-panel divide-y divide-black/5 rounded-4xl dark:divide-white/10">
+          <div className="quiet-panel divide-y divide-black/5 rounded-4xl dark:divide-white/10">
             <dl className="grid grid-cols-3 gap-2 p-5 text-center">
               <div>
                 <dt className="text-xs text-neutral-500 dark:text-neutral-400">
@@ -320,7 +320,7 @@ function InfoBlock({
   text: string;
 }) {
   return (
-    <div className="glass-panel rounded-3xl p-5">
+    <div className="quiet-panel rounded-3xl p-5">
       <h3 className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-accent-blue">
         <Icon className="h-3.5 w-3.5" />
         {label}

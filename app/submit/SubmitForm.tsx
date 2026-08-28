@@ -468,7 +468,7 @@ function FormSection({
   children: React.ReactNode;
 }) {
   return (
-    <div className="glass-panel rounded-4xl p-6 sm:p-7">
+    <div className="quiet-panel rounded-4xl p-6 sm:p-7">
       <div className="flex items-start gap-3">
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-blue/10 text-xs font-semibold text-accent-blue">
           {step}

@@ -28,7 +28,7 @@ export function CommentSection({
   }
 
   return (
-    <section className="glass-panel rounded-4xl p-6 sm:p-8">
+    <section className="quiet-panel rounded-4xl p-6 sm:p-8">
       <h2 className="flex items-center gap-2 text-xl font-semibold tracking-tight text-neutral-900 dark:text-white">
         <MessageCircle className="h-5 w-5 text-accent-blue" />
         Izohlar ({comments.length})

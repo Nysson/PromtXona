@@ -12,13 +12,17 @@
 | 3 | Trim the hero (§14.3) | **Done** |
 | 4 | Detail action row 7 → 2 + "Yana" (§14.4) | **Done** |
 | 5 | Microcopy pass (§11, §14.5) | **Done** |
+| 6 | Second surface level (§14 runners-up) | **Done** |
 | 7 | Unify the two taxonomies + 4 filter pills (§14 runners-up) | **Done** |
 | — | Home category cards linked to the wrong filter (§2) | **Fixed** |
-| 6 | Second surface level (§14 runners-up) | Open |
 | 8 | Merge "Saqlash" and "Bajarildi" (§14 runners-up) | Open |
 | — | Swap GitHub / copy emphasis on `/submit` (§12) | Open |
 | — | Collapse optional `/submit` sections (§12) | Open |
 | — | "To'ldirilgan %" meter counts optional fields (§12) | Open |
+
+The three surface levels introduced for #6 — `.glass-panel` (raised),
+`.quiet-panel` (recessed) and `.control-bar` (sticky filter row) — are defined
+with usage notes in `app/globals.css`.
 
 Line numbers below refer to the **pre-change** code, so they will not match the
 current files for anything marked Done. The findings themselves still describe

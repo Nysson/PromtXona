@@ -18,7 +18,7 @@ export function ChainNavigator({ prompt }: { prompt: Prompt }) {
   const { chain, steps, stepNumber, totalSteps, next } = ctx;
 
   return (
-    <section className="glass-panel mt-8 rounded-4xl p-6 sm:p-7">
+    <section className="quiet-panel mt-8 rounded-4xl p-6 sm:p-7">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-indigo/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-accent-indigo">

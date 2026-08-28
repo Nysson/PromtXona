@@ -102,7 +102,7 @@ export function ProfileView() {
 
       <section className="container-page pb-24">
         {/* Hisob holati */}
-        <div className="glass-panel flex flex-col items-start justify-between gap-4 rounded-4xl p-5 sm:flex-row sm:items-center">
+        <div className="quiet-panel flex flex-col items-start justify-between gap-4 rounded-4xl p-5 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-neutral-900/[0.05] text-neutral-400 dark:bg-white/10">
               <UserCircle2 className="h-6 w-6" />
@@ -174,7 +174,7 @@ export function ProfileView() {
         </div>
 
         {/* Kategoriyalar bo'yicha */}
-        <div className="glass-panel mt-5 rounded-4xl p-6 sm:p-8">
+        <div className="quiet-panel mt-5 rounded-4xl p-6 sm:p-8">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
             Kategoriyalar bo&apos;yicha
           </h2>
@@ -205,7 +205,7 @@ export function ProfileView() {
 
         {/* Zanjirlar bo'yicha */}
         {stats.chains.length > 0 && (
-          <div className="glass-panel mt-5 rounded-4xl p-6 sm:p-8">
+          <div className="quiet-panel mt-5 rounded-4xl p-6 sm:p-8">
             <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
               <ListOrdered className="h-4 w-4" />
               Zanjirlar
@@ -234,7 +234,7 @@ export function ProfileView() {
         )}
 
         {/* Oxirgi bajarilganlar */}
-        <div className="glass-panel mt-5 rounded-4xl p-6 sm:p-8">
+        <div className="quiet-panel mt-5 rounded-4xl p-6 sm:p-8">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
             Mashq qilgan promptlaringiz
           </h2>
