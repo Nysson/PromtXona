@@ -18,8 +18,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useProgress } from "@/components/ProgressProvider";
 import { CHAINS, getChainSteps } from "@/data/chains";
 import { PROMPTS } from "@/data/prompts";
-import { CATEGORY_META } from "@/lib/constants";
-import type { PromptCategory } from "@/lib/types";
+import { CATEGORIES, CATEGORY_META } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const CATEGORY_BAR: Record<string, string> = {
@@ -37,21 +36,19 @@ export function ProfileView() {
     const total = PROMPTS.length;
     const done = PROMPTS.filter((p) => completedIds.includes(p.id)).length;
 
-    const byCategory = (Object.keys(CATEGORY_META) as PromptCategory[]).map(
-      (category) => {
-        const inCat = PROMPTS.filter((p) => p.category === category);
-        const doneInCat = inCat.filter((p) => completedIds.includes(p.id));
-        return {
-          category,
-          label: CATEGORY_META[category].label,
-          done: doneInCat.length,
-          total: inCat.length,
-          percent: inCat.length
-            ? Math.round((doneInCat.length / inCat.length) * 100)
-            : 0,
-        };
-      }
-    );
+    const byCategory = CATEGORIES.map((category) => {
+      const inCat = PROMPTS.filter((p) => p.category === category);
+      const doneInCat = inCat.filter((p) => completedIds.includes(p.id));
+      return {
+        category,
+        label: CATEGORY_META[category].label,
+        done: doneInCat.length,
+        total: inCat.length,
+        percent: inCat.length
+          ? Math.round((doneInCat.length / inCat.length) * 100)
+          : 0,
+      };
+    });
 
     const chains = CHAINS.map((chain) => {
       const steps = getChainSteps(chain.id);

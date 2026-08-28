@@ -2,15 +2,7 @@ import { CategoryCard } from "@/components/CategoryCard";
 import { FeaturedPrompts } from "@/components/FeaturedPrompts";
 import { Hero } from "@/components/Hero";
 import { PROMPTS } from "@/data/prompts";
-import { CATEGORY_META } from "@/lib/constants";
-import type { PromptCategory } from "@/lib/types";
-
-const CATEGORY_HREF: Record<PromptCategory, string> = {
-  IELTS: "/prompts?category=IELTS Writing",
-  SAT: "/prompts?category=SAT Math",
-  "Ona tili va Adabiyot": "/prompts?category=Ona tili / Adabiyot",
-  DTM: "/prompts?category=DTM — Matematika",
-};
+import { CATEGORIES, CATEGORY_META } from "@/lib/constants";
 
 export default function HomePage() {
   const counts = PROMPTS.reduce<Record<string, number>>((acc, p) => {
@@ -33,7 +25,7 @@ export default function HomePage() {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {(Object.keys(CATEGORY_META) as PromptCategory[]).map((key) => {
+          {CATEGORIES.map((key) => {
             const meta = CATEGORY_META[key];
             return (
               <CategoryCard
@@ -44,7 +36,7 @@ export default function HomePage() {
                 color={meta.color}
                 icon={meta.icon}
                 count={counts[key] ?? 0}
-                href={CATEGORY_HREF[key]}
+                href={`/prompts?category=${encodeURIComponent(key)}`}
               />
             );
           })}
