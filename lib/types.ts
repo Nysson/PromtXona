@@ -3,12 +3,14 @@ export type PromptCategory = "IELTS" | "SAT" | "Ona tili va Adabiyot" | "DTM";
 export type FilterGroup =
   | "IELTS Writing"
   | "IELTS Speaking"
+  | "IELTS Reading"
   | "SAT Math"
   | "SAT Reading"
   | "Ona tili / Adabiyot"
   | "DTM — Matematika"
   | "DTM — Ona tili"
   | "DTM — Tarix"
+  | "DTM — Biologiya"
   | "DTM — Umumiy";
 
 export interface PromptComment {
@@ -16,6 +18,30 @@ export interface PromptComment {
   author: string;
   content: string;
   createdAt: string; // ISO date string
+  /** Faqat Supabase izohlarida — "o'chirish" tugmasini ko'rsatish uchun. */
+  userId?: string;
+}
+
+/** O'zgaruvchi uchun forma maydoni turi. */
+export type VariableInputType = "text" | "textarea" | "number" | "select";
+
+/**
+ * Prompt shablonidagi `{{key}}` o'zgaruvchisining sozlamasi. `key` shablondagi
+ * nom bilan aynan bir xil bo'lishi kerak (snake_case, faqat lotin harflari).
+ */
+export interface PromptVariable {
+  key: string;
+  /** Forma ustida ko'rinadigan nom. */
+  label: string;
+  type: VariableInputType;
+  placeholder?: string;
+  /** Maydon ostidagi qisqa izoh. */
+  helpText?: string;
+  /** Faqat `select` uchun. */
+  options?: string[];
+  defaultValue?: string;
+  /** Sukut bo'yicha `true`. */
+  required?: boolean;
 }
 
 export interface Prompt {
@@ -29,6 +55,11 @@ export interface Prompt {
   task: string;
   context: string;
   template: string;
+  /**
+   * Shablondagi `{{key}}` o'zgaruvchilari uchun forma sozlamalari. Berilmasa,
+   * o'zgaruvchilar shablondan avtomatik aniqlanadi (`lib/variables.ts`).
+   */
+  variables?: PromptVariable[];
   exampleInput: string;
   exampleOutput: string;
   testedModels: string[];
@@ -38,6 +69,11 @@ export interface Prompt {
   author: string;
   createdAt: string; // ISO date string
   comments: PromptComment[];
+  /**
+   * Supabase rejimida izohlar soni (izohlarning o'zi faqat detal sahifada
+   * yuklanadi). Yo'q bo'lsa `comments.length` ishlatiladi — `commentCountOf()`.
+   */
+  commentCount?: number;
   /**
    * Ixtiyoriy: prompt biror bosqichma-bosqich ketma-ketlikka (zanjirga)
    * tegishli bo'lsa, uning identifikatori. `data/chains.ts` ga qarang.

@@ -1,11 +1,13 @@
 import type { Prompt } from "@/lib/types";
+import { ACADEMIC_PROMPTS } from "./academic-prompts";
+import { READING_BIOLOGY_PROMPTS } from "./reading-biology-prompts";
 
 /**
  * PromptXona seed data.
  * 13 hand-written, production-quality prompts covering IELTS, SAT and
  * Ona tili va Adabiyot (Uzbek native language & literature) preparation.
  */
-export const PROMPTS: Prompt[] = [
+const CORE_PROMPTS: Prompt[] = [
   // ─────────────────────────────────────────────────────────────────────
   // IELTS (5)
   // ─────────────────────────────────────────────────────────────────────
@@ -31,16 +33,25 @@ export const PROMPTS: Prompt[] = [
 
 Here is my chart description:
 """
-{{Paste your chart/graph/table/process/map description here}}
+{{chart_description}}
 """`,
+    variables: [
+      {
+        key: "chart_description",
+        label: "Grafik / jadval tavsifi",
+        type: "textarea",
+        placeholder: "Masalan: Line graph showing tourist numbers in Uzbekistan, 2015–2024…",
+        helpText: "Grafik turini, o'qlarni, yillarni va asosiy raqamlarni yozing.",
+      },
+    ],
     exampleInput:
       "Line graph showing the number of tourists (in millions) visiting Uzbekistan from 2015 to 2024. Numbers rose from 2 million in 2015 to 6.7 million in 2019, dropped sharply to 0.5 million in 2021, then recovered to 8.3 million by 2024.",
     exampleOutput:
       "The line graph illustrates the number of international tourists visiting Uzbekistan between 2015 and 2024, measured in millions.\n\nOverall, tourist numbers rose substantially over the period, with a temporary but severe interruption around 2021, likely linked to travel restrictions. By the end of the period, arrivals had reached a new peak, surpassing pre-disruption levels.\n\nIn 2015, roughly 2 million tourists visited the country, and this figure climbed steadily each year to reach 6.7 million by 2019, an increase of more than three times in just four years. This upward trend, however, was dramatically reversed in 2021, when arrivals plummeted to a mere 0.5 million — the lowest point on the graph.\n\nFollowing this sharp dip, the number of tourists rebounded strongly, climbing back above pre-2021 levels within a few years. By 2024, arrivals had reached an all-time high of 8.3 million, roughly 24% higher than the 2019 peak, indicating a robust recovery in Uzbekistan's tourism sector.\n\nWhy this works:\n- Opens with a paraphrase, not a copy of the prompt.\n- Overview covers the two biggest features (long-term growth + the 2021 anomaly) without listing every number.\n- Body paragraphs group data logically (pre-dip vs. post-dip) rather than just going year by year.\n- Uses varied language: \"climbed steadily\", \"plummeted\", \"rebounded strongly\" instead of repeating \"increased/decreased\".",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Writing Task 1", "Band 7+", "Graphs", "Academic"],
-    upvotes: 412,
-    copyCount: 1830,
+    upvotes: 0,
+    copyCount: 0,
     author: "Dilnoza Karimova",
     createdAt: "2025-11-03T09:15:00.000Z",
     comments: [
@@ -85,21 +96,36 @@ Return your response in this exact structure:
 
 Be honest — do not inflate the score. Essay question:
 """
-{{Paste the essay question here}}
+{{essay_question}}
 """
 
 My essay:
 """
-{{Paste your full essay here}}
+{{essay_text}}
 """`,
+    variables: [
+      {
+        key: "essay_question",
+        label: "Insho savoli (Task 2)",
+        type: "textarea",
+        placeholder: "Some people believe that…",
+      },
+      {
+        key: "essay_text",
+        label: "Insho matningiz",
+        type: "textarea",
+        placeholder: "Inshoingizni to'liq shu yerga joylashtiring…",
+        helpText: "Kamida 250 so'z — IELTS Task 2 talabi.",
+      },
+    ],
     exampleInput:
       "Question: Some people believe that unpaid community service should be a compulsory part of high school programmes. To what extent do you agree or disagree?\n\nEssay: In many countries young people don't want to help other people. Some people think school must force students to do free work in community. I agree with this idea because it have many benefits for students and society.\n\nFirstly, when students do community service they learn how to work with other people. For example if a student help in a hospital, he will understand how doctors and nurses work hard every day. This experience can make student more responsible and hardworking in future life.\n\nSecondly, community service also good for society because there is many old people or poor people who need help but government cannot help everyone. If schools organize this, students can clean parks, teach small kids or help in orphanage, and society become better.\n\nHowever, some people say students already have very busy schedule with exams and homework, so adding community service is not good idea. But I think school can organize it during holidays or weekends so it will not effect study.\n\nIn conclusion, I believe compulsory community service in high school is a good idea because it help students grow and also help society, so government should make this policy in every school.",
     exampleOutput:
       "1. **Task Response — Band 6.0**\nThe essay addresses the question and takes a clear position (agree), with two relevant supporting ideas (personal growth, benefit to society) and one counter-argument. However, ideas remain somewhat general and under-developed — the hospital example is not fully extended with specific consequences.\n\n2. **Coherence & Cohesion — Band 6.0**\nParagraphing is logical (intro, 2 body paragraphs, counter-argument, conclusion), and basic linkers are used (\"Firstly\", \"Secondly\", \"However\", \"In conclusion\"). Cohesion is mechanical rather than fluid — try substituting some linkers with reference words (\"This experience...\", \"Such a policy...\").\n\n3. **Lexical Resource — Band 5.5**\nVocabulary is adequate but repetitive (\"good\", \"help\" used many times) and includes several word-form errors (\"it have\", \"is not effect\"). Wider paraphrasing of the question is needed in the introduction.\n\n4. **Grammatical Range & Accuracy — Band 5.5**\nSentence structures are mostly simple/compound; several agreement errors (\"it have many benefits\", \"become better\", \"student more responsible\"). Complex sentences are attempted but contain errors.\n\n5. **Overall Band Score: 5.5**\n\n6. **Top 5 Corrections**\n- \"it have many benefits\" → \"it has many benefits\" (subject-verb agreement).\n- \"there is many old people\" → \"there are many elderly people\" (agreement + more formal vocabulary).\n- \"it will not effect study\" → \"it will not affect their studies\" (affect vs. effect + article).\n- \"school must force students to do free work\" → \"schools should require students to undertake unpaid work\" (more academic register).\n- \"I agree with this idea because it have many benefits\" → \"I firmly agree with this view, as compulsory service offers substantial benefits\" (adds hedging/stance language expected at higher bands).\n\n7. **Band 8 Rewrite of Paragraph 2:**\n\"One of the clearest advantages of mandatory community service is the interpersonal and professional skills it fosters. A student volunteering in a hospital, for instance, gains first-hand insight into the dedication required of healthcare workers, which can cultivate a stronger sense of responsibility and work ethic that carries into adulthood.\"",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
     tags: ["Writing Task 2", "Band Descriptors", "Essay Feedback", "Grammar"],
-    upvotes: 587,
-    copyCount: 2410,
+    upvotes: 0,
+    copyCount: 0,
     author: "Aziz Rahimov",
     createdAt: "2025-09-22T11:00:00.000Z",
     chainId: "ielts-writing-task2",
@@ -140,7 +166,7 @@ My essay:
       "Ko'p talabalar speaking mashq qilish uchun sherik topa olmaydi. Bu prompt AI'ni to'liq imtihon formatiga o'xshatib ishlaydi: avval cue card beradi, talabaga 1 daqiqa fikrlash vaqtini 'beradi' (matn orqali), keyin talaba javobini yozib yuborgach, uni tinglagandek fikr-mulohaza va tabiiy Part 3 savollarini davom ettiradi.",
     template: `You are my IELTS Speaking practice partner. Simulate a real Speaking test:
 
-Step 1: Give me one realistic IELTS Part 2 cue card on the topic of {{topic, e.g. "a memorable trip"}}, formatted exactly like the real test (Describe a... / You should say: .../ and explain...).
+Step 1: Give me one realistic IELTS Part 2 cue card on the topic of {{topic}}, formatted exactly like the real test (Describe a... / You should say: .../ and explain...).
 
 Step 2: Tell me to take 1 minute to prepare and then speak/write for 1-2 minutes.
 
@@ -153,14 +179,22 @@ Step 3: After I reply with my answer (I will type what I would say), evaluate it
 Step 4: Then ask me 3 natural Part 3 follow-up discussion questions related to the same topic, one at a time, waiting for my answer style — but for now, list all 3 so I can prepare.
 
 Start with Step 1 and Step 2 now.`,
+    variables: [
+      {
+        key: "topic",
+        label: "Mavzu",
+        type: "text",
+        placeholder: "a memorable trip",
+      },
+    ],
     exampleInput:
       "topic: a piece of technology that has changed your life\n\n(My spoken answer): I want to talk about my smartphone. I got my first smartphone when I was 15 years old, it was a birthday gift from my parents. I use it every day for study, for example I watch English lessons on YouTube and I use apps like Duolingo. I also use it to talk with my friends and family who live far away. I think this technology changed my life because before I didn't have easy access to information, but now I can learn anything anytime. Also it help me prepare for IELTS exam because I listen to podcast every day in bus.",
     exampleOutput:
       "**Cue Card:**\nDescribe a piece of technology that has changed your life.\nYou should say:\n- what it is\n- when you started using it\n- how often you use it\nand explain how it has changed your life.\n\nYou have 1 minute to prepare. Then speak for 1-2 minutes.\n\n---\n**Feedback on your answer:**\n\n**Fluency & Coherence — Band 6.5:** Good natural flow and the answer covers all bullet points. Add more linking phrases like \"What's more\" or \"On top of that\" instead of repeating \"Also\" twice.\n\n**Lexical Resource — Band 6.0:** \"help me prepare\" is a bit basic — try \"has been instrumental in helping me prepare\". Replace \"talk with\" → \"stay in touch with\". Replace \"changed my life\" (used twice) with \"transformed the way I learn\" the second time.\n\n**Grammatical Range — Band 6.0:** \"it help me\" → \"it helps me\" (subject-verb agreement, third person -s). \"I listen to podcast\" → \"I listen to podcasts\" (plural noun needed).\n\n**Estimated Band for this response: 6.5**\n\n---\n**Part 3 Discussion Questions (same topic):**\n1. How has technology changed the way young people in your country communicate?\n2. Do you think older people find it harder to adapt to new technology? Why?\n3. What technology do you think will be common in 20 years that isn't common today?",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Speaking Part 2", "Cue Card", "Roleplay", "Fluency"],
-    upvotes: 356,
-    copyCount: 1590,
+    upvotes: 0,
+    copyCount: 0,
     author: "Shahnoza Islomova",
     createdAt: "2025-12-01T13:45:00.000Z",
     comments: [
@@ -198,16 +232,24 @@ For my text, do the following:
 
 My sentence/paragraph:
 """
-{{Paste your sentence or paragraph here}}
+{{text_to_improve}}
 """`,
+    variables: [
+      {
+        key: "text_to_improve",
+        label: "Gap yoki paragraf",
+        type: "textarea",
+        placeholder: "Yaxshilamoqchi bo'lgan inglizcha matningiz…",
+      },
+    ],
     exampleInput:
       "Many young people spend a lot of time on social media, and this is a big problem because it can be bad for their mental health.",
     exampleOutput:
       "**Low-level words identified:** many, a lot of, big, bad\n\n**Band 6 version:**\nA large number of young people spend a lot of time on social media, and this is a serious problem because it can negatively affect their mental health.\n\n**Band 7.5 version:**\nA significant proportion of young people devote considerable time to social media platforms, which raises concerns as it can have a detrimental impact on their psychological well-being.\n\n**Band 9 version:**\nAn overwhelming majority of adolescents dedicate a disproportionate amount of their day to social media platforms, a trend that has become a pressing concern given its well-documented capacity to undermine mental well-being.\n\n**Why each upgrade works:**\n- \"overwhelming majority\" instead of \"many\" → gives a precise sense of scale rather than a vague quantity.\n- \"dedicate a disproportionate amount of their day\" instead of \"spend a lot of time\" → \"dedicate\" collocates naturally with time/effort and \"disproportionate\" adds a critical nuance.\n- \"pressing concern\" instead of \"big problem\" → academic register; \"pressing\" implies urgency without being informal.\n- \"undermine mental well-being\" instead of \"bad for mental health\" → \"undermine\" is a strong, precise verb frequently used in academic writing about negative effects; \"well-being\" is the standard academic collocation (not just \"health\").\n\n**3 reusable synonyms/collocations for \"social media\" topics:**\n1. \"screen time\" — e.g. \"excessive screen time among teenagers\"\n2. \"digital dependency\" — e.g. \"growing digital dependency\"\n3. \"online engagement\" — e.g. \"unregulated online engagement\"",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Vocabulary", "Collocations", "Lexical Resource", "Paraphrasing"],
-    upvotes: 298,
-    copyCount: 1320,
+    upvotes: 0,
+    copyCount: 0,
     author: "Sevinch Nazarova",
     createdAt: "2026-01-14T08:30:00.000Z",
     comments: [],
@@ -235,16 +277,25 @@ Produce a "Coherence Map":
 
 My essay:
 """
-{{Paste your full essay here}}
+{{essay_text}}
 """`,
+    variables: [
+      {
+        key: "essay_text",
+        label: "Insho matningiz",
+        type: "textarea",
+        placeholder: "Inshoingizni to'liq shu yerga joylashtiring…",
+        helpText: "Kamida 250 so'z — IELTS Task 2 talabi.",
+      },
+    ],
     exampleInput:
       "Some people think governments should spend money on public transport instead of roads. I agree with this. Public transport is good for environment. Also roads make traffic jam in city. Government must think about future not only about cars. Many countries already use bus and train more. This is why I agree with this statement and government should spend more money on public transport.",
     exampleOutput:
       "**Coherence Map:**\n\n**Paragraph structure detected:** This appears to be written as a single paragraph rather than an introduction + body + conclusion, which itself limits the coherence score — IELTS Task 2 expects at least 4 distinct paragraphs.\n\n**Topic sentence check:** \"I agree with this\" functions as a thesis statement, but it appears too early with no context paraphrase first — the reader doesn't yet know what \"this\" refers to in isolation.\n\n**Sentence-by-sentence support:**\n- \"Public transport is good for environment\" — supports the stance, but is a bare assertion with no development (no explanation of HOW/WHY).\n- \"Also roads make traffic jam in city\" — a second, different idea introduced abruptly with \"Also\" — this is a new argument, not a continuation, so it should start a new paragraph.\n- \"Government must think about future not only about cars\" — this shifts from the transport/environment argument to a values-based claim without a bridge sentence — a coherence gap.\n\n**Cohesive devices found:** \"Also\" (used once, fine), \"This is why\" (used to signal conclusion — good instinct, but arrives too abruptly since ideas weren't clearly separated first).\n\n**Missing transitions flagged:** No paragraph breaks at all — this is the single biggest coherence issue. There is no visible transition between the environmental argument and the traffic-jam argument.\n\n**Golden thread check:** The conclusion (\"government should spend more money on public transport\") does match the opening stance — good news, the argument doesn't contradict itself, it's just underdeveloped and unseparated.\n\n**Coherence & Cohesion estimate: Band 5.0** — ideas are logically connected in the writer's mind but not yet organized into paragraphs or explicitly linked for the reader.\n\n**Rewritten weakest transition:**\nOriginal: \"...Public transport is good for environment. Also roads make traffic jam in city...\"\nImproved: \"Firstly, public transport produces significantly lower emissions per passenger than private cars, making it a more sustainable choice for growing cities. In addition to these environmental benefits, an over-reliance on roads tends to worsen traffic congestion, further strengthening the case for redirecting government funding.\"",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
     tags: ["Coherence", "Cohesion", "Essay Structure", "Linking Words"],
-    upvotes: 231,
-    copyCount: 940,
+    upvotes: 0,
+    copyCount: 0,
     author: "Aziz Rahimov",
     createdAt: "2026-02-02T15:20:00.000Z",
     comments: [
@@ -282,16 +333,24 @@ My essay:
 
 Problem:
 """
-{{Paste your SAT Math problem here, including answer choices if multiple choice}}
+{{math_problem}}
 """`,
+    variables: [
+      {
+        key: "math_problem",
+        label: "SAT Math masalasi",
+        type: "textarea",
+        placeholder: "Masala matni va (bo'lsa) A–D variantlari…",
+      },
+    ],
     exampleInput:
       "If 3(x - 4) = 2x + 5, what is the value of x?\nA) -17  B) -7  C) 7  D) 17",
     exampleOutput:
       "**Concept tested:** Linear equations — distributing and solving for a single variable.\n\n**Step-by-step full solution:**\n3(x - 4) = 2x + 5\n→ 3x - 12 = 2x + 5 (distribute the 3)\n→ 3x - 2x = 5 + 12 (subtract 2x from both sides, add 12 to both sides)\n→ x = 17\n\n**Fast SAT method:** Plug in the answer choices directly. Starting with D) 17: 3(17-4) = 3(13) = 39, and 2(17)+5 = 39. ✓ Match found in one try since D is often a good starting guess when the equation looks straightforward — this avoids algebra entirely.\n\n**Common mistake:** Students often forget to distribute the 3 across both terms inside the parentheses, mistakenly writing \"3x - 4 = 2x + 5\", which gives x = 9 (not an answer choice, which should be a red flag that a distribution error was made) — or they distribute correctly but make a sign error subtracting 2x, landing on choice B) -7.\n\n**Final Answer: D) 17**\n\n**Similar practice problem:**\n\"If 4(y + 3) = 3y + 19, what is the value of y?\"\n(Answer: y = 7 — try it yourself first!)",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["SAT Math", "Algebra", "Step-by-Step", "Time-Saving Tricks"],
-    upvotes: 521,
-    copyCount: 2680,
+    upvotes: 0,
+    copyCount: 0,
     author: "Bekzod Tursunov",
     createdAt: "2025-10-18T10:00:00.000Z",
     comments: [
@@ -332,21 +391,35 @@ Respond in this format:
 
 Passage:
 """
-{{Paste the passage excerpt here}}
+{{passage_text}}
 """
 
 Question and choices:
 """
-{{Paste the question and answer choices here}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "passage_text",
+        label: "Passage matni",
+        type: "textarea",
+        placeholder: "Passage'ni shu yerga joylashtiring…",
+      },
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Savol va A–D variantlari…",
+      },
+    ],
     exampleInput:
       "Passage: \"Marine biologists once assumed that deep-sea creatures, living in an environment with no sunlight, would evolve to lose their eyes entirely. Yet recent expeditions have found that many deep-sea species retain highly sensitive eyes, some capable of detecting the faintest bioluminescent flashes produced by other organisms. Far from being vestigial, these eyes appear to be finely tuned instruments for a world lit only by the occasional flicker of living light.\"\n\nQuestion: Which choice best supports the idea that the passage's author would disagree with the original assumption made by marine biologists?\nA) Deep-sea creatures live in complete darkness at all times.\nB) The eyes of many deep-sea species are adapted to detect very small amounts of light.\nC) Bioluminescence is produced by nearly all ocean organisms.\nD) Marine biologists have stopped studying deep-sea creatures entirely.",
     exampleOutput:
       "**What the question is really asking:** Find the piece of evidence that most directly shows the old assumption (\"eyes would disappear\") was wrong.\n\n**Key evidence in the passage:** \"many deep-sea species retain highly sensitive eyes, some capable of detecting the faintest bioluminescent flashes\" — this directly contradicts the idea that eyes would be lost.\n\n**Evaluating all 4 choices:**\n- A) \"Deep-sea creatures live in complete darkness at all times\" — **Opposite/Contradicted.** The passage explicitly mentions \"occasional flicker of living light\", so it's not complete darkness at all times.\n- B) \"The eyes of many deep-sea species are adapted to detect very small amounts of light\" — **Supported.** This directly paraphrases \"highly sensitive eyes... capable of detecting the faintest bioluminescent flashes.\"\n- C) \"Bioluminescence is produced by nearly all ocean organisms\" — **Out of Scope.** The passage never claims bioluminescence is produced by \"nearly all\" organisms, only that it exists and is detected.\n- D) \"Marine biologists have stopped studying deep-sea creatures entirely\" — **Out of Scope / Too Extreme.** Nothing in the passage supports this; in fact \"recent expeditions\" implies ongoing study.\n\n**Final Answer: B** — it is the only choice directly and fully supported by a specific quoted detail in the passage.\n\n**Strategy tip:** This question demonstrates the \"Out of Scope trap\" (choices C and D) and the \"Opposite trap\" (choice A) — always ask \"does the passage literally say this, or am I assuming it?\" before selecting an inference answer.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
     tags: ["SAT Reading", "Inference", "Evidence-Based", "Critical Reading"],
-    upvotes: 344,
-    copyCount: 1470,
+    upvotes: 0,
+    copyCount: 0,
     author: "Nilufar Ergasheva",
     createdAt: "2025-11-27T09:30:00.000Z",
     comments: [],
@@ -373,16 +446,24 @@ Respond with:
 
 Problem:
 """
-{{Paste your SAT Math problem here}}
+{{math_problem}}
 """`,
+    variables: [
+      {
+        key: "math_problem",
+        label: "SAT Math masalasi",
+        type: "textarea",
+        placeholder: "Masala matni…",
+      },
+    ],
     exampleInput:
       "For what value of x do the graphs of y = 2x + 3 and y = -x + 9 intersect?",
     exampleOutput:
       "**Traditional algebraic method:**\nSet the two expressions equal: 2x + 3 = -x + 9 → 3x = 6 → x = 2.\n\n**Desmos calculator hack:**\n1. Open Desmos (built into the Digital SAT testing app).\n2. In row 1, type: `y=2x+3`\n3. In row 2, type: `y=-x+9`\n4. Desmos will automatically plot both lines and show a small draggable point at their intersection — click on that intersection point and Desmos displays its exact coordinates, e.g. `(2, 7)`.\n5. Read off the x-value directly: **x = 2**. No algebra required.\n\n**Time comparison:** Algebra ≈ 30-45 seconds (writing steps, solving for x). Desmos hack ≈ 10-15 seconds (typing two lines and clicking the intersection point) — roughly 2-3x faster once you're used to the interface.\n\n**When NOT to use Desmos:** For questions asking about abstract properties (e.g. \"which statement must be true for all values of x\") or requiring an exact fraction/radical answer that the graph only shows as a rounded decimal, algebra is safer — Desmos intersection points sometimes display approximate decimals that can mislead you on grid-in questions requiring exact fractions.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["SAT Math", "Desmos", "Digital SAT", "Calculator Strategy"],
-    upvotes: 467,
-    copyCount: 2050,
+    upvotes: 0,
+    copyCount: 0,
     author: "Bekzod Tursunov",
     createdAt: "2026-01-08T12:10:00.000Z",
     comments: [
@@ -417,16 +498,24 @@ Respond with:
 
 Sentence and choices:
 """
-{{Paste the sentence with blank/bolded word and the 4 answer choices here}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Bo'sh joyli gap va 4 ta variant…",
+      },
+    ],
     exampleInput:
       "Despite the committee's initial skepticism, the young scientist's data was so ______ that even her harshest critics were forced to reconsider their objections.\nA) ambiguous  B) compelling  C) redundant  D) trivial",
     exampleOutput:
       "**Context clue:** \"Despite... initial skepticism\" signals contrast, and \"even her harshest critics were forced to reconsider\" tells us the data must have been extremely strong/persuasive — strong enough to change the minds of people who wanted to disagree.\n\n**My own prediction before choices:** The blank needs a word meaning something like \"very convincing\" or \"powerfully persuasive.\"\n\n**Substitution test:**\n- A) \"ambiguous\" (unclear, open to interpretation) — doesn't fit; unclear data wouldn't force critics to change their minds, it would give them MORE room to object.\n- B) \"compelling\" (convincing, demanding attention) — fits perfectly; matches \"forced to reconsider.\"\n- C) \"redundant\" (unnecessary repetition) — doesn't fit; redundant data would be dismissed, not taken seriously.\n- D) \"trivial\" (unimportant) — doesn't fit; the opposite meaning is needed since critics reconsidered because of the data's importance, not its triviality.\n\n**Final Answer: B) compelling** — it's the only word matching both the contrast signal (\"despite... skepticism\") and the strong effect described (\"forced to reconsider\").\n\n**Memory tip:** \"Compelling\" shares a root with \"compel\" (to force) — a compelling argument is one so strong it \"compels\" you to believe it, exactly like the sentence describes.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["SAT Reading", "Vocabulary", "Words in Context", "Context Clues"],
-    upvotes: 275,
-    copyCount: 1180,
+    upvotes: 0,
+    copyCount: 0,
     author: "Nilufar Ergasheva",
     createdAt: "2026-02-11T17:00:00.000Z",
     comments: [],
@@ -454,16 +543,24 @@ Respond with:
 
 Question:
 """
-{{Paste the sentence, underlined portion, and 4 answer choices here}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Gap, tagiga chizilgan qism va 4 ta variant…",
+      },
+    ],
     exampleInput:
       "The collection of rare manuscripts, discovered in the basement of the old library, [were] carefully catalogued by a team of archivists.\nA) NO CHANGE  B) was  C) have been  D) are",
     exampleOutput:
       "**Rule category:** Subject-verb agreement across an interrupting phrase. The verb must agree with the true subject (\"collection\"), not the noun closest to it (\"manuscripts\") inside the interrupting phrase \"of rare manuscripts, discovered in the basement of the old library.\"\n\n**Why the correct choice is right:** The subject of the sentence is \"The collection\" (singular), even though \"manuscripts\" (plural) sits right before the verb. \"Collection... was carefully catalogued\" is the grammatically correct singular pairing. Choice B) \"was\" is correct.\n\n**Why each wrong choice fails:**\n- A) \"were\" — incorrectly agrees with the plural \"manuscripts\" instead of the singular subject \"collection.\"\n- C) \"have been\" — also plural, same agreement error, plus an unnecessary tense shift.\n- D) \"are\" — plural and present tense, doubly incorrect for a singular subject in a past-tense narrative.\n\n**Memory rule:** \"Cross out everything between the commas — whatever verb agrees with what's left is your answer.\"\n\n**2 new practice sentences (self-test, no answers given):**\n1. \"The basket of apples, along with several bags of oranges, [was/were] left on the counter overnight.\" A) NO CHANGE (were) B) was C) have been D) are being\n2. \"A row of old houses, weathered by decades of coastal storms, [stand/stands] at the edge of the cliff.\" A) NO CHANGE (stand) B) stands C) has stood D) standing",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
     tags: ["SAT Grammar", "Writing & Language", "Subject-Verb Agreement", "Diagnostics"],
-    upvotes: 189,
-    copyCount: 860,
+    upvotes: 0,
+    copyCount: 0,
     author: "Aziz Rahimov",
     createdAt: "2026-03-01T14:40:00.000Z",
     comments: [],
@@ -496,15 +593,23 @@ Question:
 
 Insho mavzusi:
 """
-{{Insho mavzusini shu yerga yozing}}
+{{insho_mavzusi}}
 """`,
+    variables: [
+      {
+        key: "insho_mavzusi",
+        label: "Insho mavzusi",
+        type: "text",
+        placeholder: "Masalan: Vatan ostonadan boshlanadi",
+      },
+    ],
     exampleInput: "Kitob o'qishning inson kamolotidagi o'rni",
     exampleOutput:
       "**Kirish qismi:**\nInsoniyat tarixi davomida kitob doimo bilim va ma'naviyat manbai bo'lib kelgan. Ayniqsa, tez o'zgaruvchan zamonamizda, telefon va internet insonlar e'tiborini tortayotgan bir paytda, kitob o'qishning ahamiyati haqida ko'proq o'ylash kerak emasmi? Mazkur inshoda kitobning inson kamolotiga ta'siri haqida fikr yuritaman.\n*Bu yerga nima yozish kerak: mavzuni o'z so'zlaringiz bilan qisqacha tanishtiring va nega bu mavzu muhimligini bir gapda ayting.*\n\n**Asosiy qism:**\n\n1-band: Kitob insonning dunyoqarashini kengaytiradi.\nDalil: Turli mamlakatlar, davrlar va fanlar haqidagi kitoblarni o'qish orqali inson o'z atrofidagi voqealarni chuqurroq tushuna boshlaydi.\nMaqol: \"Kitob — bilim manbai\" xalq maqolida aytilganidek, u insonni ma'naviy boyitadi.\n*Bu yerga nima yozish kerak: o'zingiz o'qigan bironta kitobni misol qilib keltiring — u sizga qanday ta'sir qildi?*\n\n2-band: Kitob nutq va tafakkur madaniyatini shakllantiradi.\nDalil: Ko'p o'qigan inson fikrlarini aniq va chiroyli bayon eta oladi, chunki u yozuvchilarning uslubidan o'rganadi.\n*Bu yerga nima yozish kerak: sinfdoshingiz yoki tanishingiz orasida ko'p o'qiydigan va notiq odamni misol qilib ayting.*\n\n3-band: Kitob insonni yolg'izlikda ham ma'naviy hamroh bo'ladi.\nDalil: Qiyin damlarda kitob qahramonlarining hayotidan ibrat olish, ularning tajribasidan xulosa chiqarish mumkin.\nAdabiy misol: Abdulla Qodiriyning \"O'tkan kunlar\" romani qahramonlari orqali sadoqat va vatanparvarlik haqida chuqur fikrlash mumkin.\n*Bu yerga nima yozish kerak: sevimli adabiy qahramoningizni va undan olgan saboqni yozing.*\n\n**Xulosa qismi:**\nXulosa qilib aytganda, kitob nafaqat bilim, balki ma'naviy kamolot manbai hamdir. Zamonaviy texnologiyalar qanchalik rivojlanmasin, kitobning o'rnini hech narsa bosa olmaydi. Shaxsan men, har bir inson kuniga bo'lsa-da yarim soat kitob o'qishga vaqt ajratishi kerak, deb hisoblayman, chunki bu — kelajagimizga qilingan eng arzon va eng foydali sarmoyadir.\n*Bu yerga nima yozish kerak: o'z shaxsiy pozitsiyangizni va bitta amaliy tavsiyani qo'shing.*",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Insho", "Ona tili", "Reja", "Tuzilma"],
-    upvotes: 398,
-    copyCount: 1960,
+    upvotes: 0,
+    copyCount: 0,
     author: "Gulnora Abdullayeva",
     createdAt: "2025-09-05T07:00:00.000Z",
     comments: [
@@ -546,15 +651,30 @@ Quyidagi tuzilmada chuqur obraz tahlili tayyorlab bering:
 
 Asar va qahramon:
 """
-{{Asar nomi va tahlil qilinishi kerak bo'lgan qahramon nomini shu yerga yozing}}
+Asar: {{asar_nomi}}
+Qahramon: {{qahramon}}
 """`,
+    variables: [
+      {
+        key: "asar_nomi",
+        label: "Asar va muallif",
+        type: "text",
+        placeholder: "Abdulla Qodiriy, \"O'tkan kunlar\"",
+      },
+      {
+        key: "qahramon",
+        label: "Qahramon (obraz)",
+        type: "text",
+        placeholder: "Otabek",
+      },
+    ],
     exampleInput: "Abdulla Qodiriy, \"O'tkan kunlar\" — Otabek obrazi",
     exampleOutput:
       "**Umumiy tavsifi:** Otabek — asarning bosh qahramoni, Toshkentlik boy savdogar oilasidan chiqqan, ziyoli va ma'rifatparvar yosh yigit. U romanda ham shaxsiy sevgi tarixi, ham ijtimoiy-siyosiy voqealar markazida turadi.\n\n**Xarakter xususiyatlari:**\n1. *Vatanparvarlik va millat taqdiriga qayg'urish* — Otabek Marg'ilon va Qo'qon o'rtasidagi ichki nizolarni, mahalliy hukmdorlarning bir-biriga adovatini ko'rib, xalqning birligi yo'qligidan azob chekadi.\n2. *Sadoqat va vafodorlik* — Kumushga bo'lgan chin sevgisi, hatto Zaynab bilan ikkinchi nikohga majbur bo'lgandan keyin ham, uning qalbidagi sof tuyg'ularni o'zgartira olmaydi.\n3. *Adolat va insofni qadrlash* — Homid kabi makkor va manfaatparast kishilarga qarshi turishga harakat qiladi, garchi ko'pincha ularning fitnalariga qurbon bo'lsa ham.\n\n**Ichki ziddiyat:** Otabekning asosiy ichki kurashi — shaxsiy baxt (Kumushga bo'lgan sevgisi) bilan ijtimoiy majburiyat va oila obro'si (ota-onasi tomonidan tanlangan Zaynab bilan nikoh) o'rtasida. Bu ziddiyat uni butun roman davomida ikkilanishga va ichki iztirobga olib keladi.\n\n**Boshqa qahramonlar bilan munosabati:**\n- *Kumush bilan* — bu munosabat orqali muallif chin, sof sevgi obrazini yaratadi va uni davr taqozosi (ko'p xotinlilik, oilaviy kelishuvlar) bilan to'qnashtiradi.\n- *Homid bilan* — bu qarama-qarshilik orqali muallif yaxshilik va yomonlik, halollik va makkorlik kurashini ko'rsatadi; Homidning fitnalari Otabek boshiga ko'plab kulfatlar keltiradi.\n\n**Asar g'oyasidagi o'rni:** Qodiriy Otabek obrazi orqali XIX asr oxiri — XX asr boshidagi turkiston jamiyatining ichki nizolari, ma'rifatsizligi va ayni paytda yosh avlodning yangilanishga bo'lgan intilishini ko'rsatadi. Otabek — millatning yorug' kelajakka umidi timsoli.\n\n**Insho uchun tayyor xulosa jumlasi:**\n\"Otabek obrazi orqali Abdulla Qodiriy nafaqat bir yigitning fojiali sevgi tarixini, balki butun bir davr — parokandalik va ma'rifatsizlik girdobidagi millatning uyg'onishga bo'lgan chuqur ehtiyojini mahorat bilan tasvirlab bergan.\"",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Adabiyot", "Obraz tahlili", "Badiiy asar", "Adabiy tahlil"],
-    upvotes: 312,
-    copyCount: 1410,
+    upvotes: 0,
+    copyCount: 0,
     author: "Gulnora Abdullayeva",
     createdAt: "2025-10-10T06:45:00.000Z",
     comments: [
@@ -590,15 +710,23 @@ Muhim: fikrlarni men uchun o'ylab topmang, faqat meni o'z fikrlarimni topishga y
 
 Erkin mavzu:
 """
-{{Erkin insho mavzusini shu yerga yozing}}
+{{insho_mavzusi}}
 """`,
+    variables: [
+      {
+        key: "insho_mavzusi",
+        label: "Erkin insho mavzusi",
+        type: "text",
+        placeholder: "Masalan: Kitob — eng yaqin do'st",
+      },
+    ],
     exampleInput: "Men uchun oila nima anglatadi",
     exampleOutput:
       "**5 ta yo'naltiruvchi savol:**\n1. Oila so'zini eshitganingizda, xayolingizga birinchi bo'lib qanday manzara yoki lavha keladi?\n2. Oilangiz bilan bog'liq eng yodingizda qolgan (yoqimli yoki qiyin) bitta voqeani eslay olasizmi?\n3. Oilangizdagi kimdir sizga hayotiy saboq bergan payt bo'lganmi? Bu qanday saboq edi?\n4. Oila sizni qanday inson bo'lib shakllanishingizga qanday ta'sir ko'rsatgan deb o'ylaysiz?\n5. Agar oila tushunchasini bitta so'z yoki ramz bilan ifodalasangiz, bu nima bo'lardi va nega?\n\n**3 ta ochilish jumlasi variantlari:**\n- *Savol bilan:* \"Oila — bu shunchaki qon-qarindoshlikmi, yoki undan ko'ra kattaroq narsami?\"\n- *Hikoya bilan:* \"Har oqshom oilamiz bir dasturxon atrofida yig'ilganda, men his qiladigan tinchlikni so'z bilan ifodalash qiyin.\"\n- *Iqtibos/maqol bilan:* \"'Uyni ko'rma, uydagini ko'r', deydi xalqimiz — va men bu gapning chuqur ma'nosini oilamda amalda ko'rganman.\"\n\n**Tuzilma maslahati:** Mulohaza inshosida uchta unsurni muvozanatlang: (1) shaxsiy his-tuyg'u — nima his qilyapsiz, (2) aniq tajriba — buni his qilishga sabab bo'lgan voqea yoki lavha, (3) kengroq xulosa — bu shaxsiy tajriba orqali hayot yoki inson tabiati haqida qanday umumiy fikrga kelasiz. Faqat his-tuyg'u yozib, tajribasiz qolmang — va faqat voqea aytib, undan xulosa chiqarmasdan ham qoldirmang.\n\n**Yakunlash uchun 2 variant:**\n- *Kelajakka bog'lash:* insho oxirida, bu tushunchani (masalan, oilaviy qadriyatlarni) kelajakda o'zingiz qanday davom ettirishni xohlashingiz haqida bir-ikki gap qo'shing.\n- *Boshlanishga qaytish:* inshoning birinchi jumlasidagi obraz yoki savolga qaytib, endi unga yangi, chuqurroq javob bering — bu insho doirasini yaxlit yakunlaydi.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Mulohaza inshosi", "Ijodiy yozuv", "Erkin mavzu", "Ona tili"],
-    upvotes: 267,
-    copyCount: 1050,
+    upvotes: 0,
+    copyCount: 0,
     author: "Shahnoza Islomova",
     createdAt: "2026-02-20T10:15:00.000Z",
     comments: [
@@ -636,16 +764,24 @@ Javobingizni aynan shu tuzilmada bering:
 
 Test savoli:
 """
-{{Savol va variantlarni shu yerga joylashtiring}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Masala va A–D variantlari…",
+      },
+    ],
     exampleInput:
       "Agar 3x - 7 = 2x + 5 bo'lsa, x ning qiymatini toping.\nA) 2   B) 5   C) 12   D) 17",
     exampleOutput:
       "**Tekshirilayotgan mavzu:** Bir noma'lumli chiziqli tenglama — noma'lumni bir tomonga, ozod hadlarni ikkinchi tomonga o'tkazish.\n\n**To'liq yechim:**\n3x - 7 = 2x + 5\n→ 3x - 2x = 5 + 7 (2x ni chapga, -7 ni o'ngga o'tkazamiz, ishoralari almashadi)\n→ x = 12\n\n**Testda tezkor usul:** Variantlarni to'g'ridan-to'g'ri o'rniga qo'yish. C) 12 ni sinaymiz: chap tomon 3·12 - 7 = 29, o'ng tomon 2·12 + 5 = 29. Tenglik bajarildi — javob topildi. Bunday sodda tenglamalarda o'rniga qo'yish ba'zan algebraik yechimdan tezroq, ayniqsa variantlar butun sonlar bo'lsa.\n\n**Tuzoq variant:** Ko'pchilik B) 5 ni tanlaydi — chunki hadlarni o'tkazishda ishorani almashtirishni unutib, «3x - 2x = 5 - 7» deb hisoblaydi va x = -2 chiqadi, keyin ishorani e'tiborsiz qoldirib 5 ga yaqin variantni belgilaydi. Ikkinchi keng tarqalgan xato — 7 ni o'ngga o'tkazganda qo'shish o'rniga ayirish.\n\n**Mustaqil yechish uchun masala:**\n«Agar 5y + 3 = 3y + 19 bo'lsa, y ni toping.» (Javob: y = 8)",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["DTM", "Matematika", "Test yechish", "Tezkor usullar"],
-    upvotes: 634,
-    copyCount: 2870,
+    upvotes: 0,
+    copyCount: 0,
     author: "Bekzod Tursunov",
     createdAt: "2026-03-12T09:00:00.000Z",
     comments: [
@@ -687,16 +823,24 @@ Javobingizni shu tuzilmada bering:
 
 Test savoli:
 """
-{{Savol va variantlarni shu yerga joylashtiring}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Test savoli va A–D variantlari…",
+      },
+    ],
     exampleInput:
       "Qaysi qatordagi so'z tarkibida yasovchi qo'shimcha bor?\nA) kitoblar   B) ishchi   C) uyga   D) keldim",
     exampleOutput:
       "**Qoida:** So'z yasovchi va shakl yasovchi (lug'aviy shakl hosil qiluvchi) qo'shimchalarni farqlash.\n\n**Qoidaning qisqa izohi:** Yasovchi qo'shimcha so'zdan butunlay yangi ma'noli so'z hosil qiladi va uni lug'atga yangi so'z sifatida kiritish mumkin (ish → ishchi). Shakl yasovchi qo'shimcha esa so'zning ma'nosini o'zgartirmaydi, faqat uning grammatik shaklini (son, kelishik, shaxs) ko'rsatadi (kitob → kitoblar).\n\n**Variantlar tahlili:**\n- A) «kitoblar» — noto'g'ri. «-lar» ko'plik qo'shimchasi, u shakl yasovchi: «kitob» va «kitoblar» bir xil narsani, faqat sonini o'zgartirib bildiradi.\n- B) «ishchi» — **to'g'ri.** «-chi» yasovchi qo'shimcha: «ish» (harakat) so'zidan «ishchi» (shaxs, kasb egasi) degan butunlay yangi ma'noli so'z hosil bo'lgan.\n- C) «uyga» — noto'g'ri. «-ga» jo'nalish kelishigi qo'shimchasi, ya'ni shakl yasovchi; so'zning lug'aviy ma'nosi o'zgarmagan.\n- D) «keldim» — noto'g'ri. «-dim» o'tgan zamon va I shaxs birlik qo'shimchasi, bu ham shakl yasovchi.\n\n**To'g'ri javob: B) ishchi** — chunki faqat shu variantda qo'shimcha so'zning lug'aviy ma'nosini o'zgartirib, yangi so'z yasagan.\n\n**Mustaqil mashqlar:**\n1. Qaysi qatordagi barcha so'zlarda yasovchi qo'shimcha bor? A) suvchi, temirchi, bog'bon  B) uylar, bordim, kitobni  C) maktabda, o'quvchi, yozdi  D) gulzor, kelgan, daftarlar\n2. «Paxtakor» so'zidagi «-kor» qo'shimchasi qanday vazifa bajaradi? A) shakl yasovchi  B) so'z yasovchi  C) kelishik qo'shimchasi  D) egalik qo'shimchasi",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["DTM", "Ona tili", "Grammatika", "Test tahlili"],
-    upvotes: 498,
-    copyCount: 2140,
+    upvotes: 0,
+    copyCount: 0,
     author: "Gulnora Abdullayeva",
     createdAt: "2026-03-15T07:20:00.000Z",
     comments: [
@@ -732,15 +876,23 @@ Javobingizni shu tuzilmada bering:
 
 Mavzu yoki davr:
 """
-{{Mavzu yoki davrni shu yerga yozing}}
+{{mavzu_yoki_davr}}
 """`,
+    variables: [
+      {
+        key: "mavzu_yoki_davr",
+        label: "Mavzu yoki davr",
+        type: "text",
+        placeholder: "Masalan: Amir Temur davlati (1370–1405)",
+      },
+    ],
     exampleInput: "Amir Temur davlatining tashkil topishi va yuksalishi",
     exampleOutput:
       "**Xronologik jadval:**\n- 1336 — Amir Temurning Kesh (Shahrisabz) yaqinidagi Xoja Ilg'or qishlog'ida tug'ilishi\n- 1360-yillar boshi — Movarounnahrdagi siyosiy tarqoqlik, Temurning siyosat maydoniga chiqishi\n- 1370 — Balxda qurultoy, Amir Temurning oliy hokimiyatni qo'lga olishi va davlatga asos solinishi\n- 1370-1380-yillar — Movarounnahrni birlashtirish va chegaralarni mustahkamlash\n- 1380-1390-yillar — Oltin O'rdaga qarshi yurishlar, To'xtamishxon bilan kurash\n- 1402 — Anqara jangi, Boyazid I ustidan g'alaba\n- 1405 — Amir Temurning Xitoy yurishi arafasida O'trorda vafot etishi\n\n**Sabab-oqibat zanjiri:**\n- *Movarounnahrdagi tarqoqlik → 1370-yil hokimiyat.* XIV asr o'rtalarida o'lka mayda beklarga bo'linib, o'zaro urushlar davom etardi. Aynan shu tartibsizlik markazlashgan kuchli hokimiyatga ehtiyoj tug'dirdi va 1370-yilda Balx qurultoyi bilan yakunlandi.\n- *Markazlashgan davlat → tashqi yurishlar.* Ichkarida barqarorlik o'rnatilgach, davlat resurslari tashqi siyosatga yo'naltirildi — savdo yo'llari ustidan nazorat o'rnatish asosiy maqsadga aylandi.\n- *To'xtamish bilan ziddiyat → Oltin O'rdaga zarba.* Bir vaqtlar Temur qo'llab-quvvatlagan To'xtamishxon keyinchalik unga qarshi chiqdi; bu yurishlar Oltin O'rdaning zaiflashuviga va Buyuk Ipak yo'li savdosining janubga siljishiga olib keldi.\n\n**Chalkashtiriladigan sanalar:**\n- **1370 va 1405** — birinchisi davlatning *boshlanishi* (hokimiyatga kelish), ikkinchisi Temur hayotining *tugashi*. Ikkalasi ham «davlat tarixi burilishi» bo'lgani uchun chalkashtiriladi.\n- **1391 va 1395** — ikkalasi ham To'xtamishga qarshi yurishlar. Farqi: 1395-yilgi yurish hal qiluvchi bo'lib, Oltin O'rda poytaxtiga qattiq zarba berdi.\n- **1336 va 1370** — tug'ilgan yil va hokimiyatga kelgan yil. Orasi 34 yil.\n\n**Yodlash usullari:**\n- *1370* — «uch-yetti-nol»: uchta raqamni ketma-ket ayting, davlat «noldan» boshlangani bilan bog'lang.\n- *1402 Anqara* — «14-02» ni sana formatida (14-fevral) tasavvur qiling, shu kuni Boyazid mag'lub bo'lgan deb eslang.\n- *1405* — Temur 1336-da tug'ilgan, 1405-da vafot etgan: 1405 - 1336 = 69 yosh. Yoshni eslasangiz, sanani chiqarib olasiz.\n\n**Test savollari:**\n1. Amir Temur qaysi yilda oliy hokimiyatni qo'lga olgan? A) 1360  B) 1370  C) 1380  D) 1391\n2. Anqara jangi qaysi yilda bo'lib o'tgan? A) 1395  B) 1398  C) 1402  D) 1405\n3. Amir Temur qaysi shaharda vafot etgan? A) Samarqand  B) O'tror  C) Kesh  D) Balx\n4. 1370-yilgi qurultoy qaysi shaharda o'tkazilgan? A) Samarqand  B) Kesh  C) Balx  D) Buxoro\n5. Amir Temur necha yoshida vafot etgan? A) 62  B) 65  C) 69  D) 72\n\n**Javoblar:** 1-B, 2-C, 3-B, 4-C, 5-C",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
     tags: ["DTM", "Tarix", "Sanalar", "Yodlash"],
-    upvotes: 421,
-    copyCount: 1760,
+    upvotes: 0,
+    copyCount: 0,
     author: "Aziz Rahimov",
     createdAt: "2026-03-18T13:10:00.000Z",
     comments: [
@@ -768,11 +920,11 @@ Mavzu yoki davr:
     template: `Siz DTM imtihoniga tayyorlaydigan o'quv mentorsiz. Men sizga vaziyatimni aytaman, siz menga real bajarish mumkin bo'lgan takrorlash jadvalini tuzing.
 
 Mening ma'lumotlarim:
-- Imtihongacha qolgan kunlar: {{masalan, 30}}
-- Bloklarim: {{masalan, Matematika (asosiy), Fizika, Ona tili, Tarix}}
-- Kuniga ajrata oladigan vaqtim: {{masalan, 4 soat}}
-- O'zimni zaif his qiladigan mavzular: {{masalan, progressiyalar, kinematika, qo'shma gaplar}}
-- Kuchli mavzularim: {{masalan, foizlar, sintaksis}}
+- Imtihongacha qolgan kunlar: {{days_left}}
+- Bloklarim: {{bloklar}}
+- Kuniga ajrata oladigan vaqtim: {{daily_hours}}
+- O'zimni zaif his qiladigan mavzular: {{weak_topics}}
+- Kuchli mavzularim: {{strong_topics}}
 
 Menga quyidagilarni bering:
 1. **Umumiy strategiya** — qolgan vaqtni bloklar va mavzular orasida qanday taqsimlash kerak, zaif mavzularga necha foiz vaqt ajratish lozim.
@@ -782,14 +934,47 @@ Menga quyidagilarni bering:
 5. **Oxirgi 3 kun rejasi** — imtihon oldidan nima qilish va nima QILMASLIK kerak.
 
 Jadval real bo'lsin — kuniga 10 soat deb yozmang, men aytgan vaqtga sig'diring.`,
+    variables: [
+      {
+        key: "days_left",
+        label: "Imtihongacha qolgan kunlar",
+        type: "number",
+        placeholder: "30",
+      },
+      {
+        key: "daily_hours",
+        label: "Kuniga ajrata oladigan vaqt",
+        type: "text",
+        placeholder: "4 soat",
+      },
+      {
+        key: "bloklar",
+        label: "Fan bloklaringiz",
+        type: "text",
+        placeholder: "Matematika (asosiy), Fizika, Ona tili, Tarix",
+      },
+      {
+        key: "weak_topics",
+        label: "Zaif mavzular",
+        type: "text",
+        placeholder: "progressiyalar, kinematika, qo'shma gaplar",
+      },
+      {
+        key: "strong_topics",
+        label: "Kuchli mavzular",
+        type: "text",
+        placeholder: "foizlar, sintaksis",
+        required: false,
+      },
+    ],
     exampleInput:
       "Imtihongacha 30 kun. Bloklarim: Matematika (asosiy fan), Fizika, Ona tili, Tarix. Kuniga 4 soat vaqtim bor. Zaif mavzularim: progressiyalar, kinematika, qo'shma gaplar. Kuchli mavzularim: foizlar, sintaksis asoslari.",
     exampleOutput:
       "**Umumiy strategiya:**\n30 kun × 4 soat = 120 soat. Taqsimot: asosiy fan Matematikaga ~40% (48 soat), Fizikaga ~25% (30 soat), Ona tiliga ~20% (24 soat), Tarixga ~15% (18 soat). Zaif mavzularga umumiy vaqtning taxminan 60 foizini ajrating — kuchli mavzularni noldan o'rganish emas, faqat test bilan tekshirib turish kifoya. Oxirgi 5 kun butunlay takrorlash va to'liq test yechishga ketadi, yangi mavzu olinmaydi.\n\n**Haftalik tuzilma:**\n- Dushanba-Payshanba: yangi/zaif mavzu (2 soat) + oldingi mavzu takrori (1 soat) + test (1 soat)\n- Juma: faqat takrorlash kuni — hafta davomida o'tilgan hamma mavzu bo'yicha test\n- Shanba: to'liq blok testi, imtihon vaqti bilan (real sharoitda, telefonsiz)\n- Yakshanba: xatolar tahlili (2 soat) + yengil takrorlash (1 soat) + dam\n\n**Kunlik jadval (1-7 kun):**\n- **1-kun:** Progressiyalar — nazariya va formulalar (2 soat) · Foizlar bo'yicha 20 ta test (1 soat) · Ona tili: qo'shma gap turlari nazariyasi (1 soat)\n- **2-kun:** Kinematika — asosiy formulalar va grafiklar (2 soat) · Progressiyalar bo'yicha 15 ta masala (1 soat) · Tarix: XIV asr, xronologik jadval tuzish (1 soat)\n- **3-kun:** **Progressiyalar takrori** (1 soat) · Qo'shma gaplar — mashqlar (1.5 soat) · Matematika aralash test (1.5 soat)\n- **4-kun:** Kinematika masalalari (2 soat) · Ona tili: qo'shma gap testlari (1 soat) · Tarix takrori (1 soat)\n- **5-kun (juma):** Hafta mavzulari bo'yicha umumiy test: matematika 30 savol, fizika 20, ona tili 20, tarix 15 (3 soat) · Natija tahlili (1 soat)\n- **6-kun (shanba):** To'liq blok testi, imtihon formatida va vaqtida (3 soat) · Tanaffusdan keyin faqat javoblarni belgilash (1 soat)\n- **7-kun (yakshanba):** Xato javoblar tahlili (2 soat) · **Kinematika takrori** (1 soat) · Dam\n\n**Oraliqli takrorlash rejasi:**\n- *Progressiyalar:* 1-kun o'rganish → 3-kun takror → 8-kun takror → 17-kun takror → 27-kun yakuniy\n- *Kinematika:* 2-kun o'rganish → 7-kun takror → 12-kun takror → 21-kun takror → 28-kun yakuniy\n- *Qo'shma gaplar:* 1-kun nazariya → 4-kun mashq → 10-kun takror → 19-kun takror → 27-kun yakuniy\nQoida: har takrorlashda avval o'zingizni tekshiring (yopiq daftar bilan eslashga urinib ko'ring), keyingina konspektga qarang.\n\n**Oxirgi 3 kun:**\n*Qilish kerak:* faqat o'z konspektingiz va xatolar daftarini ko'rib chiqish; kuniga 1 ta yengil test; kuniga kamida 8 soat uxlash; imtihon kuni kerakli hujjatlarni oldindan tayyorlab qo'yish.\n*Qilmaslik kerak:* yangi mavzu boshlash (bu faqat sarosimaga soladi); yangi qiyin masalalar to'plamini yechishga urinish; tunda uxlamay takrorlash; imtihondan bir kun oldin to'liq test yechib charchash.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["DTM", "Takrorlash rejasi", "Vaqt boshqaruvi", "Oraliqli takrorlash"],
-    upvotes: 712,
-    copyCount: 3240,
+    upvotes: 0,
+    copyCount: 0,
     author: "Shahnoza Islomova",
     createdAt: "2026-03-22T10:45:00.000Z",
     comments: [
@@ -838,16 +1023,25 @@ Menga quyidagilarni bering:
 
 Mening xatolarim:
 """
-{{Xatolaringizni shu yerga ro'yxat qilib yozing}}
+{{xatolar_royxati}}
 """`,
+    variables: [
+      {
+        key: "xatolar_royxati",
+        label: "Xato javoblaringiz ro'yxati",
+        type: "textarea",
+        placeholder: "1) Savol… Mening javobim: B, To'g'ri javob: D\n2) …",
+        helpText: "Har bir xato uchun savol, sizning javobingiz va to'g'ri javobni yozing.",
+      },
+    ],
     exampleInput:
       "1. Progressiya masalasi — men C, to'g'risi A. Formulani eslay olmadim.\n2. Foiz masalasi — men B, to'g'risi D. Formulani bilardim, lekin oxirida 100 ga ko'paytirishni unutdim.\n3. Qo'shma gap turi — men A, to'g'risi C. Ergash gapli va bog'langan qo'shma gapni chalkashtirdim.\n4. Tarix sanasi — men B, to'g'risi C. 1391 va 1395 ni adashtirdim.\n5. Kinematika — men D, to'g'risi B. Vaqt tugab qolgani uchun tavakkal belgiladim.\n6. Sinonim topish — men A, to'g'risi A edi, lekin varaqqa B deb ko'chirib yozibman.",
     exampleOutput:
       "**Xatolar turkumi:**\n1. *Progressiya* → **Bilim yetishmasligi.** Formula umuman esda yo'q, ya'ni mavzu o'zlashtirilmagan.\n2. *Foiz* → **E'tiborsizlik.** Yo'l to'g'ri, faqat oxirgi qadam tashlab ketilgan — bu bilim muammosi emas.\n3. *Qo'shma gap* → **Yarim bilim.** Ikkala tur haqida tasavvur bor, lekin farqlash mezoni aniq emas.\n4. *Tarix sanasi* → **Yarim bilim.** Voqealarni bilasiz, sanalar bir-biriga yopishib qolgan.\n5. *Kinematika* → **Vaqt tanqisligi.** Bilim darajasi noma'lum — savolga umuman urinilmagan.\n6. *Sinonim* → **E'tiborsizlik.** Eng achinarli xato: javob to'g'ri topilgan, ball ko'chirishda yo'qolgan.\n\n**Statistika:**\n- E'tiborsizlik: 2 ta (33%)\n- Yarim bilim: 2 ta (33%)\n- Bilim yetishmasligi: 1 ta (17%)\n- Vaqt tanqisligi: 1 ta (17%)\n\n**Asosiy naqsh:** Xatolaringizning uchdan ikki qismi (67%) bilim yetishmasligidan EMAS, balki e'tiborsizlik va yarim bilimdan kelib chiqqan. Ya'ni siz o'ylagandan ko'ra ko'proq bilasiz — muammo bilimda emas, uni ishlatishda. Bu yaxshi xabar, chunki bunday xatolarni tuzatish yangi mavzu o'rganishdan ancha tez.\n\n**Har bir toifa uchun yechim:**\n- *E'tiborsizlik (eng ustuvor):* Har bir masalani yechgach, «savol nimani so'radi?» deb qaytadan o'qing va javobingiz aynan shunga mos ekanini tekshiring. Javoblarni varaqqa ko'chirishni oxiriga qoldirmang — har 10 savoldan keyin ko'chiring va ko'chirgandan so'ng raqamlarni bir marta solishtirib chiqing.\n- *Yarim bilim:* Chalkashtiriladigan tushunchalarni yonma-yon jadvalga yozing (bog'langan vs ergash gapli; 1391 vs 1395) va faqat farqini yodlang, ta'rifini emas.\n- *Bilim yetishmasligi:* Progressiya formulalarini alohida kartochkaga yozib, kuniga 5 daqiqadan takrorlang; keyin 15 ta masala yeching.\n- *Vaqt tanqisligi:* Testni yechishda «bir marta o'tish» qoidasini qo'llang — qiyin savolni belgilab qo'yib o'tib keting, oxirida qayting. Bitta savolga 2 daqiqadan ortiq vaqt sarflamang.\n\n**Keyingi 7 kun uchun 3 ta ustuvorlik:**\n1. **Javob ko'chirish tartibini o'zgartirish** — bu bitta odat 6-savoldagidek xatolarni butunlay yo'q qiladi va sizga darhol ball qaytaradi.\n2. **Chalkashtiriladigan juftliklar jadvali** — qo'shma gap turlari va yaqin tarixiy sanalar bo'yicha; kuniga 10 daqiqa.\n3. **Progressiyalar bloki** — nazariya + 15 masala; bu yagona haqiqiy «bilmayman» mavzuingiz.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
     tags: ["DTM", "Xatolar tahlili", "Sinov testi", "Strategiya"],
-    upvotes: 556,
-    copyCount: 2390,
+    upvotes: 0,
+    copyCount: 0,
     author: "Bekzod Tursunov",
     createdAt: "2026-04-02T08:30:00.000Z",
     comments: [
@@ -890,16 +1084,24 @@ Do NOT write the essay or an outline yet — only the analysis.
 
 Question:
 """
-{{Paste the Task 2 question here}}
+{{task2_question}}
 """`,
+    variables: [
+      {
+        key: "task2_question",
+        label: "Task 2 savoli",
+        type: "textarea",
+        placeholder: "Some people think that…",
+      },
+    ],
     exampleInput:
       "Some people think that the best way to reduce traffic congestion in cities is to build more roads. Others believe that improving public transport is more effective. Discuss both views and give your own opinion.",
     exampleOutput:
       "**Question type:** Discussion + Opinion. This is a THREE-part task: (a) discuss view 1, (b) discuss view 2, (c) state and justify your own opinion. Missing any one of the three caps Task Response at band 5-6.\n\n**Topic vs. instruction words:**\n- TOPIC: \"the best way to reduce traffic congestion in cities\" — specifically comparing \"build more roads\" against \"improving public transport\".\n- INSTRUCTION: \"Discuss both views and give your own opinion.\" Note \"discuss\" (explain the reasoning behind each side, not just name it) and \"your own opinion\" (a clear personal stance is compulsory).\n\n**Scope limits:**\n- \"in cities\" — your examples must be urban. Writing about rural highways or intercity travel is off-scope.\n- \"traffic congestion\" — the goal is reducing congestion, NOT reducing pollution or accidents. You may mention those as side benefits, but if your whole argument is about emissions, you have answered a different question.\n\n**Checklist to fully answer (Task Response 7+):**\n1. Paraphrase the question in the introduction without copying it.\n2. State your opinion clearly in the introduction (do not save it only for the conclusion).\n3. One body paragraph explaining WHY people support building more roads — with reasoning, not just a claim.\n4. One body paragraph explaining WHY people support better public transport.\n5. Your own position, clearly justified — either in a third short paragraph or woven in and restated in the conclusion.\n6. A conclusion that matches the opinion you gave in the introduction (no contradiction).\n\n**Off-topic traps:**\n1. *Turning it into a pollution essay.* Many students slide from congestion into air quality and climate change. Keep every argument tied to the number of vehicles actually moving on urban roads.\n2. *Forgetting to discuss the first view fairly.* Students who personally favour public transport often give the road-building view one weak sentence and then attack it. \"Discuss\" requires you to present its genuine logic first — otherwise the paragraph is unbalanced and Task Response drops.\n\n**My position options:**\n1. *Public transport is more effective* — easiest to argue; strong evidence available (induced demand: new roads fill up quickly; cities like Seoul and Tokyo).\n2. *Building roads is more effective* — harder; you would need to limit it to specific cases such as bypass roads that divert through-traffic.\n3. *Both are needed together* — safe and defensible, but you must still say which you consider MORE effective, or the examiner reads it as sitting on the fence.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Writing Task 2", "Savol tahlili", "Task Response", "Zanjir"],
-    upvotes: 344,
-    copyCount: 1490,
+    upvotes: 0,
+    copyCount: 0,
     author: "Aziz Rahimov",
     createdAt: "2026-04-20T09:00:00.000Z",
     chainId: "ielts-writing-task2",
@@ -941,21 +1143,35 @@ Keep every line short — this is a plan I will glance at while writing, not pro
 
 Question:
 """
-{{Paste the Task 2 question here}}
+{{task2_question}}
 """
 
 My position:
 """
-{{State the position you chose in step 1}}
+{{chosen_position}}
 """`,
+    variables: [
+      {
+        key: "task2_question",
+        label: "Task 2 savoli",
+        type: "textarea",
+        placeholder: "Some people think that…",
+      },
+      {
+        key: "chosen_position",
+        label: "Tanlagan pozitsiyangiz",
+        type: "textarea",
+        placeholder: "1-qadamda tanlagan fikringiz…",
+      },
+    ],
     exampleInput:
       "Question: Some people think that the best way to reduce traffic congestion in cities is to build more roads. Others believe that improving public transport is more effective. Discuss both views and give your own opinion.\n\nMy position: Improving public transport is more effective, though limited road building has a role.",
     exampleOutput:
       "**Introduction plan:**\n- Paraphrase: Urban congestion has prompted debate over whether expanding road networks or upgrading mass transit offers the better remedy.\n- Thesis: While additional roads can ease pressure in specific bottlenecks, investment in public transport is the more durable solution.\n\n**Body paragraph 1 — the case for building more roads** (~70 words)\n- Topic sentence: Advocates of road expansion argue that congestion is fundamentally a capacity problem.\n- Reasoning: More lanes → traffic distributes across more space → journey times fall in the short term; also allows freight to bypass city centres.\n- Example: Ring roads and bypasses around historic city centres, which divert through-traffic that has no business in the centre at all.\n\n**Body paragraph 2 — the case for public transport** (~85 words)\n- Topic sentence: However, the evidence suggests that road building offers only temporary relief.\n- Reasoning: Induced demand — new capacity attracts drivers who previously avoided the route, so roads refill within a few years; transit moves far more people per lane.\n- Example: Cities that expanded metro and bus rapid transit networks (e.g. Seoul's decision to remove an elevated motorway and invest in transit) saw congestion fall rather than rise.\n\n**Body paragraph 3 — my position** (~55 words)\n- Topic sentence: In my view, the two approaches are not equal in value.\n- Reasoning: Road building should be targeted and exceptional (bypasses only); transit is what scales with a growing population.\n- Example: A single metro line carrying the equivalent of several motorway lanes' worth of passengers.\n\n**Conclusion plan** (~35 words)\n- Restate: acknowledge roads have a narrow role, then reaffirm that transit investment addresses the cause rather than the symptom. Use different wording from the introduction — swap \"durable solution\" for something like \"addresses the root of the problem\".\n\n**Word budget:** Intro 45 · BP1 70 · BP2 85 · BP3 55 · Conclusion 35 = ~290 words. This is comfortably above the 250 minimum without risking time.\n\n**Weak spot warning:** Body paragraph 1 is hardest, because you personally disagree with it. There is a real temptation to write two sentences and move on — but an unbalanced discussion costs Task Response marks. Give it genuine reasoning and a fair example, and save your disagreement for paragraph 2, where the word \"However\" does that work for you.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Writing Task 2", "Reja tuzish", "Outline", "Zanjir"],
-    upvotes: 389,
-    copyCount: 1680,
+    upvotes: 0,
+    copyCount: 0,
     author: "Aziz Rahimov",
     createdAt: "2026-04-21T09:00:00.000Z",
     chainId: "ielts-writing-task2",
@@ -988,16 +1204,24 @@ Provide:
 
 My outline:
 """
-{{Paste the outline from step 2 here}}
+{{outline_text}}
 """`,
+    variables: [
+      {
+        key: "outline_text",
+        label: "Reja (outline)",
+        type: "textarea",
+        placeholder: "2-qadamdagi rejani shu yerga joylashtiring…",
+      },
+    ],
     exampleInput:
       "Outline: Intro (paraphrase + thesis: public transport more effective). BP1: case for roads — capacity, bypasses. BP2: case for transit — induced demand, Seoul. BP3: my position — roads targeted only, transit scales. Conclusion: restate.",
     exampleOutput:
       "**40-minute time plan:**\n- 0-3 min — re-read the question and your outline; do not start writing yet.\n- 3-8 min — introduction (keep it short, 2 sentences is enough).\n- 8-19 min — body paragraph 1.\n- 19-31 min — body paragraph 2 (your strongest, so give it the most time).\n- 31-36 min — body paragraph 3 and conclusion.\n- 36-40 min — stop writing. Check only (see the list below).\n\n**Sentence frames:**\n*Introduction:*\n- \"The question of how best to ______ has become increasingly pressing in ______.\"\n- \"Opinion is divided over whether ______ or ______ offers the more effective solution.\"\n\n*Body paragraph 1 (the view you do not hold):*\n- \"Those who favour ______ argue that ______.\"\n- \"There is a reasonable case for ______, principally because ______.\"\n\n*Body paragraph 2 (your side):*\n- \"This argument, however, overlooks ______.\"\n- \"A more compelling case can be made for ______, since ______.\"\n\n*Body paragraph 3 (your position):*\n- \"In my own view, ______ , although ______.\"\n- \"Weighing these arguments, I am persuaded that ______.\"\n\n*Conclusion:*\n- \"To conclude, while ______ has a limited role, ______.\"\n- \"On balance, the evidence points towards ______.\"\n\n**Linking language bank:**\n- *Adding:* Moreover · Furthermore · In addition · What is more\n- *Contrasting:* However · Nevertheless · That said · By contrast\n- *Giving reasons:* since · owing to · this is largely because · as a result of\n- *Giving examples:* for instance · a case in point is · as illustrated by\n- *Concluding:* To conclude · On balance · Ultimately\n\n**Rules while writing:**\n1. If you are unsure of a word's spelling, use a simpler word you can spell — an accurate simple word beats a misspelled sophisticated one.\n2. Do not count words as you go; you lose ~2 minutes. Learn roughly how many lines 280 words is in your handwriting instead.\n3. Never cross out and rewrite a whole paragraph. If a sentence goes wrong, finish it and move on.\n4. Write one idea per sentence. Long tangled sentences cost you Grammatical Accuracy marks.\n5. Leave a blank line between paragraphs so the structure is visible at a glance.\n\n**If I get stuck:**\n1. Ask yourself \"why is that true?\" about your last sentence and write the answer — that is almost always the next sentence.\n2. Move to a concrete example. Naming a specific place, group or situation restarts the paragraph.\n3. If a paragraph will not come, write its final sentence first, then work backwards to connect to it.\n\n**Stop-and-check list (last 3 minutes):**\n1. Does the introduction state a clear position?\n2. Does the conclusion agree with that same position?\n3. Are there at least 4 visible paragraphs?\n4. Scan for third-person -s errors (\"it help\" → \"it helps\") — the most common slip under time pressure.\n5. Are you over 250 words? If clearly under, add one more sentence of explanation to your strongest paragraph — never pad the conclusion.",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet"],
     tags: ["Writing Task 2", "Qoralama", "Vaqt boshqaruvi", "Zanjir"],
-    upvotes: 301,
-    copyCount: 1270,
+    upvotes: 0,
+    copyCount: 0,
     author: "Shahnoza Islomova",
     createdAt: "2026-04-22T09:00:00.000Z",
     chainId: "ielts-writing-task2",
@@ -1036,21 +1260,35 @@ Give me:
 
 My essay:
 """
-{{Paste your essay here}}
+{{essay_text}}
 """
 
 The examiner feedback I received:
 """
-{{Paste the feedback from step 4 here}}
+{{examiner_feedback}}
 """`,
+    variables: [
+      {
+        key: "essay_text",
+        label: "Insho matningiz",
+        type: "textarea",
+        placeholder: "Inshoingizni joylashtiring…",
+      },
+      {
+        key: "examiner_feedback",
+        label: "Examiner izohlari",
+        type: "textarea",
+        placeholder: "4-qadamdagi feedback'ni joylashtiring…",
+      },
+    ],
     exampleInput:
       "Essay: (the community service essay from step 4)\n\nFeedback: Task Response 6.0 — position clear but ideas under-developed. Coherence 6.0 — mechanical linkers. Lexical 5.5 — repetitive vocabulary, word-form errors. Grammar 5.5 — agreement errors, mostly simple sentences. Overall 5.5.",
     exampleOutput:
       "**Priority ranking:**\n1. *Develop your examples fully* (+0.5 Task Response) — the largest single gain available. Your hospital example stops at \"he will understand how doctors work hard\"; it never says what that changes.\n2. *Fix subject-verb agreement* (+0.5 Grammatical Range & Accuracy) — you have 4 instances of the same error type. Fixing one pattern lifts a whole criterion.\n3. *Replace repeated basic words* (+0.5 Lexical Resource) — \"good\" and \"help\" appear repeatedly.\n4. *Vary your linkers* (+0.0-0.5 Coherence) — worth doing, but your paragraphing is already logical, so the gain here is smaller than it looks.\n5. *Punctuation touch-ups* — cosmetic. Do this last, or skip it under time pressure.\n\n**The one change that matters most:**\nExtend every example by one sentence answering \"and what does that lead to?\" Right now your ideas are announced but not developed, which is precisely what separates band 6 from band 7 on Task Response. Concretely: after \"he will understand how doctors and nurses work hard\", add what results from that understanding — a greater sense of responsibility, a possible career interest, respect for public service. One sentence per example, three examples, and you have moved a whole band on the criterion that carries the most weight.\n\n**Guided rewrite — paragraph 2:**\n*Original:* \"Firstly, when students do community service they learn how to work with other people. For example if a student help in a hospital, he will understand how doctors and nurses work hard every day. This experience can make student more responsible and hardworking in future life.\"\n\n*Rewritten (band 7):* \"Firstly, community service develops interpersonal skills that classroom learning rarely provides. A student volunteering in a hospital, for example, works alongside staff under real pressure and sees at first hand the dedication the profession demands. That exposure often translates into a stronger sense of responsibility, and for some students it shapes the career they eventually choose.\"\n\n*What changed:*\n- \"if a student help\" → \"A student volunteering\" (removes the agreement error entirely by restructuring).\n- Added a consequence — \"translates into a stronger sense of responsibility... shapes the career they choose\" — which is the development the examiner said was missing.\n- \"learn how to work with other people\" → \"develops interpersonal skills\" (precise, academic register).\n\n**Guided rewrite — paragraph 4:**\n*Original:* \"However, some people say students already have very busy schedule with exams and homework, so adding community service is not good idea. But I think school can organize it during holidays or weekends so it will not effect study.\"\n\n*Rewritten (band 7):* \"Critics reasonably point out that students already face demanding schedules of examinations and coursework, and that additional obligations could harm their academic performance. This concern can be addressed through scheduling, however: if service is arranged during holidays or at weekends, it need not compete with study time at all.\"\n\n*What changed:*\n- \"it will not effect study\" → \"it need not compete with study time\" (fixes affect/effect and upgrades the phrasing).\n- \"some people say\" → \"Critics reasonably point out\" (concedes the counter-argument fairly, which strengthens Task Response).\n- Two simple sentences merged into complex sentences with subordination, addressing the \"mostly simple sentences\" comment.\n\n**What you already did well:**\n- Your essay structure is sound — introduction, two supporting paragraphs, a counter-argument, and a conclusion. Do not change this.\n- You took a clear position and never contradicted it. Many candidates lose marks here; you did not.\n- You included a counter-argument at all, which most band 5.5 essays omit.\n\n**Your personal error list (re-read before the next essay):**\n1. Third-person -s: \"it have\" → \"it has\", \"student help\" → \"student helps\".\n2. affect (verb) vs. effect (noun).\n3. Articles before singular countable nouns: \"make student more responsible\" → \"make a student\".\n4. Every example needs a consequence sentence — \"and what does that lead to?\"\n5. Never use \"good\" or \"bad\" in an academic essay; choose a precise word.\n\n**Next practice question:**\n\"Some people believe that schools should teach practical life skills such as budgeting and cooking alongside academic subjects. To what extent do you agree or disagree?\"\n(Same essay type — take a position and develop each reason with a consequence, exactly as practised above.)",
     testedModels: ["ChatGPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"],
     tags: ["Writing Task 2", "Qayta yozish", "Xatolar tahlili", "Zanjir"],
-    upvotes: 427,
-    copyCount: 1830,
+    upvotes: 0,
+    copyCount: 0,
     author: "Aziz Rahimov",
     createdAt: "2026-04-23T09:00:00.000Z",
     chainId: "ielts-writing-task2",
@@ -1071,6 +1309,12 @@ The examiner feedback I received:
       },
     ],
   },
+];
+
+export const PROMPTS: Prompt[] = [
+  ...CORE_PROMPTS,
+  ...ACADEMIC_PROMPTS,
+  ...READING_BIOLOGY_PROMPTS,
 ];
 
 export function getPromptById(id: string): Prompt | undefined {

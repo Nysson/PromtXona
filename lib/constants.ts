@@ -40,7 +40,7 @@ export const CATEGORY_META: Record<
 > = {
   IELTS: {
     label: "IELTS",
-    sublabel: "Writing, Speaking, Vocabulary",
+    sublabel: "Writing, Speaking, Reading",
     color: "from-accent-blue to-accent-indigo",
     icon: "GraduationCap",
   },
@@ -58,7 +58,7 @@ export const CATEGORY_META: Record<
   },
   DTM: {
     label: "DTM",
-    sublabel: "Matematika, Ona tili, Tarix",
+    sublabel: "Matematika, Ona tili, Tarix, Biologiya",
     color: "from-accent-green to-accent-teal",
     icon: "ClipboardCheck",
   },
@@ -67,12 +67,14 @@ export const CATEGORY_META: Record<
 export const FILTER_GROUPS: FilterGroup[] = [
   "IELTS Writing",
   "IELTS Speaking",
+  "IELTS Reading",
   "SAT Math",
   "SAT Reading",
   "Ona tili / Adabiyot",
   "DTM — Matematika",
   "DTM — Ona tili",
   "DTM — Tarix",
+  "DTM — Biologiya",
   "DTM — Umumiy",
 ];
 
@@ -87,3 +89,54 @@ export function claudeUrl(promptText: string): string {
 export function geminiUrl(): string {
   return `https://gemini.google.com/app`;
 }
+
+export function deepSeekUrl(): string {
+  return "https://chat.deepseek.com/";
+}
+
+/**
+ * Prompt matni URL'ga sig'adigan maksimal uzunlik. Undan uzun promptlar
+ * (masalan, to'liq insho bilan) URL orqali emas, faqat clipboard orqali
+ * uzatiladi — aks holda server "414 URI Too Long" qaytarishi mumkin.
+ */
+export const MAX_PREFILL_URL_LENGTH = 7000;
+
+export interface AiProvider {
+  id: "chatgpt" | "claude" | "deepseek";
+  name: string;
+  /** Promptni URL orqali oldindan to'ldira oladimi. */
+  buildUrl: (promptText: string) => string;
+  /** Prefill ishlamaganda (yoki prompt juda uzun bo'lsa) ochiladigan sahifa. */
+  homeUrl: string;
+  supportsPrefill: boolean;
+  /** Tugma hover rangi uchun Tailwind klasslari. */
+  accentClass: string;
+}
+
+export const AI_PROVIDERS: AiProvider[] = [
+  {
+    id: "chatgpt",
+    name: "ChatGPT",
+    buildUrl: chatGptUrl,
+    homeUrl: "https://chatgpt.com/",
+    supportsPrefill: true,
+    accentClass: "hover:border-accent-green/40 hover:text-accent-green",
+  },
+  {
+    id: "claude",
+    name: "Claude",
+    buildUrl: claudeUrl,
+    homeUrl: "https://claude.ai/new",
+    supportsPrefill: true,
+    accentClass: "hover:border-accent-orange/40 hover:text-accent-orange",
+  },
+  {
+    id: "deepseek",
+    name: "DeepSeek",
+    // DeepSeek rasmiy prefill parametrini qo'llab-quvvatlamaydi.
+    buildUrl: () => deepSeekUrl(),
+    homeUrl: deepSeekUrl(),
+    supportsPrefill: false,
+    accentClass: "hover:border-accent-indigo/40 hover:text-accent-indigo",
+  },
+];

@@ -14,7 +14,7 @@ import Link from "next/link";
 import { getChainContext } from "@/data/chains";
 import { chatGptUrl, claudeUrl } from "@/lib/constants";
 import type { Prompt } from "@/lib/types";
-import { cn, formatCompactNumber } from "@/lib/utils";
+import { cn, commentCountOf, formatCompactNumber } from "@/lib/utils";
 import { CompleteButton } from "./CompleteButton";
 import { usePrompts } from "./PromptsProvider";
 import { useToast } from "./ToastProvider";
@@ -51,8 +51,7 @@ export function PromptCard({ prompt }: { prompt: Prompt }) {
   }
 
   function handleUpvote() {
-    toggleUpvote(prompt.id);
-    if (!upvoted) showToast("Ovoz berganingiz uchun rahmat!");
+    void toggleUpvote(prompt.id);
   }
 
   function handleSave() {
@@ -171,11 +170,11 @@ export function PromptCard({ prompt }: { prompt: Prompt }) {
           </button>
           <CompleteButton promptId={prompt.id} />
           <span
-            title={`${prompt.comments.length} izoh`}
+            title={`${commentCountOf(prompt)} izoh`}
             className="pointer-events-none flex items-center gap-1 px-1.5 text-xs text-neutral-400"
           >
             <MessageCircle className="h-3.5 w-3.5" />
-            {prompt.comments.length}
+            {commentCountOf(prompt)}
           </span>
         </div>
 

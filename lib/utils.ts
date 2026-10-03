@@ -43,3 +43,25 @@ export function generateId(prefix = "id"): string {
     .toString(36)
     .slice(2, 8)}`;
 }
+
+/**
+ * "Mashhurlik" bo'yicha saralash: upvote → nusxalash soni → yangiroq.
+ * Ovozlar kam bo'lgan boshlang'ich davrda tartib tasodifiy bo'lib qolmaydi.
+ */
+export function byPopularity(
+  a: { upvotes: number; copyCount: number; createdAt: string },
+  b: { upvotes: number; copyCount: number; createdAt: string }
+): number {
+  return (
+    b.upvotes - a.upvotes ||
+    b.copyCount - a.copyCount ||
+    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+}
+
+export function commentCountOf(prompt: {
+  commentCount?: number;
+  comments: unknown[];
+}): number {
+  return prompt.commentCount ?? prompt.comments.length;
+}

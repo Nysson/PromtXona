@@ -3,13 +3,9 @@
 import {
   ArrowLeft,
   Bookmark,
-  Bot,
-  Copy,
   Layers,
   Link2,
-  ListChecks,
-  MessageSquareQuote,
-  Sparkles,
+  Play,
   Tag,
   Target,
   ThumbsUp,
@@ -19,13 +15,19 @@ import Link from "next/link";
 import { ChainNavigator } from "@/components/ChainNavigator";
 import { CompleteButton } from "@/components/CompleteButton";
 import { CommentSection } from "@/components/CommentSection";
+import { ExampleResponse } from "@/components/ExampleResponse";
 import { ModelBadge } from "@/components/ModelBadge";
+import { PromptWorkbench } from "@/components/PromptWorkbench";
 import { usePrompts } from "@/components/PromptsProvider";
 import { RelatedPrompts } from "@/components/RelatedPrompts";
 import { useToast } from "@/components/ToastProvider";
-import { chatGptUrl, claudeUrl } from "@/lib/constants";
 import type { Prompt } from "@/lib/types";
-import { cn, formatCompactNumber, formatDate } from "@/lib/utils";
+import {
+  cn,
+  commentCountOf,
+  formatCompactNumber,
+  formatDate,
+} from "@/lib/utils";
 
 export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
   const {
@@ -53,16 +55,6 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
       showToast("Havola nusxalandi!");
     } catch {
       // foydalanuvchi ulashishni bekor qildi — xabar kerak emas
-    }
-  }
-
-  async function handleCopy(text: string, label = "Prompt") {
-    try {
-      await navigator.clipboard.writeText(text);
-      incrementCopyCount(prompt.id);
-      showToast(`${label} nusxalandi!`);
-    } catch {
-      showToast("Nusxalashda xatolik yuz berdi.");
     }
   }
 
@@ -117,30 +109,12 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
               />
               {formatCompactNumber(prompt.upvotes)} Upvote
             </button>
-            <button
-              onClick={() => handleCopy(prompt.template)}
+            <a
+              href="#ishlatish"
               className="pill-button bg-neutral-900 text-white shadow-soft transition hover:opacity-90 dark:bg-white dark:text-neutral-900"
             >
-              <Copy className="h-4 w-4" />
-              Prompt nusxalash
-            </button>
-            <a
-              href={chatGptUrl(prompt.template)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pill-button border border-black/10 bg-white/70 text-neutral-700 transition hover:border-accent-green/40 hover:text-accent-green dark:border-white/10 dark:bg-white/[0.04] dark:text-neutral-200"
-            >
-              <Bot className="h-4 w-4" />
-              ChatGPT&apos;da sinash
-            </a>
-            <a
-              href={claudeUrl(prompt.template)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pill-button border border-black/10 bg-white/70 text-neutral-700 transition hover:border-accent-orange/40 hover:text-accent-orange dark:border-white/10 dark:bg-white/[0.04] dark:text-neutral-200"
-            >
-              <Sparkles className="h-4 w-4" />
-              Claude&apos;da sinash
+              <Play className="h-4 w-4" />
+              Promptni ishlatish
             </a>
             <button
               onClick={() => {
@@ -182,46 +156,18 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
             <InfoBlock icon={Layers} label="Context" text={prompt.context} />
           </div>
 
-          {/* Template */}
-          <div className="mt-8">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="flex items-center gap-2 text-lg font-semibold text-neutral-900 dark:text-white">
-                <ListChecks className="h-5 w-5 text-accent-blue" />
-                To&apos;liq Prompt Shabloni
-              </h2>
-              <button
-                onClick={() => handleCopy(prompt.template)}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-neutral-500 transition hover:bg-neutral-900/5 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
-              >
-                <Copy className="h-3.5 w-3.5" />
-                Nusxalash
-              </button>
-            </div>
-            <pre className="glass-panel overflow-x-auto whitespace-pre-wrap rounded-3xl p-5 font-mono text-[13px] leading-relaxed text-neutral-700 dark:text-neutral-200">
-              {prompt.template}
-            </pre>
-          </div>
+          {/* O'zgaruvchilar + jonli prompt + Quick-Run */}
+          <PromptWorkbench
+            prompt={prompt}
+            onCopied={() => incrementCopyCount(prompt.id)}
+          />
 
-          {/* Example input/output */}
-          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
-            <div>
-              <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-                <MessageSquareQuote className="h-4 w-4" />
-                Namuna kirish (Input)
-              </h3>
-              <div className="glass-panel whitespace-pre-wrap rounded-3xl p-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
-                {prompt.exampleInput}
-              </div>
-            </div>
-            <div>
-              <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-                <Sparkles className="h-4 w-4" />
-                Namuna natija (Output)
-              </h3>
-              <div className="glass-panel max-h-[420px] overflow-y-auto whitespace-pre-wrap rounded-3xl p-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
-                {prompt.exampleOutput}
-              </div>
-            </div>
+          <div className="mt-8">
+            <ExampleResponse
+              input={prompt.exampleInput}
+              output={prompt.exampleOutput}
+              model={prompt.testedModels[0]}
+            />
           </div>
 
           <RelatedPrompts current={prompt} />
@@ -253,7 +199,7 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
               <div className="flex items-center justify-between">
                 <dt className="text-neutral-500 dark:text-neutral-400">Izohlar</dt>
                 <dd className="font-semibold text-neutral-900 dark:text-white">
-                  {prompt.comments.length}
+                  {commentCountOf(prompt)}
                 </dd>
               </div>
             </dl>
@@ -264,9 +210,16 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
               Sinovdan o&apos;tgan modellar
             </h3>
             <div className="mt-3 flex flex-wrap gap-2">
-              {prompt.testedModels.map((model) => (
-                <ModelBadge key={model} model={model} />
-              ))}
+              {prompt.testedModels.length > 0 ? (
+                prompt.testedModels.map((model) => (
+                  <ModelBadge key={model} model={model} />
+                ))
+              ) : (
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Hali sinovdan o&apos;tkazilmagan — natijangizni izohda
+                  yozib qoldiring.
+                </p>
+              )}
             </div>
           </div>
 

@@ -8,6 +8,7 @@ import { AmbientBackground } from "@/components/AmbientBackground";
 import { useAuth } from "@/components/AuthProvider";
 import { Logo } from "@/components/Logo";
 import { useToast } from "@/components/ToastProvider";
+import { safeNextPath } from "@/lib/safe-redirect";
 
 export function LoginForm() {
   const { supabase, user, isConfigured, loading } = useAuth();
@@ -16,6 +17,11 @@ export function LoginForm() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
+  const next = safeNextPath(params.get("next"));
+
+  function callbackUrl() {
+    return `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
+  }
 
   useEffect(() => {
     if (params.get("error")) {
@@ -28,7 +34,7 @@ export function LoginForm() {
     setBusy(true);
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: callbackUrl() },
     });
     if (error) {
       setBusy(false);
@@ -42,7 +48,7 @@ export function LoginForm() {
     setBusy(true);
     const { error } = await supabase.auth.signInWithOtp({
       email: email.trim(),
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      options: { emailRedirectTo: callbackUrl() },
     });
     setBusy(false);
     if (error) {
