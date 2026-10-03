@@ -12,7 +12,7 @@ import {
   type ReactNode,
 } from "react";
 import { SITE } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { byPopularity, cn } from "@/lib/utils";
 import { usePrompts } from "./PromptsProvider";
 
 interface CommandPaletteContextValue {
@@ -48,7 +48,7 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
             p.subcategory.toLowerCase().includes(q) ||
             p.tags.some((t) => t.toLowerCase().includes(q))
         )
-      : [...prompts].sort((a, b) => b.upvotes - a.upvotes);
+      : [...prompts].sort(byPopularity);
     return list.slice(0, 7);
   }, [prompts, query]);
 

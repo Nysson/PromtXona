@@ -8,6 +8,7 @@ import { usePrompts } from "./PromptsProvider";
 import { PromptCard } from "./PromptCard";
 import { SearchBar } from "./SearchBar";
 import { FilterTabs } from "./FilterTabs";
+import { byPopularity } from "@/lib/utils";
 
 const FILTERS = ["Barchasi", ...FILTER_GROUPS];
 
@@ -27,7 +28,7 @@ export function FeaturedPrompts() {
           p.description.toLowerCase().includes(q) ||
           p.tags.some((t) => t.toLowerCase().includes(q))
       )
-      .sort((a, b) => b.upvotes - a.upvotes)
+      .sort(byPopularity)
       .slice(0, 6);
   }, [prompts, query, filter]);
 

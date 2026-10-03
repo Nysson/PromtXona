@@ -9,6 +9,7 @@ import { PromptCard } from "@/components/PromptCard";
 import { usePrompts } from "@/components/PromptsProvider";
 import { SearchBar } from "@/components/SearchBar";
 import { FILTER_GROUPS } from "@/lib/constants";
+import { byPopularity } from "@/lib/utils";
 
 const FILTERS = ["Barchasi", ...FILTER_GROUPS];
 
@@ -38,7 +39,7 @@ export function PromptsCatalog() {
 
     return [...list].sort((a, b) =>
       sort === "popular"
-        ? b.upvotes - a.upvotes
+        ? byPopularity(a, b)
         : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }, [prompts, query, filter, sort]);
