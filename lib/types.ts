@@ -18,6 +18,28 @@ export interface PromptComment {
   createdAt: string; // ISO date string
 }
 
+/** O'zgaruvchi uchun forma maydoni turi. */
+export type VariableInputType = "text" | "textarea" | "number" | "select";
+
+/**
+ * Prompt shablonidagi `{{key}}` o'zgaruvchisining sozlamasi. `key` shablondagi
+ * nom bilan aynan bir xil bo'lishi kerak (snake_case, faqat lotin harflari).
+ */
+export interface PromptVariable {
+  key: string;
+  /** Forma ustida ko'rinadigan nom. */
+  label: string;
+  type: VariableInputType;
+  placeholder?: string;
+  /** Maydon ostidagi qisqa izoh. */
+  helpText?: string;
+  /** Faqat `select` uchun. */
+  options?: string[];
+  defaultValue?: string;
+  /** Sukut bo'yicha `true`. */
+  required?: boolean;
+}
+
 export interface Prompt {
   id: string;
   title: string;
@@ -29,6 +51,11 @@ export interface Prompt {
   task: string;
   context: string;
   template: string;
+  /**
+   * Shablondagi `{{key}}` o'zgaruvchilari uchun forma sozlamalari. Berilmasa,
+   * o'zgaruvchilar shablondan avtomatik aniqlanadi (`lib/variables.ts`).
+   */
+  variables?: PromptVariable[];
   exampleInput: string;
   exampleOutput: string;
   testedModels: string[];

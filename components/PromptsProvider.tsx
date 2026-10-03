@@ -1,14 +1,19 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
+import { setPromptUpvote } from "@/app/actions/upvote";
+import { useAuth } from "@/components/AuthProvider";
+import { useToast } from "@/components/ToastProvider";
 import { PROMPTS } from "@/data/prompts";
 import type { Prompt, PromptComment, PromptOverride } from "@/lib/types";
 import { generateId } from "@/lib/utils";
@@ -21,7 +26,7 @@ type OverrideMap = Record<string, PromptOverride>;
 interface PromptsContextValue {
   prompts: Prompt[];
   isUpvoted: (id: string) => boolean;
-  toggleUpvote: (id: string) => void;
+  toggleUpvote: (id: string) => Promise<void>;
   incrementCopyCount: (id: string) => void;
   addComment: (id: string, author: string, content: string) => void;
   getPromptById: (id: string) => Prompt | undefined;
@@ -52,7 +57,22 @@ function saveOverrides(overrides: OverrideMap) {
   }
 }
 
+/**
+ * Upvote ikki rejimda ishlaydi:
+ * - Supabase sozlangan bo'lsa — haqiqiy ovozlar bazada (faqat tizimga
+ *   kirganlar ovoz beradi). Ko'rsatiladigan son = `data/prompts.ts` dagi
+ *   boshlang'ich hisob + bazadagi haqiqiy ovozlar.
+ * - Sozlanmagan bo'lsa (lokal ishlab chiqish) — avvalgidek localStorage'da.
+ */
 export function PromptsProvider({ children }: { children: ReactNode }) {
+  const { supabase, user } = useAuth();
+  const { showToast } = useToast();
+  const router = useRouter();
+  const pathname = usePathname();
+  const remoteUpvotes = Boolean(supabase);
+  const [remoteCounts, setRemoteCounts] = useState<Record<string, number>>({});
+  const [myUpvotes, setMyUpvotes] = useState<Set<string>>(() => new Set());
+  const pendingUpvotes = useRef<Set<string>>(new Set());
   const [overrides, setOverrides] = useState<OverrideMap>({});
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [hydrated, setHydrated] = useState(false);
@@ -81,25 +101,74 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
     }
   }, [savedIds, hydrated]);
 
+  // Barcha promptlarning ovozlar soni — bitta kichik so'rov (har prompt uchun
+  // bitta qator), shuning uchun sahifalash shart emas.
+  useEffect(() => {
+    if (!supabase) return;
+    let active = true;
+    supabase
+      .from("prompt_stats")
+      .select("prompt_id, upvote_count")
+      .then(({ data, error }) => {
+        if (!active) return;
+        if (error) {
+          console.error("prompt_stats yuklanmadi", error);
+          return;
+        }
+        setRemoteCounts(
+          Object.fromEntries(
+            (data ?? []).map((row) => [row.prompt_id as string, row.upvote_count as number])
+          )
+        );
+      });
+    return () => {
+      active = false;
+    };
+  }, [supabase]);
+
+  // Joriy foydalanuvchi qaysi promptlarga ovoz bergan (RLS faqat o'zinikini qaytaradi).
+  useEffect(() => {
+    if (!supabase || !user) {
+      setMyUpvotes(new Set());
+      return;
+    }
+    let active = true;
+    supabase
+      .from("prompt_upvotes")
+      .select("prompt_id")
+      .eq("user_id", user.id)
+      .then(({ data, error }) => {
+        if (!active || error) return;
+        setMyUpvotes(new Set((data ?? []).map((row) => row.prompt_id as string)));
+      });
+    return () => {
+      active = false;
+    };
+  }, [supabase, user]);
+
   const prompts = useMemo<Prompt[]>(() => {
     return PROMPTS.map((base) => {
       const o = overrides[base.id];
-      if (!o) return base;
+      const upvotes = remoteUpvotes
+        ? base.upvotes + (remoteCounts[base.id] ?? 0)
+        : o?.upvotes ?? base.upvotes;
+      if (!o && upvotes === base.upvotes) return base;
       return {
         ...base,
-        upvotes: o.upvotes ?? base.upvotes,
-        copyCount: o.copyCount ?? base.copyCount,
-        comments: o.comments ?? base.comments,
+        upvotes,
+        copyCount: o?.copyCount ?? base.copyCount,
+        comments: o?.comments ?? base.comments,
       };
     });
-  }, [overrides]);
+  }, [overrides, remoteUpvotes, remoteCounts]);
 
   const isUpvoted = useCallback(
-    (id: string) => Boolean(overrides[id]?.upvoted),
-    [overrides]
+    (id: string) =>
+      remoteUpvotes ? myUpvotes.has(id) : Boolean(overrides[id]?.upvoted),
+    [remoteUpvotes, myUpvotes, overrides]
   );
 
-  const toggleUpvote = useCallback((id: string) => {
+  const toggleLocalUpvote = useCallback((id: string) => {
     setOverrides((prev) => {
       const base = PROMPTS.find((p) => p.id === id);
       if (!base) return prev;
@@ -116,6 +185,75 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
       };
     });
   }, []);
+
+  const toggleUpvote = useCallback(
+    async (id: string) => {
+      if (!remoteUpvotes) {
+        const wasUpvoted = Boolean(overrides[id]?.upvoted);
+        toggleLocalUpvote(id);
+        if (!wasUpvoted) showToast("Ovoz berganingiz uchun rahmat!");
+        return;
+      }
+
+      if (!user) {
+        showToast("Ovoz berish uchun avval tizimga kiring.");
+        router.push(`/login?next=${encodeURIComponent(pathname)}`);
+        return;
+      }
+
+      // Bir prompt uchun bir vaqtda faqat bitta so'rov.
+      if (pendingUpvotes.current.has(id)) return;
+      pendingUpvotes.current.add(id);
+
+      const nextUpvoted = !myUpvotes.has(id);
+      const delta = nextUpvoted ? 1 : -1;
+
+      // Optimistik yangilash — tugma darhol javob beradi.
+      const applyLocal = (upvoted: boolean, count?: number, diff = 0) => {
+        setMyUpvotes((prev) => {
+          const next = new Set(prev);
+          if (upvoted) next.add(id);
+          else next.delete(id);
+          return next;
+        });
+        setRemoteCounts((prev) => ({
+          ...prev,
+          [id]: count ?? Math.max((prev[id] ?? 0) + diff, 0),
+        }));
+      };
+      applyLocal(nextUpvoted, undefined, delta);
+
+      try {
+        const result = await setPromptUpvote(id, nextUpvoted);
+        if (result.ok) {
+          applyLocal(result.upvoted, result.count);
+          if (result.upvoted) showToast("Ovoz berganingiz uchun rahmat!");
+          return;
+        }
+        applyLocal(!nextUpvoted, undefined, -delta);
+        showToast(
+          result.error === "unauthenticated"
+            ? "Sessiya tugagan — qaytadan kiring."
+            : "Ovoz saqlanmadi. Birozdan keyin qayta urinib ko'ring."
+        );
+      } catch {
+        applyLocal(!nextUpvoted, undefined, -delta);
+        showToast("Tarmoq xatosi — ovoz saqlanmadi.");
+      } finally {
+        pendingUpvotes.current.delete(id);
+      }
+    },
+    [
+      remoteUpvotes,
+      overrides,
+      toggleLocalUpvote,
+      user,
+      myUpvotes,
+      showToast,
+      router,
+      pathname,
+    ]
+  );
 
   const incrementCopyCount = useCallback((id: string) => {
     setOverrides((prev) => {

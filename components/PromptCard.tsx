@@ -51,8 +51,7 @@ export function PromptCard({ prompt }: { prompt: Prompt }) {
   }
 
   function handleUpvote() {
-    toggleUpvote(prompt.id);
-    if (!upvoted) showToast("Ovoz berganingiz uchun rahmat!");
+    void toggleUpvote(prompt.id);
   }
 
   function handleSave() {

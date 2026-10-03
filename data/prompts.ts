@@ -1,11 +1,12 @@
 import type { Prompt } from "@/lib/types";
+import { ACADEMIC_PROMPTS } from "./academic-prompts";
 
 /**
  * PromptXona seed data.
  * 13 hand-written, production-quality prompts covering IELTS, SAT and
  * Ona tili va Adabiyot (Uzbek native language & literature) preparation.
  */
-export const PROMPTS: Prompt[] = [
+const CORE_PROMPTS: Prompt[] = [
   // ─────────────────────────────────────────────────────────────────────
   // IELTS (5)
   // ─────────────────────────────────────────────────────────────────────
@@ -31,8 +32,17 @@ export const PROMPTS: Prompt[] = [
 
 Here is my chart description:
 """
-{{Paste your chart/graph/table/process/map description here}}
+{{chart_description}}
 """`,
+    variables: [
+      {
+        key: "chart_description",
+        label: "Grafik / jadval tavsifi",
+        type: "textarea",
+        placeholder: "Masalan: Line graph showing tourist numbers in Uzbekistan, 2015–2024…",
+        helpText: "Grafik turini, o'qlarni, yillarni va asosiy raqamlarni yozing.",
+      },
+    ],
     exampleInput:
       "Line graph showing the number of tourists (in millions) visiting Uzbekistan from 2015 to 2024. Numbers rose from 2 million in 2015 to 6.7 million in 2019, dropped sharply to 0.5 million in 2021, then recovered to 8.3 million by 2024.",
     exampleOutput:
@@ -85,13 +95,28 @@ Return your response in this exact structure:
 
 Be honest — do not inflate the score. Essay question:
 """
-{{Paste the essay question here}}
+{{essay_question}}
 """
 
 My essay:
 """
-{{Paste your full essay here}}
+{{essay_text}}
 """`,
+    variables: [
+      {
+        key: "essay_question",
+        label: "Insho savoli (Task 2)",
+        type: "textarea",
+        placeholder: "Some people believe that…",
+      },
+      {
+        key: "essay_text",
+        label: "Insho matningiz",
+        type: "textarea",
+        placeholder: "Inshoingizni to'liq shu yerga joylashtiring…",
+        helpText: "Kamida 250 so'z — IELTS Task 2 talabi.",
+      },
+    ],
     exampleInput:
       "Question: Some people believe that unpaid community service should be a compulsory part of high school programmes. To what extent do you agree or disagree?\n\nEssay: In many countries young people don't want to help other people. Some people think school must force students to do free work in community. I agree with this idea because it have many benefits for students and society.\n\nFirstly, when students do community service they learn how to work with other people. For example if a student help in a hospital, he will understand how doctors and nurses work hard every day. This experience can make student more responsible and hardworking in future life.\n\nSecondly, community service also good for society because there is many old people or poor people who need help but government cannot help everyone. If schools organize this, students can clean parks, teach small kids or help in orphanage, and society become better.\n\nHowever, some people say students already have very busy schedule with exams and homework, so adding community service is not good idea. But I think school can organize it during holidays or weekends so it will not effect study.\n\nIn conclusion, I believe compulsory community service in high school is a good idea because it help students grow and also help society, so government should make this policy in every school.",
     exampleOutput:
@@ -140,7 +165,7 @@ My essay:
       "Ko'p talabalar speaking mashq qilish uchun sherik topa olmaydi. Bu prompt AI'ni to'liq imtihon formatiga o'xshatib ishlaydi: avval cue card beradi, talabaga 1 daqiqa fikrlash vaqtini 'beradi' (matn orqali), keyin talaba javobini yozib yuborgach, uni tinglagandek fikr-mulohaza va tabiiy Part 3 savollarini davom ettiradi.",
     template: `You are my IELTS Speaking practice partner. Simulate a real Speaking test:
 
-Step 1: Give me one realistic IELTS Part 2 cue card on the topic of {{topic, e.g. "a memorable trip"}}, formatted exactly like the real test (Describe a... / You should say: .../ and explain...).
+Step 1: Give me one realistic IELTS Part 2 cue card on the topic of {{topic}}, formatted exactly like the real test (Describe a... / You should say: .../ and explain...).
 
 Step 2: Tell me to take 1 minute to prepare and then speak/write for 1-2 minutes.
 
@@ -153,6 +178,14 @@ Step 3: After I reply with my answer (I will type what I would say), evaluate it
 Step 4: Then ask me 3 natural Part 3 follow-up discussion questions related to the same topic, one at a time, waiting for my answer style — but for now, list all 3 so I can prepare.
 
 Start with Step 1 and Step 2 now.`,
+    variables: [
+      {
+        key: "topic",
+        label: "Mavzu",
+        type: "text",
+        placeholder: "a memorable trip",
+      },
+    ],
     exampleInput:
       "topic: a piece of technology that has changed your life\n\n(My spoken answer): I want to talk about my smartphone. I got my first smartphone when I was 15 years old, it was a birthday gift from my parents. I use it every day for study, for example I watch English lessons on YouTube and I use apps like Duolingo. I also use it to talk with my friends and family who live far away. I think this technology changed my life because before I didn't have easy access to information, but now I can learn anything anytime. Also it help me prepare for IELTS exam because I listen to podcast every day in bus.",
     exampleOutput:
@@ -198,8 +231,16 @@ For my text, do the following:
 
 My sentence/paragraph:
 """
-{{Paste your sentence or paragraph here}}
+{{text_to_improve}}
 """`,
+    variables: [
+      {
+        key: "text_to_improve",
+        label: "Gap yoki paragraf",
+        type: "textarea",
+        placeholder: "Yaxshilamoqchi bo'lgan inglizcha matningiz…",
+      },
+    ],
     exampleInput:
       "Many young people spend a lot of time on social media, and this is a big problem because it can be bad for their mental health.",
     exampleOutput:
@@ -235,8 +276,17 @@ Produce a "Coherence Map":
 
 My essay:
 """
-{{Paste your full essay here}}
+{{essay_text}}
 """`,
+    variables: [
+      {
+        key: "essay_text",
+        label: "Insho matningiz",
+        type: "textarea",
+        placeholder: "Inshoingizni to'liq shu yerga joylashtiring…",
+        helpText: "Kamida 250 so'z — IELTS Task 2 talabi.",
+      },
+    ],
     exampleInput:
       "Some people think governments should spend money on public transport instead of roads. I agree with this. Public transport is good for environment. Also roads make traffic jam in city. Government must think about future not only about cars. Many countries already use bus and train more. This is why I agree with this statement and government should spend more money on public transport.",
     exampleOutput:
@@ -282,8 +332,16 @@ My essay:
 
 Problem:
 """
-{{Paste your SAT Math problem here, including answer choices if multiple choice}}
+{{math_problem}}
 """`,
+    variables: [
+      {
+        key: "math_problem",
+        label: "SAT Math masalasi",
+        type: "textarea",
+        placeholder: "Masala matni va (bo'lsa) A–D variantlari…",
+      },
+    ],
     exampleInput:
       "If 3(x - 4) = 2x + 5, what is the value of x?\nA) -17  B) -7  C) 7  D) 17",
     exampleOutput:
@@ -332,13 +390,27 @@ Respond in this format:
 
 Passage:
 """
-{{Paste the passage excerpt here}}
+{{passage_text}}
 """
 
 Question and choices:
 """
-{{Paste the question and answer choices here}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "passage_text",
+        label: "Passage matni",
+        type: "textarea",
+        placeholder: "Passage'ni shu yerga joylashtiring…",
+      },
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Savol va A–D variantlari…",
+      },
+    ],
     exampleInput:
       "Passage: \"Marine biologists once assumed that deep-sea creatures, living in an environment with no sunlight, would evolve to lose their eyes entirely. Yet recent expeditions have found that many deep-sea species retain highly sensitive eyes, some capable of detecting the faintest bioluminescent flashes produced by other organisms. Far from being vestigial, these eyes appear to be finely tuned instruments for a world lit only by the occasional flicker of living light.\"\n\nQuestion: Which choice best supports the idea that the passage's author would disagree with the original assumption made by marine biologists?\nA) Deep-sea creatures live in complete darkness at all times.\nB) The eyes of many deep-sea species are adapted to detect very small amounts of light.\nC) Bioluminescence is produced by nearly all ocean organisms.\nD) Marine biologists have stopped studying deep-sea creatures entirely.",
     exampleOutput:
@@ -373,8 +445,16 @@ Respond with:
 
 Problem:
 """
-{{Paste your SAT Math problem here}}
+{{math_problem}}
 """`,
+    variables: [
+      {
+        key: "math_problem",
+        label: "SAT Math masalasi",
+        type: "textarea",
+        placeholder: "Masala matni…",
+      },
+    ],
     exampleInput:
       "For what value of x do the graphs of y = 2x + 3 and y = -x + 9 intersect?",
     exampleOutput:
@@ -417,8 +497,16 @@ Respond with:
 
 Sentence and choices:
 """
-{{Paste the sentence with blank/bolded word and the 4 answer choices here}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Bo'sh joyli gap va 4 ta variant…",
+      },
+    ],
     exampleInput:
       "Despite the committee's initial skepticism, the young scientist's data was so ______ that even her harshest critics were forced to reconsider their objections.\nA) ambiguous  B) compelling  C) redundant  D) trivial",
     exampleOutput:
@@ -454,8 +542,16 @@ Respond with:
 
 Question:
 """
-{{Paste the sentence, underlined portion, and 4 answer choices here}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Gap, tagiga chizilgan qism va 4 ta variant…",
+      },
+    ],
     exampleInput:
       "The collection of rare manuscripts, discovered in the basement of the old library, [were] carefully catalogued by a team of archivists.\nA) NO CHANGE  B) was  C) have been  D) are",
     exampleOutput:
@@ -496,8 +592,16 @@ Question:
 
 Insho mavzusi:
 """
-{{Insho mavzusini shu yerga yozing}}
+{{insho_mavzusi}}
 """`,
+    variables: [
+      {
+        key: "insho_mavzusi",
+        label: "Insho mavzusi",
+        type: "text",
+        placeholder: "Masalan: Vatan ostonadan boshlanadi",
+      },
+    ],
     exampleInput: "Kitob o'qishning inson kamolotidagi o'rni",
     exampleOutput:
       "**Kirish qismi:**\nInsoniyat tarixi davomida kitob doimo bilim va ma'naviyat manbai bo'lib kelgan. Ayniqsa, tez o'zgaruvchan zamonamizda, telefon va internet insonlar e'tiborini tortayotgan bir paytda, kitob o'qishning ahamiyati haqida ko'proq o'ylash kerak emasmi? Mazkur inshoda kitobning inson kamolotiga ta'siri haqida fikr yuritaman.\n*Bu yerga nima yozish kerak: mavzuni o'z so'zlaringiz bilan qisqacha tanishtiring va nega bu mavzu muhimligini bir gapda ayting.*\n\n**Asosiy qism:**\n\n1-band: Kitob insonning dunyoqarashini kengaytiradi.\nDalil: Turli mamlakatlar, davrlar va fanlar haqidagi kitoblarni o'qish orqali inson o'z atrofidagi voqealarni chuqurroq tushuna boshlaydi.\nMaqol: \"Kitob — bilim manbai\" xalq maqolida aytilganidek, u insonni ma'naviy boyitadi.\n*Bu yerga nima yozish kerak: o'zingiz o'qigan bironta kitobni misol qilib keltiring — u sizga qanday ta'sir qildi?*\n\n2-band: Kitob nutq va tafakkur madaniyatini shakllantiradi.\nDalil: Ko'p o'qigan inson fikrlarini aniq va chiroyli bayon eta oladi, chunki u yozuvchilarning uslubidan o'rganadi.\n*Bu yerga nima yozish kerak: sinfdoshingiz yoki tanishingiz orasida ko'p o'qiydigan va notiq odamni misol qilib ayting.*\n\n3-band: Kitob insonni yolg'izlikda ham ma'naviy hamroh bo'ladi.\nDalil: Qiyin damlarda kitob qahramonlarining hayotidan ibrat olish, ularning tajribasidan xulosa chiqarish mumkin.\nAdabiy misol: Abdulla Qodiriyning \"O'tkan kunlar\" romani qahramonlari orqali sadoqat va vatanparvarlik haqida chuqur fikrlash mumkin.\n*Bu yerga nima yozish kerak: sevimli adabiy qahramoningizni va undan olgan saboqni yozing.*\n\n**Xulosa qismi:**\nXulosa qilib aytganda, kitob nafaqat bilim, balki ma'naviy kamolot manbai hamdir. Zamonaviy texnologiyalar qanchalik rivojlanmasin, kitobning o'rnini hech narsa bosa olmaydi. Shaxsan men, har bir inson kuniga bo'lsa-da yarim soat kitob o'qishga vaqt ajratishi kerak, deb hisoblayman, chunki bu — kelajagimizga qilingan eng arzon va eng foydali sarmoyadir.\n*Bu yerga nima yozish kerak: o'z shaxsiy pozitsiyangizni va bitta amaliy tavsiyani qo'shing.*",
@@ -546,8 +650,23 @@ Quyidagi tuzilmada chuqur obraz tahlili tayyorlab bering:
 
 Asar va qahramon:
 """
-{{Asar nomi va tahlil qilinishi kerak bo'lgan qahramon nomini shu yerga yozing}}
+Asar: {{asar_nomi}}
+Qahramon: {{qahramon}}
 """`,
+    variables: [
+      {
+        key: "asar_nomi",
+        label: "Asar va muallif",
+        type: "text",
+        placeholder: "Abdulla Qodiriy, \"O'tkan kunlar\"",
+      },
+      {
+        key: "qahramon",
+        label: "Qahramon (obraz)",
+        type: "text",
+        placeholder: "Otabek",
+      },
+    ],
     exampleInput: "Abdulla Qodiriy, \"O'tkan kunlar\" — Otabek obrazi",
     exampleOutput:
       "**Umumiy tavsifi:** Otabek — asarning bosh qahramoni, Toshkentlik boy savdogar oilasidan chiqqan, ziyoli va ma'rifatparvar yosh yigit. U romanda ham shaxsiy sevgi tarixi, ham ijtimoiy-siyosiy voqealar markazida turadi.\n\n**Xarakter xususiyatlari:**\n1. *Vatanparvarlik va millat taqdiriga qayg'urish* — Otabek Marg'ilon va Qo'qon o'rtasidagi ichki nizolarni, mahalliy hukmdorlarning bir-biriga adovatini ko'rib, xalqning birligi yo'qligidan azob chekadi.\n2. *Sadoqat va vafodorlik* — Kumushga bo'lgan chin sevgisi, hatto Zaynab bilan ikkinchi nikohga majbur bo'lgandan keyin ham, uning qalbidagi sof tuyg'ularni o'zgartira olmaydi.\n3. *Adolat va insofni qadrlash* — Homid kabi makkor va manfaatparast kishilarga qarshi turishga harakat qiladi, garchi ko'pincha ularning fitnalariga qurbon bo'lsa ham.\n\n**Ichki ziddiyat:** Otabekning asosiy ichki kurashi — shaxsiy baxt (Kumushga bo'lgan sevgisi) bilan ijtimoiy majburiyat va oila obro'si (ota-onasi tomonidan tanlangan Zaynab bilan nikoh) o'rtasida. Bu ziddiyat uni butun roman davomida ikkilanishga va ichki iztirobga olib keladi.\n\n**Boshqa qahramonlar bilan munosabati:**\n- *Kumush bilan* — bu munosabat orqali muallif chin, sof sevgi obrazini yaratadi va uni davr taqozosi (ko'p xotinlilik, oilaviy kelishuvlar) bilan to'qnashtiradi.\n- *Homid bilan* — bu qarama-qarshilik orqali muallif yaxshilik va yomonlik, halollik va makkorlik kurashini ko'rsatadi; Homidning fitnalari Otabek boshiga ko'plab kulfatlar keltiradi.\n\n**Asar g'oyasidagi o'rni:** Qodiriy Otabek obrazi orqali XIX asr oxiri — XX asr boshidagi turkiston jamiyatining ichki nizolari, ma'rifatsizligi va ayni paytda yosh avlodning yangilanishga bo'lgan intilishini ko'rsatadi. Otabek — millatning yorug' kelajakka umidi timsoli.\n\n**Insho uchun tayyor xulosa jumlasi:**\n\"Otabek obrazi orqali Abdulla Qodiriy nafaqat bir yigitning fojiali sevgi tarixini, balki butun bir davr — parokandalik va ma'rifatsizlik girdobidagi millatning uyg'onishga bo'lgan chuqur ehtiyojini mahorat bilan tasvirlab bergan.\"",
@@ -590,8 +709,16 @@ Muhim: fikrlarni men uchun o'ylab topmang, faqat meni o'z fikrlarimni topishga y
 
 Erkin mavzu:
 """
-{{Erkin insho mavzusini shu yerga yozing}}
+{{insho_mavzusi}}
 """`,
+    variables: [
+      {
+        key: "insho_mavzusi",
+        label: "Erkin insho mavzusi",
+        type: "text",
+        placeholder: "Masalan: Kitob — eng yaqin do'st",
+      },
+    ],
     exampleInput: "Men uchun oila nima anglatadi",
     exampleOutput:
       "**5 ta yo'naltiruvchi savol:**\n1. Oila so'zini eshitganingizda, xayolingizga birinchi bo'lib qanday manzara yoki lavha keladi?\n2. Oilangiz bilan bog'liq eng yodingizda qolgan (yoqimli yoki qiyin) bitta voqeani eslay olasizmi?\n3. Oilangizdagi kimdir sizga hayotiy saboq bergan payt bo'lganmi? Bu qanday saboq edi?\n4. Oila sizni qanday inson bo'lib shakllanishingizga qanday ta'sir ko'rsatgan deb o'ylaysiz?\n5. Agar oila tushunchasini bitta so'z yoki ramz bilan ifodalasangiz, bu nima bo'lardi va nega?\n\n**3 ta ochilish jumlasi variantlari:**\n- *Savol bilan:* \"Oila — bu shunchaki qon-qarindoshlikmi, yoki undan ko'ra kattaroq narsami?\"\n- *Hikoya bilan:* \"Har oqshom oilamiz bir dasturxon atrofida yig'ilganda, men his qiladigan tinchlikni so'z bilan ifodalash qiyin.\"\n- *Iqtibos/maqol bilan:* \"'Uyni ko'rma, uydagini ko'r', deydi xalqimiz — va men bu gapning chuqur ma'nosini oilamda amalda ko'rganman.\"\n\n**Tuzilma maslahati:** Mulohaza inshosida uchta unsurni muvozanatlang: (1) shaxsiy his-tuyg'u — nima his qilyapsiz, (2) aniq tajriba — buni his qilishga sabab bo'lgan voqea yoki lavha, (3) kengroq xulosa — bu shaxsiy tajriba orqali hayot yoki inson tabiati haqida qanday umumiy fikrga kelasiz. Faqat his-tuyg'u yozib, tajribasiz qolmang — va faqat voqea aytib, undan xulosa chiqarmasdan ham qoldirmang.\n\n**Yakunlash uchun 2 variant:**\n- *Kelajakka bog'lash:* insho oxirida, bu tushunchani (masalan, oilaviy qadriyatlarni) kelajakda o'zingiz qanday davom ettirishni xohlashingiz haqida bir-ikki gap qo'shing.\n- *Boshlanishga qaytish:* inshoning birinchi jumlasidagi obraz yoki savolga qaytib, endi unga yangi, chuqurroq javob bering — bu insho doirasini yaxlit yakunlaydi.",
@@ -636,8 +763,16 @@ Javobingizni aynan shu tuzilmada bering:
 
 Test savoli:
 """
-{{Savol va variantlarni shu yerga joylashtiring}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Masala va A–D variantlari…",
+      },
+    ],
     exampleInput:
       "Agar 3x - 7 = 2x + 5 bo'lsa, x ning qiymatini toping.\nA) 2   B) 5   C) 12   D) 17",
     exampleOutput:
@@ -687,8 +822,16 @@ Javobingizni shu tuzilmada bering:
 
 Test savoli:
 """
-{{Savol va variantlarni shu yerga joylashtiring}}
+{{question_text}}
 """`,
+    variables: [
+      {
+        key: "question_text",
+        label: "Savol va variantlar",
+        type: "textarea",
+        placeholder: "Test savoli va A–D variantlari…",
+      },
+    ],
     exampleInput:
       "Qaysi qatordagi so'z tarkibida yasovchi qo'shimcha bor?\nA) kitoblar   B) ishchi   C) uyga   D) keldim",
     exampleOutput:
@@ -732,8 +875,16 @@ Javobingizni shu tuzilmada bering:
 
 Mavzu yoki davr:
 """
-{{Mavzu yoki davrni shu yerga yozing}}
+{{mavzu_yoki_davr}}
 """`,
+    variables: [
+      {
+        key: "mavzu_yoki_davr",
+        label: "Mavzu yoki davr",
+        type: "text",
+        placeholder: "Masalan: Amir Temur davlati (1370–1405)",
+      },
+    ],
     exampleInput: "Amir Temur davlatining tashkil topishi va yuksalishi",
     exampleOutput:
       "**Xronologik jadval:**\n- 1336 — Amir Temurning Kesh (Shahrisabz) yaqinidagi Xoja Ilg'or qishlog'ida tug'ilishi\n- 1360-yillar boshi — Movarounnahrdagi siyosiy tarqoqlik, Temurning siyosat maydoniga chiqishi\n- 1370 — Balxda qurultoy, Amir Temurning oliy hokimiyatni qo'lga olishi va davlatga asos solinishi\n- 1370-1380-yillar — Movarounnahrni birlashtirish va chegaralarni mustahkamlash\n- 1380-1390-yillar — Oltin O'rdaga qarshi yurishlar, To'xtamishxon bilan kurash\n- 1402 — Anqara jangi, Boyazid I ustidan g'alaba\n- 1405 — Amir Temurning Xitoy yurishi arafasida O'trorda vafot etishi\n\n**Sabab-oqibat zanjiri:**\n- *Movarounnahrdagi tarqoqlik → 1370-yil hokimiyat.* XIV asr o'rtalarida o'lka mayda beklarga bo'linib, o'zaro urushlar davom etardi. Aynan shu tartibsizlik markazlashgan kuchli hokimiyatga ehtiyoj tug'dirdi va 1370-yilda Balx qurultoyi bilan yakunlandi.\n- *Markazlashgan davlat → tashqi yurishlar.* Ichkarida barqarorlik o'rnatilgach, davlat resurslari tashqi siyosatga yo'naltirildi — savdo yo'llari ustidan nazorat o'rnatish asosiy maqsadga aylandi.\n- *To'xtamish bilan ziddiyat → Oltin O'rdaga zarba.* Bir vaqtlar Temur qo'llab-quvvatlagan To'xtamishxon keyinchalik unga qarshi chiqdi; bu yurishlar Oltin O'rdaning zaiflashuviga va Buyuk Ipak yo'li savdosining janubga siljishiga olib keldi.\n\n**Chalkashtiriladigan sanalar:**\n- **1370 va 1405** — birinchisi davlatning *boshlanishi* (hokimiyatga kelish), ikkinchisi Temur hayotining *tugashi*. Ikkalasi ham «davlat tarixi burilishi» bo'lgani uchun chalkashtiriladi.\n- **1391 va 1395** — ikkalasi ham To'xtamishga qarshi yurishlar. Farqi: 1395-yilgi yurish hal qiluvchi bo'lib, Oltin O'rda poytaxtiga qattiq zarba berdi.\n- **1336 va 1370** — tug'ilgan yil va hokimiyatga kelgan yil. Orasi 34 yil.\n\n**Yodlash usullari:**\n- *1370* — «uch-yetti-nol»: uchta raqamni ketma-ket ayting, davlat «noldan» boshlangani bilan bog'lang.\n- *1402 Anqara* — «14-02» ni sana formatida (14-fevral) tasavvur qiling, shu kuni Boyazid mag'lub bo'lgan deb eslang.\n- *1405* — Temur 1336-da tug'ilgan, 1405-da vafot etgan: 1405 - 1336 = 69 yosh. Yoshni eslasangiz, sanani chiqarib olasiz.\n\n**Test savollari:**\n1. Amir Temur qaysi yilda oliy hokimiyatni qo'lga olgan? A) 1360  B) 1370  C) 1380  D) 1391\n2. Anqara jangi qaysi yilda bo'lib o'tgan? A) 1395  B) 1398  C) 1402  D) 1405\n3. Amir Temur qaysi shaharda vafot etgan? A) Samarqand  B) O'tror  C) Kesh  D) Balx\n4. 1370-yilgi qurultoy qaysi shaharda o'tkazilgan? A) Samarqand  B) Kesh  C) Balx  D) Buxoro\n5. Amir Temur necha yoshida vafot etgan? A) 62  B) 65  C) 69  D) 72\n\n**Javoblar:** 1-B, 2-C, 3-B, 4-C, 5-C",
@@ -768,11 +919,11 @@ Mavzu yoki davr:
     template: `Siz DTM imtihoniga tayyorlaydigan o'quv mentorsiz. Men sizga vaziyatimni aytaman, siz menga real bajarish mumkin bo'lgan takrorlash jadvalini tuzing.
 
 Mening ma'lumotlarim:
-- Imtihongacha qolgan kunlar: {{masalan, 30}}
-- Bloklarim: {{masalan, Matematika (asosiy), Fizika, Ona tili, Tarix}}
-- Kuniga ajrata oladigan vaqtim: {{masalan, 4 soat}}
-- O'zimni zaif his qiladigan mavzular: {{masalan, progressiyalar, kinematika, qo'shma gaplar}}
-- Kuchli mavzularim: {{masalan, foizlar, sintaksis}}
+- Imtihongacha qolgan kunlar: {{days_left}}
+- Bloklarim: {{bloklar}}
+- Kuniga ajrata oladigan vaqtim: {{daily_hours}}
+- O'zimni zaif his qiladigan mavzular: {{weak_topics}}
+- Kuchli mavzularim: {{strong_topics}}
 
 Menga quyidagilarni bering:
 1. **Umumiy strategiya** — qolgan vaqtni bloklar va mavzular orasida qanday taqsimlash kerak, zaif mavzularga necha foiz vaqt ajratish lozim.
@@ -782,6 +933,39 @@ Menga quyidagilarni bering:
 5. **Oxirgi 3 kun rejasi** — imtihon oldidan nima qilish va nima QILMASLIK kerak.
 
 Jadval real bo'lsin — kuniga 10 soat deb yozmang, men aytgan vaqtga sig'diring.`,
+    variables: [
+      {
+        key: "days_left",
+        label: "Imtihongacha qolgan kunlar",
+        type: "number",
+        placeholder: "30",
+      },
+      {
+        key: "daily_hours",
+        label: "Kuniga ajrata oladigan vaqt",
+        type: "text",
+        placeholder: "4 soat",
+      },
+      {
+        key: "bloklar",
+        label: "Fan bloklaringiz",
+        type: "text",
+        placeholder: "Matematika (asosiy), Fizika, Ona tili, Tarix",
+      },
+      {
+        key: "weak_topics",
+        label: "Zaif mavzular",
+        type: "text",
+        placeholder: "progressiyalar, kinematika, qo'shma gaplar",
+      },
+      {
+        key: "strong_topics",
+        label: "Kuchli mavzular",
+        type: "text",
+        placeholder: "foizlar, sintaksis",
+        required: false,
+      },
+    ],
     exampleInput:
       "Imtihongacha 30 kun. Bloklarim: Matematika (asosiy fan), Fizika, Ona tili, Tarix. Kuniga 4 soat vaqtim bor. Zaif mavzularim: progressiyalar, kinematika, qo'shma gaplar. Kuchli mavzularim: foizlar, sintaksis asoslari.",
     exampleOutput:
@@ -838,8 +1022,17 @@ Menga quyidagilarni bering:
 
 Mening xatolarim:
 """
-{{Xatolaringizni shu yerga ro'yxat qilib yozing}}
+{{xatolar_royxati}}
 """`,
+    variables: [
+      {
+        key: "xatolar_royxati",
+        label: "Xato javoblaringiz ro'yxati",
+        type: "textarea",
+        placeholder: "1) Savol… Mening javobim: B, To'g'ri javob: D\n2) …",
+        helpText: "Har bir xato uchun savol, sizning javobingiz va to'g'ri javobni yozing.",
+      },
+    ],
     exampleInput:
       "1. Progressiya masalasi — men C, to'g'risi A. Formulani eslay olmadim.\n2. Foiz masalasi — men B, to'g'risi D. Formulani bilardim, lekin oxirida 100 ga ko'paytirishni unutdim.\n3. Qo'shma gap turi — men A, to'g'risi C. Ergash gapli va bog'langan qo'shma gapni chalkashtirdim.\n4. Tarix sanasi — men B, to'g'risi C. 1391 va 1395 ni adashtirdim.\n5. Kinematika — men D, to'g'risi B. Vaqt tugab qolgani uchun tavakkal belgiladim.\n6. Sinonim topish — men A, to'g'risi A edi, lekin varaqqa B deb ko'chirib yozibman.",
     exampleOutput:
@@ -890,8 +1083,16 @@ Do NOT write the essay or an outline yet — only the analysis.
 
 Question:
 """
-{{Paste the Task 2 question here}}
+{{task2_question}}
 """`,
+    variables: [
+      {
+        key: "task2_question",
+        label: "Task 2 savoli",
+        type: "textarea",
+        placeholder: "Some people think that…",
+      },
+    ],
     exampleInput:
       "Some people think that the best way to reduce traffic congestion in cities is to build more roads. Others believe that improving public transport is more effective. Discuss both views and give your own opinion.",
     exampleOutput:
@@ -941,13 +1142,27 @@ Keep every line short — this is a plan I will glance at while writing, not pro
 
 Question:
 """
-{{Paste the Task 2 question here}}
+{{task2_question}}
 """
 
 My position:
 """
-{{State the position you chose in step 1}}
+{{chosen_position}}
 """`,
+    variables: [
+      {
+        key: "task2_question",
+        label: "Task 2 savoli",
+        type: "textarea",
+        placeholder: "Some people think that…",
+      },
+      {
+        key: "chosen_position",
+        label: "Tanlagan pozitsiyangiz",
+        type: "textarea",
+        placeholder: "1-qadamda tanlagan fikringiz…",
+      },
+    ],
     exampleInput:
       "Question: Some people think that the best way to reduce traffic congestion in cities is to build more roads. Others believe that improving public transport is more effective. Discuss both views and give your own opinion.\n\nMy position: Improving public transport is more effective, though limited road building has a role.",
     exampleOutput:
@@ -988,8 +1203,16 @@ Provide:
 
 My outline:
 """
-{{Paste the outline from step 2 here}}
+{{outline_text}}
 """`,
+    variables: [
+      {
+        key: "outline_text",
+        label: "Reja (outline)",
+        type: "textarea",
+        placeholder: "2-qadamdagi rejani shu yerga joylashtiring…",
+      },
+    ],
     exampleInput:
       "Outline: Intro (paraphrase + thesis: public transport more effective). BP1: case for roads — capacity, bypasses. BP2: case for transit — induced demand, Seoul. BP3: my position — roads targeted only, transit scales. Conclusion: restate.",
     exampleOutput:
@@ -1036,13 +1259,27 @@ Give me:
 
 My essay:
 """
-{{Paste your essay here}}
+{{essay_text}}
 """
 
 The examiner feedback I received:
 """
-{{Paste the feedback from step 4 here}}
+{{examiner_feedback}}
 """`,
+    variables: [
+      {
+        key: "essay_text",
+        label: "Insho matningiz",
+        type: "textarea",
+        placeholder: "Inshoingizni joylashtiring…",
+      },
+      {
+        key: "examiner_feedback",
+        label: "Examiner izohlari",
+        type: "textarea",
+        placeholder: "4-qadamdagi feedback'ni joylashtiring…",
+      },
+    ],
     exampleInput:
       "Essay: (the community service essay from step 4)\n\nFeedback: Task Response 6.0 — position clear but ideas under-developed. Coherence 6.0 — mechanical linkers. Lexical 5.5 — repetitive vocabulary, word-form errors. Grammar 5.5 — agreement errors, mostly simple sentences. Overall 5.5.",
     exampleOutput:
@@ -1072,6 +1309,8 @@ The examiner feedback I received:
     ],
   },
 ];
+
+export const PROMPTS: Prompt[] = [...CORE_PROMPTS, ...ACADEMIC_PROMPTS];
 
 export function getPromptById(id: string): Prompt | undefined {
   return PROMPTS.find((p) => p.id === id);
