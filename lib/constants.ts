@@ -40,7 +40,7 @@ export const CATEGORY_META: Record<
 > = {
   IELTS: {
     label: "IELTS",
-    sublabel: "Writing, Speaking, Vocabulary",
+    sublabel: "Writing, Speaking, Reading",
     color: "from-accent-blue to-accent-indigo",
     icon: "GraduationCap",
   },
@@ -58,7 +58,7 @@ export const CATEGORY_META: Record<
   },
   DTM: {
     label: "DTM",
-    sublabel: "Matematika, Ona tili, Tarix",
+    sublabel: "Matematika, Ona tili, Tarix, Biologiya",
     color: "from-accent-green to-accent-teal",
     icon: "ClipboardCheck",
   },
@@ -67,12 +67,14 @@ export const CATEGORY_META: Record<
 export const FILTER_GROUPS: FilterGroup[] = [
   "IELTS Writing",
   "IELTS Speaking",
+  "IELTS Reading",
   "SAT Math",
   "SAT Reading",
   "Ona tili / Adabiyot",
   "DTM — Matematika",
   "DTM — Ona tili",
   "DTM — Tarix",
+  "DTM — Biologiya",
   "DTM — Umumiy",
 ];
 

@@ -1,5 +1,6 @@
 import type { Prompt } from "@/lib/types";
 import { ACADEMIC_PROMPTS } from "./academic-prompts";
+import { READING_BIOLOGY_PROMPTS } from "./reading-biology-prompts";
 
 /**
  * PromptXona seed data.
@@ -1310,7 +1311,11 @@ The examiner feedback I received:
   },
 ];
 
-export const PROMPTS: Prompt[] = [...CORE_PROMPTS, ...ACADEMIC_PROMPTS];
+export const PROMPTS: Prompt[] = [
+  ...CORE_PROMPTS,
+  ...ACADEMIC_PROMPTS,
+  ...READING_BIOLOGY_PROMPTS,
+];
 
 export function getPromptById(id: string): Prompt | undefined {
   return PROMPTS.find((p) => p.id === id);

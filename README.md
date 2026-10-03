@@ -12,8 +12,8 @@ bir zumda ishlating.
 
 ## ✨ Features
 
-- **4 kategoriya:** DTM (Matematika, Ona tili, Tarix), IELTS (Writing,
-  Speaking), SAT (Math, Reading), Ona tili va Adabiyot — 25 ta to'liq
+- **4 kategoriya:** DTM (Matematika, Ona tili, Tarix, Biologiya), IELTS
+  (Writing, Speaking, Reading), SAT (Math, Reading), Ona tili va Adabiyot — 29 ta to'liq
   yozilgan, production-sifatli prompt.
 - **Dinamik o'zgaruvchilar** — shablondagi `{{essay_text}}`, `{{target_score}}`
   kabi o'zgaruvchilar uchun avtomatik forma (text / textarea / number / select).
@@ -32,7 +32,8 @@ bir zumda ishlating.
   - 👍 Upvote — Supabase'da, faqat tizimga kirganlar uchun (1 foydalanuvchi =
     1 ovoz); Supabase sozlanmagan bo'lsa brauzerda
   - 🔖 Saqlash (bookmark) — `/saved` sahifasida to'planadi
-  - 💬 To'liq izoh (comment) tizimi — yangi izoh qoldirish, real-time yangilanish
+  - 💬 Izohlar — Supabase'da, faqat tizimga kirganlar yozadi va o'z izohini
+    o'chira oladi (muallif ismi serverda aniqlanadi, spam cheklovi bor)
 - **⌘K / Ctrl+K buyruq palitrasi** — istalgan joydan tez qidirish, klaviatura
   bilan boshqarish (↑↓ tanlash, ↵ ochish, Esc yopish).
 - **Qidiruv va filtrlash** — kategoriya bo'yicha pill-filtrlar, mashhurlik/vaqt
@@ -53,8 +54,8 @@ bir zumda ishlating.
 - **Kirish (ixtiyoriy)** — Supabase Auth orqali Google yoki email magic link.
   Kirilgan bo'lsa progress bulutga saqlanadi va qurilmalar aro sinxronlanadi;
   kirilmagan bo'lsa brauzerda saqlanadi va birinchi kirishda bulutga ko'chadi.
-- **LocalStorage** — nusxalash soni, saqlanganlar, izohlar va o'zgaruvchi
-  qiymatlari brauzer xotirasida saqlanadi, sahifani yangilaganda ham yo'qolmaydi.
+- **Supabase'siz ham ishlaydi** — kalitlar bo'lmasa upvote, nusxalash soni va
+  izohlar brauzer xotirasida saqlanadi (lokal ishlab chiqish uchun).
 
 ## 🧱 Tech Stack
 
@@ -77,7 +78,9 @@ promptxona/
 │   ├── globals.css
 │   ├── not-found.tsx
 │   ├── actions/
-│   │   └── upvote.ts              # Server Action: setPromptUpvote() → RPC
+│   │   ├── upvote.ts              # Server Action: setPromptUpvote() → RPC
+│   │   ├── copy.ts                # Server Action: recordPromptCopy() → RPC
+│   │   └── comments.ts            # Server Action: izoh qo'shish / o'chirish
 │   └── prompts/
 │       ├── page.tsx               # Promptlar katalogi (server wrapper)
 │       ├── PromptsCatalog.tsx     # Qidiruv/filtr mantig'i (client)
@@ -101,12 +104,14 @@ promptxona/
 ├── data/
 │   ├── prompts.ts                 # 22 ta asosiy prompt (DTM/IELTS/SAT/Ona tili)
 │   ├── academic-prompts.ts        # Akademik paket: IELTS xatolar tahlili, SAT R&W, mumtoz adabiyot
+│   ├── reading-biology-prompts.ts # IELTS Reading (TFNG, Headings) + DTM Biologiya
 │   └── chains.ts                  # Prompt zanjirlari + navigatsiya yordamchilari
 ├── supabase/
 │   └── migrations/
 │       ├── 0001_prompt_completions.sql   # Progress jadvali + RLS siyosatlari
 │       ├── 0002_prompt_library_schema.sql # Kategoriya, prompt, teg, o'zgaruvchi jadvallari
-│       └── 0003_prompt_upvotes.sql        # Upvote jadvallari + set_prompt_upvote() RPC
+│       ├── 0003_prompt_upvotes.sql        # Upvote jadvallari + set_prompt_upvote() RPC
+│       └── 0004_prompt_copies_and_comments.sql # Nusxalash soni + izohlar
 ├── middleware.ts                  # Supabase sessiyasini yangilab turadi
 ├── lib/
 │   ├── types.ts                   # TypeScript interfeyslar
@@ -196,6 +201,7 @@ bepul loyiha oching.
 | `0001_prompt_completions.sql` | Progress jadvali + RLS |
 | `0002_prompt_library_schema.sql` | `categories`, `filter_groups`, `prompts`, `tags`, `prompt_tags`, `prompt_variables` (kelajakdagi admin panel uchun; hozircha ilova promptlarni `data/` dan o'qiydi) |
 | `0003_prompt_upvotes.sql` | `prompt_upvotes`, `prompt_stats` + `set_prompt_upvote()` RPC |
+| `0004_prompt_copies_and_comments.sql` | `prompt_stats.copy_count` / `comment_count`, `increment_prompt_copy()` RPC, `prompt_comments` (RLS, muallif triggeri, 10 daqiqada 5 izoh cheklovi) |
 
 Supabase CLI ishlatsangiz: `supabase db push`.
 
@@ -223,7 +229,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
 chaqiradi. `set_prompt_upvote(prompt_id, upvoted)` "toggle" emas, kerakli
 holatni qabul qiladi — shuning uchun ikki marta bosish yoki qayta urinish
 hisobni buzmaydi. Xato bo'lsa UI avvalgi holatga qaytadi. Ko'rsatiladigan son =
-`data/prompts.ts` dagi boshlang'ich `upvotes` + bazadagi haqiqiy ovozlar.
+`data/prompts.ts` dagi boshlang'ich `upvotes` (hozir hammasi 0) + bazadagi
+haqiqiy ovozlar.
+
+**Nusxalash va izohlar:** nusxalash soni har sessiyada har prompt uchun bir
+marta hisoblanadi. Supabase rejimida `data/` dagi namuna izohlar
+ko'rsatilmaydi — faqat bazadagi haqiqiy izohlar.
 
 Vercel'ga deploy qilganda o'sha ikki `NEXT_PUBLIC_*` o'zgaruvchini loyiha
 sozlamalariga ham qo'shishni unutmang.
@@ -284,7 +295,8 @@ variables: [
 - Bitta kalit shablonda bir necha marta ishlatilishi mumkin.
 - `variables` berilmasa ham ishlaydi — har bir `{{key}}` uchun oddiy textarea
   chiqadi; lekin yaxshi `label` va `placeholder` talabalar uchun ancha qulay.
-- `testedModels` ni faqat promptni haqiqatan sinab ko'rgandan keyin to'ldiring.
+- `testedModels` ni faqat promptni haqiqatan sinab ko'rgandan keyin to'ldiring —
+  qanday sinash kerakligi [`docs/prompt-testing.md`](docs/prompt-testing.md) da.
 
 Jamiyat a'zolari esa header'dagi **"Prompt yuborish"** tugmasi orqali Google
 Form'ga o'z promptlarini yuborishlari mumkin — bu promptlar admin tomonidan
