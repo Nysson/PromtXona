@@ -11,6 +11,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { recordPromptCopy } from "@/app/actions/copy";
 import { setPromptUpvote } from "@/app/actions/upvote";
 import { useAuth } from "@/components/AuthProvider";
 import { useToast } from "@/components/ToastProvider";
@@ -20,6 +21,21 @@ import { generateId } from "@/lib/utils";
 
 const STORAGE_KEY = "promptxona-overrides-v1";
 const SAVED_KEY = "promptxona-saved-v1";
+const COPIED_SESSION_KEY = "promptxona-copied-session-v1";
+
+/** Bitta sessiyada har prompt nusxasini bir marta hisoblaymiz. */
+function markCopiedThisSession(id: string): boolean {
+  try {
+    const raw = window.sessionStorage.getItem(COPIED_SESSION_KEY);
+    const ids: string[] = raw ? JSON.parse(raw) : [];
+    if (ids.includes(id)) return false;
+    ids.push(id);
+    window.sessionStorage.setItem(COPIED_SESSION_KEY, JSON.stringify(ids));
+    return true;
+  } catch {
+    return true;
+  }
+}
 
 type OverrideMap = Record<string, PromptOverride>;
 
@@ -29,6 +45,10 @@ interface PromptsContextValue {
   toggleUpvote: (id: string) => Promise<void>;
   incrementCopyCount: (id: string) => void;
   addComment: (id: string, author: string, content: string) => void;
+  /** Supabase rejimida izohlar soni bazada — UI'ni darhol moslash uchun. */
+  adjustCommentCount: (id: string, delta: number) => void;
+  /** true — upvote, nusxalash va izohlar Supabase'da. */
+  isRemote: boolean;
   getPromptById: (id: string) => Prompt | undefined;
   savedIds: string[];
   isSaved: (id: string) => boolean;
@@ -58,10 +78,9 @@ function saveOverrides(overrides: OverrideMap) {
 }
 
 /**
- * Upvote ikki rejimda ishlaydi:
- * - Supabase sozlangan bo'lsa — haqiqiy ovozlar bazada (faqat tizimga
- *   kirganlar ovoz beradi). Ko'rsatiladigan son = `data/prompts.ts` dagi
- *   boshlang'ich hisob + bazadagi haqiqiy ovozlar.
+ * Upvote, nusxalash soni va izohlar ikki rejimda ishlaydi:
+ * - Supabase sozlangan bo'lsa — hammasi bazada (ovoz va izoh faqat tizimga
+ *   kirganlar uchun). `data/` dagi namuna izohlar bu rejimda ko'rsatilmaydi.
  * - Sozlanmagan bo'lsa (lokal ishlab chiqish) — avvalgidek localStorage'da.
  */
 export function PromptsProvider({ children }: { children: ReactNode }) {
@@ -69,8 +88,12 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
   const { showToast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
-  const remoteUpvotes = Boolean(supabase);
+  const isRemote = Boolean(supabase);
   const [remoteCounts, setRemoteCounts] = useState<Record<string, number>>({});
+  const [remoteCopies, setRemoteCopies] = useState<Record<string, number>>({});
+  const [remoteComments, setRemoteComments] = useState<Record<string, number>>(
+    {}
+  );
   const [myUpvotes, setMyUpvotes] = useState<Set<string>>(() => new Set());
   const pendingUpvotes = useRef<Set<string>>(new Set());
   const [overrides, setOverrides] = useState<OverrideMap>({});
@@ -101,25 +124,31 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
     }
   }, [savedIds, hydrated]);
 
-  // Barcha promptlarning ovozlar soni — bitta kichik so'rov (har prompt uchun
+  // Barcha promptlarning statistikasi — bitta kichik so'rov (har prompt uchun
   // bitta qator), shuning uchun sahifalash shart emas.
   useEffect(() => {
     if (!supabase) return;
     let active = true;
     supabase
       .from("prompt_stats")
-      .select("prompt_id, upvote_count")
+      .select("prompt_id, upvote_count, copy_count, comment_count")
       .then(({ data, error }) => {
         if (!active) return;
         if (error) {
           console.error("prompt_stats yuklanmadi", error);
           return;
         }
-        setRemoteCounts(
-          Object.fromEntries(
-            (data ?? []).map((row) => [row.prompt_id as string, row.upvote_count as number])
-          )
-        );
+        const rows = (data ?? []) as {
+          prompt_id: string;
+          upvote_count: number;
+          copy_count: number;
+          comment_count: number;
+        }[];
+        const pick = (key: "upvote_count" | "copy_count" | "comment_count") =>
+          Object.fromEntries(rows.map((row) => [row.prompt_id, row[key]]));
+        setRemoteCounts(pick("upvote_count"));
+        setRemoteCopies(pick("copy_count"));
+        setRemoteComments(pick("comment_count"));
       });
     return () => {
       active = false;
@@ -148,24 +177,30 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
 
   const prompts = useMemo<Prompt[]>(() => {
     return PROMPTS.map((base) => {
+      if (isRemote) {
+        return {
+          ...base,
+          upvotes: base.upvotes + (remoteCounts[base.id] ?? 0),
+          copyCount: base.copyCount + (remoteCopies[base.id] ?? 0),
+          comments: [],
+          commentCount: remoteComments[base.id] ?? 0,
+        };
+      }
       const o = overrides[base.id];
-      const upvotes = remoteUpvotes
-        ? base.upvotes + (remoteCounts[base.id] ?? 0)
-        : o?.upvotes ?? base.upvotes;
-      if (!o && upvotes === base.upvotes) return base;
+      if (!o) return base;
       return {
         ...base,
-        upvotes,
-        copyCount: o?.copyCount ?? base.copyCount,
-        comments: o?.comments ?? base.comments,
+        upvotes: o.upvotes ?? base.upvotes,
+        copyCount: o.copyCount ?? base.copyCount,
+        comments: o.comments ?? base.comments,
       };
     });
-  }, [overrides, remoteUpvotes, remoteCounts]);
+  }, [overrides, isRemote, remoteCounts, remoteCopies, remoteComments]);
 
   const isUpvoted = useCallback(
     (id: string) =>
-      remoteUpvotes ? myUpvotes.has(id) : Boolean(overrides[id]?.upvoted),
-    [remoteUpvotes, myUpvotes, overrides]
+      isRemote ? myUpvotes.has(id) : Boolean(overrides[id]?.upvoted),
+    [isRemote, myUpvotes, overrides]
   );
 
   const toggleLocalUpvote = useCallback((id: string) => {
@@ -188,7 +223,7 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
 
   const toggleUpvote = useCallback(
     async (id: string) => {
-      if (!remoteUpvotes) {
+      if (!isRemote) {
         const wasUpvoted = Boolean(overrides[id]?.upvoted);
         toggleLocalUpvote(id);
         if (!wasUpvoted) showToast("Ovoz berganingiz uchun rahmat!");
@@ -244,7 +279,7 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
       }
     },
     [
-      remoteUpvotes,
+      isRemote,
       overrides,
       toggleLocalUpvote,
       user,
@@ -255,7 +290,7 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
     ]
   );
 
-  const incrementCopyCount = useCallback((id: string) => {
+  const incrementLocalCopyCount = useCallback((id: string) => {
     setOverrides((prev) => {
       const base = PROMPTS.find((p) => p.id === id);
       if (!base) return prev;
@@ -267,6 +302,28 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
       };
     });
   }, []);
+
+  const incrementCopyCount = useCallback(
+    (id: string) => {
+      if (isRemote) {
+        if (!markCopiedThisSession(id)) return;
+        setRemoteCopies((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
+        // Fon rejimida: xato bo'lsa ham foydalanuvchini bezovta qilmaymiz.
+        void recordPromptCopy(id).catch(() => undefined);
+        return;
+      }
+      incrementLocalCopyCount(id);
+    },
+    [isRemote, incrementLocalCopyCount]
+  );
+
+  const adjustCommentCount = useCallback((id: string, delta: number) => {
+    setRemoteComments((prev) => ({
+      ...prev,
+      [id]: Math.max((prev[id] ?? 0) + delta, 0),
+    }));
+  }, []);
+
 
   const addComment = useCallback(
     (id: string, author: string, content: string) => {
@@ -312,6 +369,8 @@ export function PromptsProvider({ children }: { children: ReactNode }) {
     toggleUpvote,
     incrementCopyCount,
     addComment,
+    adjustCommentCount,
+    isRemote,
     getPromptById,
     savedIds,
     isSaved,

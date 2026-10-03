@@ -22,7 +22,12 @@ import { usePrompts } from "@/components/PromptsProvider";
 import { RelatedPrompts } from "@/components/RelatedPrompts";
 import { useToast } from "@/components/ToastProvider";
 import type { Prompt } from "@/lib/types";
-import { cn, formatCompactNumber, formatDate } from "@/lib/utils";
+import {
+  cn,
+  commentCountOf,
+  formatCompactNumber,
+  formatDate,
+} from "@/lib/utils";
 
 export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
   const {
@@ -194,7 +199,7 @@ export function PromptDetail({ initialPrompt }: { initialPrompt: Prompt }) {
               <div className="flex items-center justify-between">
                 <dt className="text-neutral-500 dark:text-neutral-400">Izohlar</dt>
                 <dd className="font-semibold text-neutral-900 dark:text-white">
-                  {prompt.comments.length}
+                  {commentCountOf(prompt)}
                 </dd>
               </div>
             </dl>

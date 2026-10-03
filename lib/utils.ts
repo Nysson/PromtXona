@@ -58,3 +58,10 @@ export function byPopularity(
     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 }
+
+export function commentCountOf(prompt: {
+  commentCount?: number;
+  comments: unknown[];
+}): number {
+  return prompt.commentCount ?? prompt.comments.length;
+}
