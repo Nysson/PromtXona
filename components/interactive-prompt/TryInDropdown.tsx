@@ -98,7 +98,7 @@ export function TryInDropdown({ prompt, onSelect }: TryInDropdownProps) {
           id={menuId}
           role="menu"
           onKeyDown={onMenuKeyDown}
-          className="animate-toast-in absolute right-0 z-30 mt-2 w-64 origin-top-right rounded-2xl border border-black/5 bg-white/95 p-1.5 shadow-soft backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/95 dark:shadow-soft-dark"
+          className="animate-toast-in absolute right-0 z-30 mt-2 w-64 origin-top-right rounded-2xl border border-black/5 bg-white p-1.5 shadow-soft dark:border-white/10 dark:bg-neutral-900 dark:shadow-soft-dark"
         >
           {TARGETS.map((target, index) => (
             <a

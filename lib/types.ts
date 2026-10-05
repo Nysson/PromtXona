@@ -25,6 +25,8 @@ export interface Prompt {
   filterGroup: FilterGroup;
   subcategory: string;
   description: string;
+  /** Kartada ko'rsatiladigan bir qatorli kutilgan natija: "nima olasiz". */
+  outcome?: string;
   role: string;
   task: string;
   context: string;

@@ -17,6 +17,7 @@ export const PROMPTS: Prompt[] = [
     subcategory: "Writing Task 1",
     description:
       "Grafik, jadval yoki diagrammani band 7+ darajasidagi Task 1 hisobotiga aylantiradi va tuzilmani tushuntiradi.",
+    outcome: "Tayyor band 7+ Task 1 hisobot va tuzilma izohi",
     role: "You are a certified IELTS Academic Writing examiner with 12 years of experience marking Task 1 reports for band scores 6.5–9.0.",
     task: "Turn a raw description of a graph, chart, table, process diagram or map into a fully structured, band 7+ IELTS Writing Task 1 report of 150–190 words, then explain the structural choices you made.",
     context:
@@ -68,6 +69,7 @@ Here is my chart description:
     subcategory: "Writing Task 2",
     description:
       "Insho matningizni rasmiy IELTS band descriptorlariga ko'ra baholaydi va har bir mezon bo'yicha aniq tuzatish beradi.",
+    outcome: "Har bir mezon bo'yicha band ball va aniq tuzatishlar",
     role: "You are a senior IELTS examiner trained on the official Task 2 Band Descriptors (Task Response, Coherence & Cohesion, Lexical Resource, Grammatical Range & Accuracy).",
     task: "Assess a student's IELTS Writing Task 2 essay, assign an estimated band score for each of the four marking criteria plus an overall band, and provide specific, quoted corrections.",
     context:
@@ -134,6 +136,7 @@ My essay:
     subcategory: "Speaking Part 2",
     description:
       "AI'ni jonli speaking hamkoringizga aylantiradi: cue card beradi, 1 daqiqa tayyorlanish beradi va Part 3 savollari bilan davom ettiradi.",
+    outcome: "Cue card, 1 daqiqa tayyorgarlik va Part 3 savollari",
     role: "You are a friendly, encouraging IELTS Speaking partner and examiner who role-plays the full Part 2 and Part 3 speaking test experience.",
     task: "Simulate a realistic IELTS Speaking Part 2 long turn (cue card) followed by 3 related Part 3 discussion questions, then give feedback on fluency, coherence, vocabulary and pronunciation cues based on the student's written response.",
     context:
@@ -181,6 +184,7 @@ Start with Step 1 and Step 2 now.`,
     subcategory: "Vocabulary",
     description:
       "Oddiy so'zlar bilan yozilgan gapni band 7-9 darajasidagi lug'at boyligi bilan qayta yozadi, sinonimlar va kolokatsiyalarni tushuntiradi.",
+    outcome: "Band 7–9 lug'atli gap va kolokatsiyalar ro'yxati",
     role: "You are an IELTS vocabulary coach specializing in academic collocations and topic-specific lexis for bands 7-9.",
     task: "Take a student's simple sentence or paragraph and rewrite it 3 times at increasing sophistication levels (Band 6, Band 7.5, Band 9), while explaining every upgraded word/collocation used.",
     context:
@@ -220,6 +224,7 @@ My sentence/paragraph:
     subcategory: "Coherence & Cohesion",
     description:
       "Insho paragraflari orasidagi mantiqiy bog'lanish va linking words'lardan foydalanishni tekshiradi, xarita (mapping) shaklida ko'rsatadi.",
+    outcome: "Paragraflar bog'lanish xaritasi va linking tuzatishlari",
     role: "You are an IELTS Coherence & Cohesion specialist who maps the logical flow of essays paragraph-by-paragraph and sentence-by-sentence.",
     task: "Analyze an essay's paragraph structure, topic sentences, and use of cohesive devices, then produce a 'coherence map' showing where the logic breaks down and how to fix transitions.",
     context:
@@ -268,6 +273,7 @@ My essay:
     subcategory: "Math",
     description:
       "Har qanday SAT Math masalasini bosqichma-bosqich yechadi, qaysi konsepsiya ishlatilganini va tez yechish 'trick'ini tushuntiradi.",
+    outcome: "Bosqichma-bosqich yechim va tez yechish usuli",
     role: "You are an expert SAT Math tutor who has helped hundreds of students raise their Math score from the 500s to 750+.",
     task: "Solve any SAT Math problem step-by-step, explicitly naming the underlying concept, showing the fastest method (not just the longest one), and finishing with a similar practice problem.",
     context:
@@ -317,6 +323,7 @@ Problem:
     subcategory: "Reading",
     description:
       "Inference (xulosa chiqarish) savollarini matndagi aniq dalillar bilan bog'lab, noto'g'ri variantlar nega noto'g'ri ekanini tushuntiradi.",
+    outcome: "Matndan dalil va har bir variant tahlili",
     role: "You are an SAT Reading & Writing expert who specializes in breaking down inference and 'best evidence' questions using evidence-based reasoning.",
     task: "Given an SAT Reading passage excerpt and an inference question with answer choices, identify the exact textual evidence, eliminate wrong choices one-by-one with reasoning, and teach the general inference strategy used.",
     context:
@@ -359,6 +366,7 @@ Question and choices:
     subcategory: "Math",
     description:
       "Digital SAT'dagi Desmos kalkulyatoridan qanday qilib algebraik masalalarni tezroq va xatosiz yechish uchun foydalanishni o'rgatadi.",
+    outcome: "Masalani Desmos'da tez yechish ketma-ketligi",
     role: "You are a Digital SAT strategy coach who specializes in using the built-in Desmos graphing calculator to solve algebra, functions, and systems questions faster than by hand.",
     task: "Given an SAT Math problem, show exactly what to type into the Desmos calculator (built into the Digital SAT) to get the answer in under 30 seconds, alongside the traditional algebraic method for comparison.",
     context:
@@ -402,6 +410,7 @@ Problem:
     subcategory: "Vocabulary",
     description:
       "Words-in-Context savollarini matn ma'nosidan kelib chiqib yechishga o'rgatadi, so'zma-so'z lug'at yodlashdan ko'ra samaraliroq usul.",
+    outcome: "So'z ma'nosini kontekstdan topish usuli",
     role: "You are an SAT Reading & Writing tutor specializing in 'Words in Context' questions, which test meaning-from-context rather than memorized definitions.",
     task: "Given a sentence with a blank or a bolded word and 4 answer choices, teach the substitution-and-context-clue method to find the correct meaning, rather than relying on rote vocabulary memorization.",
     context:
@@ -439,6 +448,7 @@ Sentence and choices:
     subcategory: "Grammar",
     description:
       "Grammatik xato turini aniq nomlab beradi (vergul, subject-verb agreement, modifier va h.k.) va bir xil turdagi qo'shimcha mashqlar taklif qiladi.",
+    outcome: "Xato turi nomi va shu turdagi qo'shimcha mashqlar",
     role: "You are an SAT Writing & Language (grammar/editing) specialist who diagnoses the exact grammatical rule being tested in each question.",
     task: "Given an SAT grammar/editing question, name the precise grammar rule category being tested, explain the fix, and generate 2 additional practice sentences testing the exact same rule.",
     context:
@@ -480,6 +490,7 @@ Question:
     subcategory: "Insho tuzilmasi",
     description:
       "Har qanday insho mavzusi uchun kirish, asosiy qism (dalillar bilan) va xulosadan iborat to'liq reja va namuna matn tuzib beradi.",
+    outcome: "Kirish, asosiy qism va xulosali reja + namuna matn",
     role: "Siz maktab o'quvchilariga ona tili va adabiyot fanidan insho yozishni o'rgatuvchi tajribali til va adabiyot o'qituvchisisiz.",
     task: "Berilgan insho mavzusi asosida to'liq reja (kirish, 3 ta asosiy fikr, xulosa) tuzib, har bir qism uchun namuna gaplar yozib bering va o'quvchiga qanday qilib o'z fikrlarini shu tuzilmaga joylashtirishni tushuntiring.",
     context:
@@ -530,6 +541,7 @@ Insho mavzusi:
     subcategory: "Adabiy tahlil",
     description:
       "Badiiy asardagi bosh qahramon (obraz)ni tahlil qiladi: xarakter xususiyatlari, ichki ziddiyatlari va asar g'oyasidagi o'rnini ochib beradi.",
+    outcome: "Obraz xarakteri, ziddiyatlari va asardagi o'rni",
     role: "Siz o'zbek va jahon adabiyoti bo'yicha chuqur bilimga ega adabiyotshunos va adabiyot o'qituvchisisiz.",
     task: "Berilgan badiiy asar va qahramon nomi asosida obrazning xarakterini, ichki va tashqi ziddiyatlarini, boshqa qahramonlar bilan munosabatini va asar g'oyasidagi o'rnini chuqur tahlil qiling.",
     context:
@@ -574,6 +586,7 @@ Asar va qahramon:
     subcategory: "Mulohaza inshosi",
     description:
       "Erkin (ijodiy) mavzu bo'yicha shaxsiy mulohaza inshosi yozishga yordam beradi: g'oyalar generatsiya qiladi va his-tuyg'ularni ifodalash uslubini o'rgatadi.",
+    outcome: "Insho g'oyalari va fikrni ifodalash namunalari",
     role: "Siz o'quvchilarga erkin mavzudagi ijodiy va mulohaza inshosi yozishni o'rgatuvchi mehribon va ilhomlantiruvchi ona tili o'qituvchisisiz.",
     task: "Berilgan erkin mavzu asosida o'quvchiga shaxsiy fikr-mulohazalarini tartibga solishga yordam beradigan savollar to'plami, ilhom beruvchi ochilish jumlalari va yakuniy fikrni shakllantirish bo'yicha maslahat bering.",
     context:
@@ -621,6 +634,7 @@ Erkin mavzu:
     subcategory: "Matematika",
     description:
       "DTM test savolini bosqichma-bosqich yechadi, qaysi mavzu tekshirilayotganini aytadi va imtihonda vaqt tejaydigan tezkor usulni ko'rsatadi.",
+    outcome: "Yechim, tekshirilgan mavzu va vaqt tejash usuli",
     role: "Siz DTM (Davlat Test Markazi) matematika blokiga o'nlab yillar davomida abituriyentlarni tayyorlab kelgan tajribali repetitorsiz.",
     task: "Berilgan DTM matematika test savolini to'liq bosqichma-bosqich yeching, tekshirilayotgan mavzuni nomlang, testda vaqt tejaydigan tezkor usulni ko'rsating va eng ko'p tanlanadigan noto'g'ri variantning sababini tushuntiring.",
     context:
@@ -672,6 +686,7 @@ Test savoli:
     subcategory: "Ona tili",
     description:
       "Ona tili test savolining ortidagi grammatik qoidani ochib beradi, har bir variantni alohida tahlil qiladi va shu qoidaga oid qo'shimcha mashq beradi.",
+    outcome: "Qoida izohi, variantlar tahlili va qo'shimcha mashq",
     role: "Siz DTM ona tili va adabiyot blokiga abituriyentlar tayyorlaydigan, o'zbek tili grammatikasini chuqur biladigan filolog o'qituvchisiz.",
     task: "Berilgan ona tili test savolidagi qoidani aniq nomlang, to'rtala variantni birma-bir tahlil qiling, to'g'ri javobni qoida asosida asoslang va shu qoidani mustahkamlash uchun 2 ta yangi mashq bering.",
     context:
@@ -717,6 +732,7 @@ Test savoli:
     subcategory: "Tarix",
     description:
       "Tarixiy davr yoki mavzu bo'yicha sanalarni xronologik jadvalga soladi, sabab-oqibat bog'lanishini ko'rsatadi va yodlash uchun assotsiatsiyalar beradi.",
+    outcome: "Xronologik jadval va eslab qolish assotsiatsiyalari",
     role: "Siz O'zbekiston tarixi fanidan DTM blokiga abituriyentlar tayyorlaydigan, mavzuni sanalar quruq ro'yxati sifatida emas, bog'liq voqealar zanjiri sifatida o'rgatadigan tarix o'qituvchisisiz.",
     task: "Berilgan tarixiy davr yoki mavzu bo'yicha asosiy sanalarni xronologik jadval shaklida bering, har bir voqeaning sababi va oqibatini ko'rsating, oson chalkashtiriladigan sanalarni ajratib tushuntiring va yodlash uchun assotsiatsiyalar taklif qiling.",
     context:
@@ -761,6 +777,7 @@ Mavzu yoki davr:
     subcategory: "Takrorlash rejasi",
     description:
       "Imtihongacha qolgan kunlar va zaif mavzularingizga qarab kunlik takrorlash jadvalini tuzadi, takrorlash oralig'ini hisobga oladi.",
+    outcome: "Imtihongacha kunlik takrorlash jadvali",
     role: "Siz DTM imtihoniga tayyorgarlik ko'rayotgan abituriyentlar uchun o'quv reja tuzuvchi tajribali mentorsiz va oraliqli takrorlash (spaced repetition) tamoyilini bilasiz.",
     task: "Imtihongacha qolgan kunlar soni, bloklar va o'quvchining zaif mavzulariga qarab kunlik takrorlash jadvalini tuzing; har bir mavzuni kamida ikki marta — birinchi o'rganish va keyin oraliqli takrorlash sifatida — rejaga kiriting.",
     context:
@@ -816,6 +833,7 @@ Jadval real bo'lsin — kuniga 10 soat deb yozmang, men aytgan vaqtga sig'diring
     subcategory: "Xatolar tahlili",
     description:
       "Sinov testidagi xatolaringizni turkumlarga ajratadi: bilim yetishmasligi, e'tiborsizlik yoki vaqt tanqisligi — va har biriga alohida yechim beradi.",
+    outcome: "Xatolar turkumi va har biriga alohida yechim",
     role: "Siz DTM sinov testlari natijalarini tahlil qilib, abituriyentning aynan qaysi sababdan ball yo'qotayotganini aniqlaydigan o'quv tahlilchisisiz.",
     task: "Sinov testida noto'g'ri belgilangan savollar ro'yxatini tahlil qiling, har bir xatoni sababi bo'yicha turkumlang, takrorlanuvchi naqshni aniqlang va keyingi qadamlar uchun aniq tavsiyalar bering.",
     context:
@@ -872,6 +890,7 @@ Mening xatolarim:
     subcategory: "Writing Task 2",
     description:
       "Insho savolining turini aniqlaydi, kalit so'zlarni ajratadi va mavzudan chetga chiqmaslik uchun aniq chegara belgilaydi.",
+    outcome: "Savol turi, kalit so'zlar va mavzu chegarasi",
     role: "You are an IELTS Writing Task 2 coach who specializes in question analysis — the step most students skip and the single biggest cause of low Task Response scores.",
     task: "Break down an IELTS Task 2 question: identify its type, extract the topic and the exact instruction words, list what MUST be addressed to fully answer it, and flag the most likely ways a student could drift off-topic.",
     context:
@@ -922,6 +941,7 @@ Question:
     subcategory: "Writing Task 2",
     description:
       "Tahlil qilingan savol asosida paragraflarga bo'lingan reja tuzadi: har bir band uchun tezis, dalil va aniq misol.",
+    outcome: "Tezis, dalil va misolli paragraf rejasi",
     role: "You are an IELTS Writing Task 2 coach who builds essay outlines that can be written up in 30 minutes under exam conditions.",
     task: "Turn a Task 2 question and the writer's chosen position into a paragraph-by-paragraph outline, giving each body paragraph a topic sentence, a line of reasoning, and one concrete example — without writing the essay itself.",
     context:
@@ -970,6 +990,7 @@ My position:
     subcategory: "Writing Task 2",
     description:
       "Rejani inshoga aylantirish uchun bosqichma-bosqich yo'riqnoma beradi: har bir band uchun boshlanish iboralari va 40 daqiqalik vaqt taqsimoti.",
+    outcome: "Boshlanish iboralari va 40 daqiqalik vaqt rejasi",
     role: "You are an IELTS Writing Task 2 coach guiding a student through writing their own first draft under exam timing — you coach, you do not write the essay for them.",
     task: "Give the student a paragraph-by-paragraph writing guide based on their outline: opening sentence frames, linking language, a 40-minute time plan, and rules for what to do when they get stuck — without producing the finished essay.",
     context:
@@ -1020,6 +1041,7 @@ My outline:
     subcategory: "Writing Task 2",
     description:
       "Baholash natijasidagi izohlarni amaliy tuzatishlarga aylantiradi va inshoni bir band yuqori darajada qayta yozishga yo'naltiradi.",
+    outcome: "Tuzatishlar ro'yxati va bir band yuqori qayta yozish",
     role: "You are an IELTS Writing Task 2 coach running the final revision stage: converting examiner feedback into a concrete, prioritised rewrite plan.",
     task: "Take an essay together with its examiner feedback and produce a prioritised revision plan — which fixes raise the band most, a guided rewrite of the two weakest paragraphs, and a personal error list the student can reuse on future essays.",
     context:
