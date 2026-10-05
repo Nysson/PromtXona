@@ -84,6 +84,7 @@ export function claudeUrl(promptText: string): string {
   return `https://claude.ai/new?q=${encodeURIComponent(promptText)}`;
 }
 
+/** Gemini URL orqali matn qabul qilmaydi — prompt avval nusxalanadi. */
 export function geminiUrl(): string {
   return `https://gemini.google.com/app`;
 }

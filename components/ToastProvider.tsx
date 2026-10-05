@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, X } from "lucide-react";
+import { AlertCircle, CheckCircle2, X } from "lucide-react";
 import {
   createContext,
   useCallback,
@@ -10,13 +10,16 @@ import {
 } from "react";
 import { generateId } from "@/lib/utils";
 
+export type ToastTone = "success" | "warning";
+
 interface ToastItem {
   id: string;
   message: string;
+  tone: ToastTone;
 }
 
 interface ToastContextValue {
-  showToast: (message: string) => void;
+  showToast: (message: string, tone?: ToastTone) => void;
 }
 
 const ToastContext = createContext<ToastContextValue | undefined>(undefined);
@@ -29,9 +32,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const showToast = useCallback(
-    (message: string) => {
+    (message: string, tone: ToastTone = "success") => {
       const id = generateId("toast");
-      setToasts((prev) => [...prev, { id, message }]);
+      setToasts((prev) => [...prev, { id, message, tone }]);
       window.setTimeout(() => dismiss(id), 2600);
     },
     [dismiss]
@@ -49,10 +52,17 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={toast.id}
             className="animate-toast-in pointer-events-auto flex items-center gap-2.5 rounded-2xl border border-black/5 bg-white/90 px-4 py-3 text-sm font-medium text-neutral-900 shadow-glow backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/90 dark:text-white"
           >
-            <CheckCircle2
-              className="h-4 w-4 shrink-0 text-accent-green"
-              strokeWidth={2.5}
-            />
+            {toast.tone === "warning" ? (
+              <AlertCircle
+                className="h-4 w-4 shrink-0 text-accent-orange"
+                strokeWidth={2.5}
+              />
+            ) : (
+              <CheckCircle2
+                className="h-4 w-4 shrink-0 text-accent-green"
+                strokeWidth={2.5}
+              />
+            )}
             <span>{toast.message}</span>
             <button
               onClick={() => dismiss(toast.id)}
